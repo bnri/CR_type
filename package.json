@@ -1,0 +1,22 @@
+{
+  "name": "@cr/type",
+  "version": "1.0.0",
+  "description": "CheckReading shared TypeScript types",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "deploy_npm": "npm version patch && npm publish",
+    "build": "tsc --project tsconfig.json",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bnri/CR_type.git"
+  },
+  "author": "YOUR_NAME",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
