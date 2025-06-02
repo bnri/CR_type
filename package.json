@@ -8,7 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "deploy_npm": "npm version patch && npm publish",
+    "deploy_npm": "npm version patch && npm publish --access public",
     "build": "tsc --project tsconfig.json",
     "prepare": "npm run build"
   },
