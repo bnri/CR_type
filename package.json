@@ -4,7 +4,9 @@
   "description": "CheckReading shared TypeScript types",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "deploy_npm": "npm version patch && npm publish",
     "build": "tsc --project tsconfig.json",
@@ -18,5 +20,8 @@
   "license": "MIT",
   "publishConfig": {
     "access": "restricted"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
   }
 }
