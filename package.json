@@ -19,7 +19,7 @@
   "author": "YOUR_NAME",
   "license": "MIT",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "devDependencies": {
     "typescript": "^5.8.3"
