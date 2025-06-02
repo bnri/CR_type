@@ -14,9 +14,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bnri/CR_type.git"
+    "url": "https://github.com/bnri/CR_type.git"
   },
-  "author": "YOUR_NAME",
+  "author": "guripong",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
