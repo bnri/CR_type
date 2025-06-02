@@ -1,5 +1,5 @@
 {
-  "name": "@cr/type",
+  "name": "@readerseye2/cr_type",
   "version": "1.0.4",
   "description": "CheckReading shared TypeScript types",
   "main": "dist/index.js",
