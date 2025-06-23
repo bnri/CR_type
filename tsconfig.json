@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
+    "module": "CommonJS", // ✅ 이걸 꼭 명시!
     "declaration": true,
     "emitDeclarationOnly": false,
     "outDir": "dist",
