@@ -1,4 +1,13 @@
-export type providerEnum = 'google' | 'naver' | 'kakao';
+export declare enum OauthUserType {
+    CHILD = "child",
+    PARENT = "parent",
+    ADMIN = "admin"
+}
+export declare enum OauthProvider {
+    GOOGLE = "google",
+    NAVER = "naver",
+    KAKAO = "kakao"
+}
 export interface CommonSessionData {
     access_token: string;
     access_token_expire: number;
@@ -6,18 +15,19 @@ export interface CommonSessionData {
     refresh_token_expire: number;
     createdAt: number;
     device_ID: string;
-    session_type: 'parent' | 'child';
+    session_type: OauthUserType;
 }
 export interface ParentSessionData extends CommonSessionData {
     user_idx: number;
-    user_logo_url: string;
+    user_logo_url?: string;
     client_id: string;
     email: string;
     name: string;
-    provider: providerEnum;
+    provider: OauthProvider;
 }
 export interface ChildSessionData extends CommonSessionData {
     child_idx: number;
-    child_logo_url: string;
+    child_image_url?: string;
+    child_ID: string;
 }
 export type userSessionData = ParentSessionData | ChildSessionData;

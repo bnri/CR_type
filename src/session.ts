@@ -17,7 +17,7 @@ export interface CommonSessionData {
   refresh_token_expire: number;
   createdAt: number;
   device_ID: string;
-  session_type: 'parent' | 'child';
+  session_type: OauthUserType;
 }
 
 export interface ParentSessionData extends CommonSessionData {
