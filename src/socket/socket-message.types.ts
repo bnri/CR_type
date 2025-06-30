@@ -1,8 +1,10 @@
 // 📁 src/types/socket/socket-message.types.ts
 
+import { OauthUserType } from "../session";
+
 // 클라이언트 → 서버
 export interface MessageRequest {
-  receiver_type: 'parent' | 'child';
+  receiver_type: OauthUserType;
   receiver_idx: number; // user_idx or child_idx
   msg: string;
 }
@@ -11,7 +13,7 @@ export interface MessageRequest {
 // 실시간 수신용
 export interface MessageResponse {
   msg: string;
-  sender_type: 'parent' | 'child';
+  sender_type: OauthUserType;
   sender_idx: number;
   receiver_type: 'parent' | 'child';
   receiver_idx: number;
