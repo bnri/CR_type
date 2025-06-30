@@ -1,11 +1,12 @@
+import { OauthUserType } from "../session";
 export interface MessageRequest {
-    receiver_type: 'parent' | 'child';
+    receiver_type: OauthUserType;
     receiver_idx: number;
     msg: string;
 }
 export interface MessageResponse {
     msg: string;
-    sender_type: 'parent' | 'child';
+    sender_type: OauthUserType;
     sender_idx: number;
     receiver_type: 'parent' | 'child';
     receiver_idx: number;
