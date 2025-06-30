@@ -30,5 +30,7 @@ export interface ChildSessionData extends CommonSessionData {
     child_idx: number;
     child_image_url?: string;
     child_ID: string;
+    parent_name: string;
+    parent_logo_url?: string;
 }
 export type userSessionData = ParentSessionData | ChildSessionData;
