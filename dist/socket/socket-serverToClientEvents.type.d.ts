@@ -1,4 +1,4 @@
-import { MessageResponse } from "./socket-message.types";
+import { MessageReadResponse, MessageResponse } from "./socket-message.types";
 export interface ServerToClientEvents {
     connect: () => void;
     disconnect: () => void;
@@ -9,4 +9,5 @@ export interface ServerToClientEvents {
         roomKey: string;
         msgArr: MessageResponse[];
     }) => void;
+    'chat-message:read-peer': (payload: MessageReadResponse) => void;
 }

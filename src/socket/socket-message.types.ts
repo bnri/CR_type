@@ -36,6 +36,25 @@ export interface ChatMessageRefreshRequest {
 }
 
 
+
+
+export interface ChatMessageReadRequest {
+  room_key: string;
+  last_read_at: string; 
+}
+
+
+export interface MessageReadResponse {
+  room_key: string;
+  receiver_type: OauthUserType; //admin도 받을수 있게..
+  receiver_idx: number;
+  message_ids: string[]; // optional, 특정 메시지를 지정했을 경우
+}
+
+
+
+
+
 //이것은 CR_ws 에서만 필요한 타입임
 //몽고에 직접적인 엑세스를 하는곳이니
 export interface MessageLogDocument extends MessageResponse {

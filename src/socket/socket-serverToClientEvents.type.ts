@@ -1,6 +1,6 @@
 // import type { MessageResponse } from '@/types/socket/socket-message.types';
 
-import { MessageResponse } from "./socket-message.types";
+import { MessageReadResponse, MessageResponse } from "./socket-message.types";
 
 export interface ServerToClientEvents {
   connect: () => void;
@@ -17,4 +17,5 @@ export interface ServerToClientEvents {
   // 채팅방 일정기간의 채팅로그들을 줘야함
 
   'chat-message:refreshed': (payload: { roomKey: string; msgArr: MessageResponse[] }) => void;
+  'chat-message:read-peer':(payload:MessageReadResponse)=>void;
 }

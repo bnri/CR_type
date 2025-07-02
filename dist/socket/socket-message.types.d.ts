@@ -24,6 +24,16 @@ export interface ChatMessageRefreshRequest {
     end?: string;
     count?: number;
 }
+export interface ChatMessageReadRequest {
+    room_key: string;
+    last_read_at: string;
+}
+export interface MessageReadResponse {
+    room_key: string;
+    receiver_type: OauthUserType;
+    receiver_idx: number;
+    message_ids: string[];
+}
 export interface MessageLogDocument extends MessageResponse {
     createdAt: string;
     updatedAt?: string;
