@@ -41,6 +41,8 @@ export interface ChatMessageRefreshRequest {
 export interface ChatMessageReadRequest {
   room_key: string;
   last_read_at: string; 
+  receiver_type: OauthUserType; //admin도 받을수 있게..
+  receiver_idx: number;
 }
 
 
