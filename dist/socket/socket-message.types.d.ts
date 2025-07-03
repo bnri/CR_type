@@ -27,8 +27,6 @@ export interface ChatMessageRefreshRequest {
 export interface ChatMessageReadRequest {
     room_key: string;
     last_read_at: string;
-    receiver_type: OauthUserType;
-    receiver_idx: number;
 }
 export interface MessageReadResponse {
     room_key: string;
