@@ -18,4 +18,6 @@ export interface ServerToClientEvents {
 
   'chat-message:refreshed': (payload: { roomKey: string; msgArr: MessageResponse[] }) => void;
   'chat-message:read-peer':(payload:MessageReadResponse)=>void;
+
+  
 }

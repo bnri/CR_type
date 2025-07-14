@@ -6,6 +6,15 @@ export interface MessageRequest {
     msg: string;
     temp_id?: string;
 }
+export interface ImageMessageRequest {
+    room_key: string;
+    receiver_type: OauthUserType;
+    receiver_idx: number;
+    file_url: string;
+    file_name: string;
+    temp_id?: string;
+    type: 'image';
+}
 export interface MessageResponse {
     msg: string;
     sender_type: OauthUserType;
@@ -17,6 +26,7 @@ export interface MessageResponse {
     is_read: boolean;
     _id: string;
     temp_id?: string;
+    type: "text" | "image";
 }
 export interface ChatMessageRefreshRequest {
     roomKey: string;

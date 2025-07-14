@@ -11,6 +11,16 @@ export interface MessageRequest {
   temp_id?: string; // 👈 프론트가 관리용으로 보내는 값 (optional)
 }
 
+export interface ImageMessageRequest {
+  room_key: string;
+  receiver_type: OauthUserType;
+  receiver_idx: number;
+  file_url: string;
+  file_name: string;
+  temp_id?: string;
+  type: 'image'; 
+}
+
 // 서버 → 클라이언트
 // 실시간 수신용
 export interface MessageResponse {
@@ -25,7 +35,9 @@ export interface MessageResponse {
   _id: string;     // MongoDB ID (DB용 식별자)
   // 👇 아래 1개는 선택적
   temp_id?: string; // Front 전용, 본인에게만 echo
+  type:"text"|"image";
 }
+
 
 
 export interface ChatMessageRefreshRequest {
