@@ -9,17 +9,9 @@ export interface MessageRequest {
   receiver_idx: number; // user_idx or child_idx
   msg: string;
   temp_id?: string; // 👈 프론트가 관리용으로 보내는 값 (optional)
+   type:"text"|"image";
 }
 
-export interface ImageMessageRequest {
-  room_key: string;
-  receiver_type: OauthUserType;
-  receiver_idx: number;
-  file_url: string;
-  file_name: string;
-  temp_id?: string;
-  type: 'image'; 
-}
 
 // 서버 → 클라이언트
 // 실시간 수신용

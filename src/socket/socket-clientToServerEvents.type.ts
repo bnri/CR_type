@@ -1,4 +1,4 @@
-import { ChatMessageReadRequest, ChatMessageRefreshRequest, ImageMessageRequest, MessageRequest } from "./socket-message.types";
+import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
 
 
 export interface ClientToServerEvents {
@@ -8,7 +8,5 @@ export interface ClientToServerEvents {
   
   'chat-message:read' : (payload:ChatMessageReadRequest) => void;
 
-
-  'chat-image:send' : (payload:ImageMessageRequest) => void;
 
 }

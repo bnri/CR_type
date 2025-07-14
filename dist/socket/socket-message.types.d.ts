@@ -5,15 +5,7 @@ export interface MessageRequest {
     receiver_idx: number;
     msg: string;
     temp_id?: string;
-}
-export interface ImageMessageRequest {
-    room_key: string;
-    receiver_type: OauthUserType;
-    receiver_idx: number;
-    file_url: string;
-    file_name: string;
-    temp_id?: string;
-    type: 'image';
+    type: "text" | "image";
 }
 export interface MessageResponse {
     msg: string;
