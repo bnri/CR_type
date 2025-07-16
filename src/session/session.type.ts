@@ -39,4 +39,12 @@ export interface ChildSessionData extends CommonSessionData {
 
 }
 
+export interface AdminSessionData extends CommonSessionData{
+  admin_idx:number;
+  admin_id:string;
+  admin_name:string;
+  admin_scope:string;
+}
+
+
 export type userSessionData = ParentSessionData | ChildSessionData;
