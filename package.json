@@ -1,6 +1,6 @@
 {
   "name": "@readerseye2/cr_type",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "CheckReading shared TypeScript types",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
