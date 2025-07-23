@@ -1,11 +1,18 @@
 import { OauthUserType } from "../session";
+export interface NoticeMessage {
+    notice_title?: string;
+    notice_imgurl: string;
+    notice_msg: string;
+    notice_btn_name: string;
+}
 export interface MessageRequest {
     room_key: string;
     receiver_type: OauthUserType;
     receiver_idx: number;
     msg: string;
     temp_id?: string;
-    type: "text" | "image";
+    type: "text" | "image" | "notice";
+    notice_payload?: NoticeMessage;
 }
 export interface MessageResponse {
     msg: string;
@@ -18,7 +25,8 @@ export interface MessageResponse {
     is_read: boolean;
     _id: string;
     temp_id?: string;
-    type: "text" | "image";
+    type: "text" | "image" | "notice";
+    notice_payload?: NoticeMessage;
 }
 export interface ChatMessageRefreshRequest {
     roomKey: string;

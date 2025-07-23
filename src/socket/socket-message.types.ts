@@ -1,7 +1,12 @@
 // 📁 src/types/socket/socket-message.types.ts
 
 import { OauthUserType } from "../session";
-
+export interface NoticeMessage{
+  notice_title?:string;
+  notice_imgurl:string;
+  notice_msg:string;
+  notice_btn_name:string;
+}
 // 클라이언트 → 서버
 export interface MessageRequest {
   room_key: string; // ✅ 필수 추가
@@ -9,7 +14,8 @@ export interface MessageRequest {
   receiver_idx: number; // user_idx or child_idx
   msg: string;
   temp_id?: string; // 👈 프론트가 관리용으로 보내는 값 (optional)
-   type:"text"|"image";
+  type:"text"|"image"|"notice";
+  notice_payload?:NoticeMessage;
 }
 
 
@@ -27,7 +33,8 @@ export interface MessageResponse {
   _id: string;     // MongoDB ID (DB용 식별자)
   // 👇 아래 1개는 선택적
   temp_id?: string; // Front 전용, 본인에게만 echo
-  type:"text"|"image";
+  type:"text"|"image"|"notice";
+  notice_payload?:NoticeMessage;
 }
 
 
