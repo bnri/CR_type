@@ -2,10 +2,15 @@
 
 import { OauthUserType } from "../session";
 export interface NoticeMessage{
-  notice_title?:string;
-  notice_imgurl:string;
-  notice_msg:string;
-  notice_btn_name:string;
+  notice_idx: number;
+  notice_imgurl?: string | null;
+  notice_title?: string | null;
+  notice_msg: string;
+  notice_created_at: string; // ISO string or Date
+  notice_btn_name?: string | null;
+  notice_to_who: string; //parent or child (모든 타입들에게 보냄)
+  notice_category: string; //별의미 없는데 나중에 쿼리할때 쓸수도?
+  notice_link?: string | null; //클릭시 가는링크
 }
 // 클라이언트 → 서버
 export interface MessageRequest {

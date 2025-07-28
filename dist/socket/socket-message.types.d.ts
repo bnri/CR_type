@@ -1,9 +1,14 @@
 import { OauthUserType } from "../session";
 export interface NoticeMessage {
-    notice_title?: string;
-    notice_imgurl: string;
+    notice_idx: number;
+    notice_imgurl?: string | null;
+    notice_title?: string | null;
     notice_msg: string;
-    notice_btn_name: string;
+    notice_created_at: string;
+    notice_btn_name?: string | null;
+    notice_to_who: string;
+    notice_category: string;
+    notice_link?: string | null;
 }
 export interface MessageRequest {
     room_key: string;
