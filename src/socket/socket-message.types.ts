@@ -22,6 +22,11 @@ export interface MessageRequest {
   type:"text"|"image"|"notice";
   notice_payload?:NoticeMessage;
 }
+export interface NoticeMessageResult {
+  success: boolean;
+  payload?: MessageRequest;
+  error?: string;
+}
 
 
 // 서버 → 클라이언트

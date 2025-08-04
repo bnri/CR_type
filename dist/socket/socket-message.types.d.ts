@@ -19,6 +19,11 @@ export interface MessageRequest {
     type: "text" | "image" | "notice";
     notice_payload?: NoticeMessage;
 }
+export interface NoticeMessageResult {
+    success: boolean;
+    payload?: MessageRequest;
+    error?: string;
+}
 export interface MessageResponse {
     msg: string;
     sender_type: OauthUserType;
