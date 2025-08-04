@@ -10,3 +10,13 @@ export interface ClientToServerEvents {
 
 
 }
+
+
+export interface NoticeToServerEvents {
+  'notice-message:send': (msg: MessageRequest) => void;
+}
+
+export interface AdminClientToServerEvents
+  extends ClientToServerEvents,
+          NoticeToServerEvents {}
+          

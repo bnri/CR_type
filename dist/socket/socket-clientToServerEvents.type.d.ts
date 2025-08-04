@@ -4,3 +4,8 @@ export interface ClientToServerEvents {
     'chat-message:refresh': (msg: ChatMessageRefreshRequest) => void;
     'chat-message:read': (payload: ChatMessageReadRequest) => void;
 }
+export interface NoticeToServerEvents {
+    'notice-message:send': (msg: MessageRequest) => void;
+}
+export interface AdminClientToServerEvents extends ClientToServerEvents, NoticeToServerEvents {
+}
