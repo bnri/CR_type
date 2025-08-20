@@ -25,7 +25,7 @@ export interface ParentSessionData extends CommonSessionData {
     email: string;
     name: string;
     provider: OauthProvider;
-    user_extended?: ParentDetail;
+    lastUpdatedOauthAt?: number;
 }
 export interface ParentDetail {
     user_extended_idx: number;

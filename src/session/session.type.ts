@@ -28,7 +28,8 @@ export interface ParentSessionData extends CommonSessionData {
   email: string;
   name: string;
   provider: OauthProvider;
-  user_extended?:ParentDetail;
+  lastUpdatedOauthAt?: number; // ✅ 외부 OAuth 프로필 갱신 시각
+
 }
 
 export interface ParentDetail {
