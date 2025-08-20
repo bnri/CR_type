@@ -24,6 +24,14 @@ export interface ParentSessionData extends CommonSessionData {
     email: string;
     name: string;
     provider: OauthProvider;
+    user_extended?: ParentDetail;
+}
+export interface ParentDetail {
+    user_extended_idx: number;
+    user_phone: string;
+    user_address: string;
+    user_address_detail: string;
+    user_address_postal: string;
 }
 export interface ChildSessionData extends CommonSessionData {
     parent_idx: number;
