@@ -16,6 +16,7 @@ export interface CommonSessionData {
   refresh_token: string;
   refresh_token_expire: number;
   createdAt: number;
+  lastRefreshedAt:number;
   device_ID: string;
   session_type: OauthUserType;
 }
