@@ -23,6 +23,7 @@ export interface ParentSessionData extends CommonSessionData {
     user_logo_url?: string;
     client_id: string;
     email: string;
+    user_name: string;
     name: string;
     provider: OauthProvider;
     lastUpdatedOauthAt?: number;

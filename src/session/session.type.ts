@@ -26,7 +26,8 @@ export interface ParentSessionData extends CommonSessionData {
   user_logo_url?: string; //대표 oauth로 연동된 사진 복사 혹은 변경된 url 임
   client_id: string; //로긴할때의 클라이언트아이디
   email: string;
-  name: string;
+  user_name:string; //내가 지정한이름
+  name: string; //oauth 네임
   provider: OauthProvider;
   lastUpdatedOauthAt?: number; // ✅ 외부 OAuth 프로필 갱신 시각
 
