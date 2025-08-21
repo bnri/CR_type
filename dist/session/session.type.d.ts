@@ -21,10 +21,11 @@ export interface CommonSessionData {
 export interface ParentSessionData extends CommonSessionData {
     user_idx: number;
     user_logo_url?: string;
+    oauth_logo_url?: string;
     client_id: string;
-    email: string;
+    oauth_email: string;
     user_name: string;
-    name: string;
+    oauth_name: string;
     provider: OauthProvider;
     lastUpdatedOauthAt?: number;
 }
