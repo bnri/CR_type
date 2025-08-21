@@ -34,10 +34,10 @@ export interface ParentSessionData extends CommonSessionData {
 
 export interface ParentDetail {
   user_extended_idx:number;
-  user_phone: string;
-  user_address:string;
-  user_address_detail:string;
-  user_address_postal:string;
+  user_phone?: string;
+  user_address?:string;
+  user_address_detail?:string;
+  user_address_postal?:string;
   //추후 더 확장 일단 DB가 있는것만
 }
 
