@@ -20,29 +20,14 @@ export interface CommonSessionData {
 }
 export interface ParentSessionData extends CommonSessionData {
     user_idx: number;
-    user_logo_url?: string;
-    oauth_logo_url?: string;
     client_id: string;
     oauth_email: string;
-    user_name: string;
-    oauth_name: string;
     provider: OauthProvider;
-    lastUpdatedOauthAt?: number;
-}
-export interface ParentDetail {
-    user_extended_idx: number;
-    user_phone?: string;
-    user_address?: string;
-    user_address_detail?: string;
-    user_address_postal?: string;
 }
 export interface ChildSessionData extends CommonSessionData {
     parent_idx: number;
     child_idx: number;
-    child_image_url?: string;
     child_ID: string;
-    parent_name: string;
-    parent_logo_url?: string;
 }
 export interface AdminSessionData extends CommonSessionData {
     admin_idx: number;
