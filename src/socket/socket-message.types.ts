@@ -1,6 +1,8 @@
 // 📁 src/types/socket/socket-message.types.ts
 
-import { OauthUserType } from "../session";
+import { OauthUserType } from "../session/session.type";
+
+// import { OauthUserType } from "../session";
 export interface NoticeMessage{
   notice_idx: number;
   notice_imgurl?: string | null;
