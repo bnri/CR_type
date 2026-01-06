@@ -37,3 +37,32 @@ export enum BookGenre {
   OTHER = 'other', // 기타
 }
 
+/** 책 기본 정보 (리스트용) */
+export interface BookShort {
+  id: string;
+  title: string;
+  author: string;
+  coverUrl: string;
+  rating: number;
+  lengthText: string;
+  language: BookLanguageCode;
+  level: number;
+  genre: string;
+}
+
+/** 책 상세 정보 */
+export interface BookDetail extends BookShort {
+  description?: string;
+  tags?: string[];
+  publishedAtText?: string;
+  priceText?: string;
+  toc?: string[];
+  // 확장 메타 정보
+  ageGrade?: BookAgeGrade;
+  wordCount?: number;
+  isbn?: string;
+  originalPublisher?: string;
+  originalPublishDate?: string;
+  edition?: string;
+}
+
