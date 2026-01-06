@@ -52,4 +52,5 @@ export interface BookDetail extends BookShort {
     originalPublisher?: string;
     originalPublishDate?: string;
     edition?: string;
+    quizRetryAllowed?: boolean;
 }
