@@ -50,6 +50,7 @@ export interface BookShort {
   genre: string;
   wordCount?: number; // 전체 어절 수
   soundMinutes?: number; // 재생 분수 (wordCount / 200)
+  rating?: number; // 평균 평점 (Published 책에서만, 없으면 undefined)
 }
 
 /** 책 상세 정보 */
