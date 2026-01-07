@@ -76,6 +76,15 @@ export interface BookDetail extends BookShort {
   sectionOrder?: string[];
 }
 
+/** 오디오 메타 정보 (TTS 설정) */
+export type AudioMeta = {
+  provider: 'AWS' | 'GCP';
+  language?: 'en-US' | 'ko-KR';
+  engine?: 'neural' | 'standard' | 'long-form';
+  voiceName?: string;
+  voiceGender?: 'Male' | 'Female';
+};
+
 /** 섹션 요약 정보 */
 export interface SectionSummary {
   sectionId: string;
@@ -90,6 +99,7 @@ export interface SectionSummary {
   isAddedAudio?: boolean;
   isAddedQuiz?: boolean;
   updatedAt?: string;
+  audioMeta?: AudioMeta; // TTS 설정 정보
 }
 
 // ========== API 응답용 타입 (snake_case) ==========
