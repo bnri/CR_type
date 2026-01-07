@@ -1,16 +1,17 @@
 "use strict";
+// ========== Enums ==========
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BookGenre = exports.BookLength = exports.BookAgeGrade = exports.BOOK_LEVEL_MAX = exports.BOOK_LEVEL_MIN = exports.BookLanguageCode = void 0;
-// 값 자체를 코드로 쓰는 용도 (DB 저장/전송)
+exports.calcSoundMinutes = exports.BookGenre = exports.BookAgeGrade = exports.BOOK_LEVEL_MAX = exports.BOOK_LEVEL_MIN = exports.BookLanguageCode = void 0;
+/** 언어 코드 */
 var BookLanguageCode;
 (function (BookLanguageCode) {
     BookLanguageCode["KO"] = "ko";
     BookLanguageCode["EN"] = "en";
 })(BookLanguageCode || (exports.BookLanguageCode = BookLanguageCode = {}));
-// 레벨 범위도 중앙집중 관리
+/** 레벨 범위 */
 exports.BOOK_LEVEL_MIN = 5;
 exports.BOOK_LEVEL_MAX = 19;
-// 연령 등급
+/** 연령 등급 */
 var BookAgeGrade;
 (function (BookAgeGrade) {
     BookAgeGrade["ALL"] = "all";
@@ -19,14 +20,7 @@ var BookAgeGrade;
     BookAgeGrade["AGE_15"] = "15+";
     BookAgeGrade["AGE_19"] = "19+";
 })(BookAgeGrade || (exports.BookAgeGrade = BookAgeGrade = {}));
-// 책 길이
-var BookLength;
-(function (BookLength) {
-    BookLength["SHORT"] = "short";
-    BookLength["MEDIUM"] = "medium";
-    BookLength["LONG"] = "long";
-})(BookLength || (exports.BookLength = BookLength = {}));
-// 책 종류/장르
+/** 책 종류/장르 */
 var BookGenre;
 (function (BookGenre) {
     BookGenre["FICTION"] = "fiction";
@@ -39,3 +33,7 @@ var BookGenre;
     BookGenre["POETRY"] = "poetry";
     BookGenre["OTHER"] = "other";
 })(BookGenre || (exports.BookGenre = BookGenre = {}));
+// ========== 헬퍼 함수 ==========
+/** 어절 수 → 재생 분수 계산 (200 WPM 기준) */
+const calcSoundMinutes = (wordCount) => Math.ceil(wordCount / 200);
+exports.calcSoundMinutes = calcSoundMinutes;
