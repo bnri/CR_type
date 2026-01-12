@@ -203,6 +203,8 @@ export interface DraftMeta {
   draft_book_create_date: string;
   /** 수정일 (ISO) */
   draft_book_update_date: string;
+  /** 출판 상태 */
+  draft_book_publish_status?: 'draft' | 'pending' | 'rejected';
 }
 
 // SectionSummary, AudioMeta는 book.type.ts에서 export됨
