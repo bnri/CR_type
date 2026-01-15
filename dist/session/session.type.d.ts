@@ -1,7 +1,8 @@
 export declare enum OauthUserType {
     CHILD = "child",
     PARENT = "parent",
-    ADMIN = "admin"
+    ADMIN = "admin",
+    CREATOR = "creator"
 }
 export declare enum OauthProvider {
     GOOGLE = "google",
@@ -34,5 +35,11 @@ export interface AdminSessionData extends CommonSessionData {
     admin_id: string;
     admin_name: string;
     admin_scope: string;
+}
+export interface CreatorSessionData extends Omit<CommonSessionData, 'session_type'> {
+    creator_idx: number;
+    creator_id: string;
+    creator_name: string;
+    session_type: OauthUserType.CREATOR;
 }
 export type userSessionData = ParentSessionData | ChildSessionData;
