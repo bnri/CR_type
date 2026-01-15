@@ -7,6 +7,7 @@ var OauthUserType;
     OauthUserType["CHILD"] = "child";
     OauthUserType["PARENT"] = "parent";
     OauthUserType["ADMIN"] = "admin";
+    OauthUserType["CREATOR"] = "creator";
 })(OauthUserType || (exports.OauthUserType = OauthUserType = {}));
 var OauthProvider;
 (function (OauthProvider) {
