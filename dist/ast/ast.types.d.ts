@@ -130,16 +130,20 @@ export interface DraftMeta {
     draft_book_title: string;
     /** 언어 코드 */
     draft_book_language: 'ko' | 'en';
-    /** 난이도 레벨 (default: 5) */
+    /** 난이도 레벨 (권장 연령, default: 5) */
     draft_book_level: number;
     /** 표지 이미지 URL (nullable) */
     draft_book_cover_url: string | null;
+    /** 책 길이 (short/medium/long) */
+    draft_book_length: string | null;
+    /** 책 종류/장르 (fiction/non-fiction/other) */
+    draft_book_genre: string | null;
+    /** 영어레벨 (영어책 전용) */
+    draft_book_en_level: string | null;
+    /** 시리즈명 */
+    draft_book_series: string | null;
     /** 원작자 */
     draft_book_author: string | null;
-    /** 연령 등급 */
-    draft_book_age_grade: string | null;
-    /** 책 종류/장르 */
-    draft_book_genre: string | null;
     /** 태그 배열 */
     draft_book_tags: string[] | null;
     /** 설명 */
@@ -148,8 +152,6 @@ export interface DraftMeta {
     draft_book_original_publish_date: string | null;
     /** 원출판사 */
     draft_book_original_publisher: string | null;
-    /** 판 */
-    draft_book_edition: string | null;
     /** ISBN */
     draft_book_isbn: string | null;
     /** 총 어절 수 (자동 계산) */
