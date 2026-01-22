@@ -18,3 +18,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./socket-clientToServerEvents.type"), exports);
 __exportStar(require("./socket-serverToClientEvents.type"), exports);
 __exportStar(require("./socket-message.types"), exports);
+__exportStar(require("./reading-session.types"), exports);
