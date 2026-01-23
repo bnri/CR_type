@@ -19,3 +19,4 @@ __exportStar(require("./session/session.type"), exports);
 __exportStar(require("./socket"), exports); // socket 전체 export
 __exportStar(require("./book"), exports);
 __exportStar(require("./ast"), exports); // AST 타입 (SectionData, Block 등)
+__exportStar(require("./viewer/viewerEvent.types"), exports); // 뷰어 이벤트/스냅샷 타입

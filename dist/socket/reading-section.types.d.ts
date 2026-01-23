@@ -1,38 +1,20 @@
-/** 재생에 필요한 뷰어 설정 상태 (CRViewerState의 핵심 필드) */
-export interface ViewerStateSnapshot {
-    mode: 'scroll' | 'page';
-    theme: 'light' | 'dark' | 'sepia' | 'green';
-    fontFamily: string;
-    fontSizePx: number;
-    lineHeight: number;
-    marginX: number;
-    marginY: number;
-    pointerStyle: 'highlight' | 'underline';
-    pointerColor: string;
-    breakMarks: {
-        slash: boolean;
-    };
-    breakGapPx: number;
-    showPointer: boolean;
-    showSplit: boolean;
-}
-/** 뷰어 스냅샷 (현재 상태) */
+import type { ViewerEventType, RecordingViewerState } from '../viewer/viewerEvent.types';
+/** 뷰어 설정 상태 (CRViewerState에서 재사용) */
+export type ViewerStateSnapshot = RecordingViewerState;
+/** 뷰어 스냅샷 (소켓 통신용 - 현재 읽기 상태) */
 export interface ViewerSnapshot {
     viewMode: 'scroll' | 'page';
     globalRunIndex: number;
     pageIndex?: number;
     scrollPosition?: number;
     totalItems: number;
-    /** 뷰어 너비 (재생 시 동일 크기로 렌더링) */
     viewportWidth?: number;
-    /** 뷰어 높이 (재생 시 동일 크기로 렌더링) */
     viewportHeight?: number;
-    /** 뷰어 설정 상태 (재생 시 동일하게 적용) */
     viewerState?: ViewerStateSnapshot;
 }
-/** 뷰어 이벤트 */
-export interface ViewerEvent {
-    type: 'page_change' | 'scroll' | 'overlay_toggle' | 'range_select' | 'quiz_answer' | 'gi_change' | 'global_index_change' | 'section_change' | 'mode_change' | 'settings_change' | 'viewer_state_snapshot' | 'recording_start' | 'recording_stop' | 'audio_control' | 'viewport_resize' | 'render_start' | 'loading_start' | 'loading_end';
+/** 소켓 전송용 뷰어 이벤트 (간소화된 형태) */
+export interface SocketViewerEvent {
+    type: ViewerEventType | 'overlay_toggle' | 'range_select' | 'quiz_answer' | 'gi_change';
     timestamp: number;
     data: Record<string, unknown>;
 }
@@ -83,7 +65,7 @@ export interface SessionProgressPayload {
 }
 /** 이벤트 배치 전송 페이로드 */
 export interface SessionEventPayload {
-    events: ViewerEvent[];
+    events: SocketViewerEvent[];
 }
 /** 세션 구독 페이로드 (Admin용) */
 export interface SessionSubscribePayload {
@@ -125,7 +107,7 @@ export interface SessionProgressResponse {
 /** 세션 이벤트 응답 */
 export interface SessionEventsResponse {
     sessionId: string;
-    events: ViewerEvent[];
+    events: SocketViewerEvent[];
 }
 /** 세션 목록 응답 */
 export interface SessionListResponse {

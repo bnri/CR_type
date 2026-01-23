@@ -1,7 +1,7 @@
 // src/socket/monitor.types.ts
 // Admin 실시간 모니터링용 타입 정의
 
-import { ViewerEvent, ViewerSnapshot, ReadingSessionInfo } from './reading-section.types';
+import { SocketViewerEvent, ViewerSnapshot, ReadingSessionInfo } from './reading-section.types';
 
 // ===================== S3 저장 구조 =====================
 
@@ -25,7 +25,7 @@ export interface MonitorChunk {
   readingSessionId: string | null;
   sectionId: string | null;
   bookIdx: number | null;
-  events: ViewerEvent[];
+  events: SocketViewerEvent[];
   snapshot: ViewerSnapshot | null;
   /** 청크 생성 주기 (ms) */
   delayMs: number;

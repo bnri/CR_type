@@ -1,4 +1,4 @@
-import { ViewerEvent, ViewerSnapshot, ReadingSessionInfo } from './reading-section.types';
+import { SocketViewerEvent, ViewerSnapshot, ReadingSessionInfo } from './reading-section.types';
 /** 모니터링 메타 정보 (S3 meta.json) */
 export interface MonitorMeta {
     targetSocketId: string;
@@ -18,7 +18,7 @@ export interface MonitorChunk {
     readingSessionId: string | null;
     sectionId: string | null;
     bookIdx: number | null;
-    events: ViewerEvent[];
+    events: SocketViewerEvent[];
     snapshot: ViewerSnapshot | null;
     /** 청크 생성 주기 (ms) */
     delayMs: number;

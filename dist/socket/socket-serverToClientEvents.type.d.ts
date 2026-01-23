@@ -1,5 +1,5 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
-import { ReadingSessionInfo, ViewerEvent, ViewerSnapshot } from "./reading-section.types";
+import { ReadingSessionInfo, SocketViewerEvent, ViewerSnapshot } from "./reading-section.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { MonitorStartedPayload, MonitorChunkPayload, MonitorSessionChangedPayload, MonitorStoppedPayload, MonitorErrorPayload } from "./monitor.types";
 export interface ServerToClientEvents {
@@ -35,7 +35,7 @@ export interface ReadingServerToClientEvents {
     }) => void;
     'reading-section:events': (payload: {
         sessionId: string;
-        events: ViewerEvent[];
+        events: SocketViewerEvent[];
     }) => void;
     'reading-section:error': (payload: {
         message: string;
