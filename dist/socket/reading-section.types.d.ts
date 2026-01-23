@@ -38,7 +38,7 @@ export interface SessionStats {
     scrollDistance?: number;
     interactionCount?: number;
 }
-/** 세션 시작 페이로드 */
+/** 섹션 읽기 시작 페이로드 */
 export interface SessionStartPayload {
     bookIdx: number;
     sectionId: string;
@@ -46,7 +46,7 @@ export interface SessionStartPayload {
     viewerConfig?: ViewerConfig;
     meta?: SessionMeta;
 }
-/** 세션 종료 페이로드 */
+/** 섹션 읽기 종료 페이로드 */
 export interface SessionEndPayload {
     durationMs?: number;
     finalSnapshot?: ViewerSnapshot;
@@ -61,7 +61,7 @@ export interface SessionProgressPayload {
 export interface SessionEventPayload {
     events: ViewerEvent[];
 }
-/** 세션 구독 페이로드 */
+/** 세션 구독 페이로드 (Admin용) */
 export interface SessionSubscribePayload {
     sessionId: string;
 }

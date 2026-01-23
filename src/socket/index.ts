@@ -2,4 +2,4 @@
 export * from './socket-clientToServerEvents.type';
 export * from './socket-serverToClientEvents.type';
 export * from './socket-message.types';
-export * from './reading-session.types';
+export * from './reading-section.types';
