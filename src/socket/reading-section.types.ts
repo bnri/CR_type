@@ -4,6 +4,23 @@
 
 // ===================== 기본 타입 =====================
 
+/** 재생에 필요한 뷰어 설정 상태 (CRViewerState의 핵심 필드) */
+export interface ViewerStateSnapshot {
+  mode: 'scroll' | 'page';
+  theme: 'light' | 'dark' | 'sepia' | 'green';
+  fontFamily: string;
+  fontSizePx: number;
+  lineHeight: number;
+  marginX: number;
+  marginY: number;
+  pointerStyle: 'highlight' | 'underline';
+  pointerColor: string;
+  breakMarks: { slash: boolean };
+  breakGapPx: number;
+  showPointer: boolean;
+  showSplit: boolean;
+}
+
 /** 뷰어 스냅샷 (현재 상태) */
 export interface ViewerSnapshot {
   viewMode: 'scroll' | 'page';
@@ -15,6 +32,8 @@ export interface ViewerSnapshot {
   viewportWidth?: number;
   /** 뷰어 높이 (재생 시 동일 크기로 렌더링) */
   viewportHeight?: number;
+  /** 뷰어 설정 상태 (재생 시 동일하게 적용) */
+  viewerState?: ViewerStateSnapshot;
 }
 
 /** 뷰어 이벤트 */
