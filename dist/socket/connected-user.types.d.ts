@@ -18,13 +18,22 @@ export interface ConnectedUser {
     readingSessionId?: string;
 }
 /**
- * 연결된 사용자 목록 (부모/자녀 그룹화)
+ * 가족 그룹 (family:{parentIdx} 기준)
+ */
+export interface FamilyGroup {
+    /** 가족 ID (parent_idx) */
+    familyId: number;
+    /** 가족 내 연결된 사용자 목록 */
+    members: ConnectedUser[];
+}
+/**
+ * 연결된 사용자 목록 (가족별 그룹화)
  */
 export interface ConnectedUsersGrouped {
-    /** 부모 목록 */
-    parents: ConnectedUser[];
-    /** 자녀 목록 (parentIdx로 그룹화 가능) */
-    children: ConnectedUser[];
+    /** 가족별 그룹 목록 */
+    families: FamilyGroup[];
+    /** 총 연결 수 */
+    totalCount: number;
 }
 /** 연결된 사용자 목록 응답 */
 export interface ConnectedUsersListResponse {

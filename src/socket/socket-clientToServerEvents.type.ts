@@ -1,5 +1,6 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
 import { SessionStartPayload, SessionEndPayload, SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
+import { MonitorStartPayload, MonitorStopPayload } from "./monitor.types";
 
 
 export interface ClientToServerEvents {
@@ -28,8 +29,15 @@ export interface ReadingAdminToServerEvents {
   'reading-section:unsubscribe': (payload: SessionSubscribePayload) => void;
 }
 
+/** 실시간 모니터링 이벤트 (Admin용 - 모니터링 시작/중지) */
+export interface MonitorAdminToServerEvents {
+  'monitor:start': (payload: MonitorStartPayload) => void;
+  'monitor:stop': (payload: MonitorStopPayload) => void;
+}
+
 export interface AdminClientToServerEvents
   extends ClientToServerEvents,
           NoticeToServerEvents,
-          ReadingAdminToServerEvents {}
+          ReadingAdminToServerEvents,
+          MonitorAdminToServerEvents {}
           

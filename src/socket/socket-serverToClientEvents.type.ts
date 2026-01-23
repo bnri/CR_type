@@ -3,6 +3,7 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
 import { ReadingSessionInfo, ViewerEvent, ViewerSnapshot } from "./reading-section.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
+import { MonitorStartedPayload, MonitorChunkPayload, MonitorSessionChangedPayload, MonitorStoppedPayload, MonitorErrorPayload } from "./monitor.types";
 
 export interface ServerToClientEvents {
   connect: () => void;
@@ -47,9 +48,19 @@ export interface UserServerToClientEvents {
   'user:reading-status': (payload: { socketId: string; userId: number; userType: 'parent' | 'child'; readingSessionId: string | null }) => void;
 }
 
+/** 실시간 모니터링 이벤트 (Admin에게 전송) */
+export interface MonitorServerToClientEvents {
+  'monitor:started': (payload: MonitorStartedPayload) => void;
+  'monitor:chunk': (payload: MonitorChunkPayload) => void;
+  'monitor:session-changed': (payload: MonitorSessionChangedPayload) => void;
+  'monitor:stopped': (payload: MonitorStoppedPayload) => void;
+  'monitor:error': (payload: MonitorErrorPayload) => void;
+}
+
 export interface AdminServerToClientEvents
   extends ServerToClientEvents,
           NoticeToClientEvents,
           ReadingServerToClientEvents,
-          UserServerToClientEvents {}
+          UserServerToClientEvents,
+          MonitorServerToClientEvents {}
           

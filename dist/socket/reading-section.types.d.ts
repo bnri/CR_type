@@ -5,6 +5,10 @@ export interface ViewerSnapshot {
     pageIndex?: number;
     scrollPosition?: number;
     totalItems: number;
+    /** 뷰어 너비 (재생 시 동일 크기로 렌더링) */
+    viewportWidth?: number;
+    /** 뷰어 높이 (재생 시 동일 크기로 렌더링) */
+    viewportHeight?: number;
 }
 /** 뷰어 이벤트 */
 export interface ViewerEvent {
