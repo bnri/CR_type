@@ -21,7 +21,15 @@ export interface ViewerEvent {
     | 'overlay_toggle'
     | 'range_select'
     | 'quiz_answer'
-    | 'gi_change';
+    | 'gi_change'
+    | 'global_index_change'
+    | 'section_change'
+    | 'mode_change'
+    | 'settings_change'
+    | 'viewer_state_snapshot'
+    | 'recording_start'
+    | 'recording_stop'
+    | 'audio_control';
   timestamp: number;
   data: Record<string, unknown>;
 }
