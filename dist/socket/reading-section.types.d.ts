@@ -32,7 +32,7 @@ export interface ViewerSnapshot {
 }
 /** 뷰어 이벤트 */
 export interface ViewerEvent {
-    type: 'page_change' | 'scroll' | 'overlay_toggle' | 'range_select' | 'quiz_answer' | 'gi_change' | 'global_index_change' | 'section_change' | 'mode_change' | 'settings_change' | 'viewer_state_snapshot' | 'recording_start' | 'recording_stop' | 'audio_control';
+    type: 'page_change' | 'scroll' | 'overlay_toggle' | 'range_select' | 'quiz_answer' | 'gi_change' | 'global_index_change' | 'section_change' | 'mode_change' | 'settings_change' | 'viewer_state_snapshot' | 'recording_start' | 'recording_stop' | 'audio_control' | 'viewport_resize' | 'render_start' | 'loading_start' | 'loading_end';
     timestamp: number;
     data: Record<string, unknown>;
 }

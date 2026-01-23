@@ -52,7 +52,11 @@ export interface ViewerEvent {
     | 'viewer_state_snapshot'
     | 'recording_start'
     | 'recording_stop'
-    | 'audio_control';
+    | 'audio_control'
+    | 'viewport_resize'
+    | 'render_start'
+    | 'loading_start'
+    | 'loading_end';
   timestamp: number;
   data: Record<string, unknown>;
 }
