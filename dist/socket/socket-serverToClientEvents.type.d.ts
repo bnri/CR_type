@@ -1,5 +1,6 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
 import { ReadingSessionInfo, ViewerEvent, ViewerSnapshot } from "./reading-section.types";
+import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 export interface ServerToClientEvents {
     connect: () => void;
     disconnect: () => void;
@@ -39,5 +40,25 @@ export interface ReadingServerToClientEvents {
         message: string;
     }) => void;
 }
-export interface AdminServerToClientEvents extends ServerToClientEvents, NoticeToClientEvents, ReadingServerToClientEvents {
+/** 연결된 사용자 모니터링 이벤트 (Admin에게 전송) */
+export interface UserServerToClientEvents {
+    'user:list': (payload: {
+        users: ConnectedUsersGrouped;
+    }) => void;
+    'user:connected': (payload: {
+        user: ConnectedUser;
+    }) => void;
+    'user:disconnected': (payload: {
+        socketId: string;
+        userId: number;
+        userType: 'parent' | 'child';
+    }) => void;
+    'user:reading-status': (payload: {
+        socketId: string;
+        userId: number;
+        userType: 'parent' | 'child';
+        readingSessionId: string | null;
+    }) => void;
+}
+export interface AdminServerToClientEvents extends ServerToClientEvents, NoticeToClientEvents, ReadingServerToClientEvents, UserServerToClientEvents {
 }

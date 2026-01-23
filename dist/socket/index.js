@@ -19,3 +19,4 @@ __exportStar(require("./socket-clientToServerEvents.type"), exports);
 __exportStar(require("./socket-serverToClientEvents.type"), exports);
 __exportStar(require("./socket-message.types"), exports);
 __exportStar(require("./reading-section.types"), exports);
+__exportStar(require("./connected-user.types"), exports);
