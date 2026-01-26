@@ -2,7 +2,7 @@ import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./soc
 import { ReadingSessionInfo, SocketViewerEvent, ViewerSnapshot } from "./reading-section.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { MonitorStartedPayload, MonitorChunkPayload, MonitorSessionChangedPayload, MonitorStoppedPayload, MonitorErrorPayload } from "./monitor.types";
-import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload } from "./recording.types";
+import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
 export interface ServerToClientEvents {
     connect: () => void;
     disconnect: () => void;
@@ -80,6 +80,10 @@ export interface RecordingServerToClientEvents {
     'recording:error': (payload: {
         message: string;
     }) => void;
+    'recording:list-result': (payload: RecordingListResultPayload) => void;
+    'recording:manifest': (payload: RecordingManifestPayload) => void;
+    'recording:segment': (payload: SegmentMetaPayload) => void;
+    'recording:chunks': (payload: ChunksResultPayload) => void;
 }
 export interface AdminServerToClientEvents extends ServerToClientEvents, NoticeToClientEvents, ReadingServerToClientEvents, UserServerToClientEvents, MonitorServerToClientEvents, RecordingServerToClientEvents {
 }

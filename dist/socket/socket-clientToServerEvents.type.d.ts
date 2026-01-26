@@ -1,7 +1,7 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
 import { SessionStartPayload, SessionEndPayload, SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
 import { MonitorStartPayload, MonitorStopPayload } from "./monitor.types";
-import { RecordingStartPayload, RecordingStopPayload } from "./recording.types";
+import { RecordingStartPayload, RecordingStopPayload, RecordingListPayload, RecordingGetPayload, SegmentGetPayload, ChunksGetPayload } from "./recording.types";
 export interface ClientToServerEvents {
     'chat-message:send': (msg: MessageRequest) => void;
     'chat-message:refresh': (msg: ChatMessageRefreshRequest) => void;
@@ -29,6 +29,10 @@ export interface MonitorAdminToServerEvents {
 export interface RecordingAdminToServerEvents {
     'recording:start': (payload: RecordingStartPayload) => void;
     'recording:stop': (payload: RecordingStopPayload) => void;
+    'recording:list': (payload: RecordingListPayload) => void;
+    'recording:get': (payload: RecordingGetPayload) => void;
+    'recording:get-segment': (payload: SegmentGetPayload) => void;
+    'recording:get-chunks': (payload: ChunksGetPayload) => void;
 }
 export interface AdminClientToServerEvents extends ClientToServerEvents, NoticeToServerEvents, ReadingAdminToServerEvents, MonitorAdminToServerEvents, RecordingAdminToServerEvents {
 }

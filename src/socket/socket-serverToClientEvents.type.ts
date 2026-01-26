@@ -4,7 +4,7 @@ import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./soc
 import { ReadingSessionInfo, SocketViewerEvent, ViewerSnapshot } from "./reading-section.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { MonitorStartedPayload, MonitorChunkPayload, MonitorSessionChangedPayload, MonitorStoppedPayload, MonitorErrorPayload } from "./monitor.types";
-import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload } from "./recording.types";
+import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
 
 export interface ServerToClientEvents {
   connect: () => void;
@@ -60,12 +60,18 @@ export interface MonitorServerToClientEvents {
 
 /** 녹화 이벤트 (Admin/Parent에게 전송) - P2.2 Recording System */
 export interface RecordingServerToClientEvents {
+  // 실시간 녹화 알림
   'recording:started': (payload: RecordingStartedPayload) => void;
   'recording:stopped': (payload: RecordingStoppedPayload) => void;
   'recording:chunk': (payload: RecordingChunkPayload) => void;
   'recording:segment-started': (payload: SegmentStartedPayload) => void;
   'recording:segment-ended': (payload: SegmentEndedPayload) => void;
   'recording:error': (payload: { message: string }) => void;
+  // 녹화 조회 결과 (재생용)
+  'recording:list-result': (payload: RecordingListResultPayload) => void;
+  'recording:manifest': (payload: RecordingManifestPayload) => void;
+  'recording:segment': (payload: SegmentMetaPayload) => void;
+  'recording:chunks': (payload: ChunksResultPayload) => void;
 }
 
 export interface AdminServerToClientEvents

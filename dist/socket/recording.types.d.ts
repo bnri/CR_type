@@ -175,6 +175,59 @@ export interface SegmentEndedPayload {
     segmentIndex: number;
     endedAt: number;
 }
+/** 녹화 목록 조회 요청 */
+export interface RecordingListPayload {
+    /** 조회할 가족 ID (Admin은 모든 가족, Parent는 자신의 가족만) */
+    familyId?: number;
+    /** 조회할 뷰어 사용자 ID */
+    viewerUserId?: number;
+    /** 상태 필터 */
+    status?: RecordingStatus;
+    /** 페이지네이션 */
+    limit?: number;
+    offset?: number;
+}
+/** 녹화 상세 조회 요청 */
+export interface RecordingGetPayload {
+    recordingId: string;
+}
+/** 세그먼트 상세 조회 요청 */
+export interface SegmentGetPayload {
+    recordingId: string;
+    segmentIndex: number;
+}
+/** 청크 조회 요청 (재생용) */
+export interface ChunksGetPayload {
+    recordingId: string;
+    segmentIndex: number;
+    /** 시작 timestamp (이 시점부터 청크 조회) */
+    fromTimestamp?: number;
+    /** 종료 timestamp (이 시점까지 청크 조회) */
+    toTimestamp?: number;
+}
+/** 녹화 목록 조회 결과 */
+export interface RecordingListResultPayload {
+    recordings: RecordingManifest[];
+    total: number;
+    hasMore: boolean;
+}
+/** 녹화 상세 조회 결과 */
+export interface RecordingManifestPayload {
+    manifest: RecordingManifest;
+}
+/** 세그먼트 상세 조회 결과 */
+export interface SegmentMetaPayload {
+    recordingId: string;
+    segment: SegmentMeta;
+}
+/** 청크 조회 결과 */
+export interface ChunksResultPayload {
+    recordingId: string;
+    segmentIndex: number;
+    chunks: ChunkFile[];
+    /** 요청 시점에 가장 가까운 스냅샷 (Seek 시 초기 상태 복원용) */
+    nearestSnapshot: SnapshotFile | null;
+}
 /** 녹화 목록 조회 응답 */
 export interface RecordingListResponse {
     recordings: RecordingManifest[];
