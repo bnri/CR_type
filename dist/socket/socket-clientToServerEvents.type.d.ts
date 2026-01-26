@@ -13,6 +13,10 @@ export interface ClientToServerEvents {
 export interface NoticeToServerEvents {
     'notice-message:send': (msg: MessageRequest) => void;
 }
+/** 사용자 관리 이벤트 (Admin용 - 연결된 사용자 목록 조회) */
+export interface UserAdminToServerEvents {
+    'user:list': () => void;
+}
 /** 읽기 섹션 관리 이벤트 (Admin용 - 활성 세션 목록 조회/구독) */
 export interface ReadingAdminToServerEvents {
     'reading-section:list': () => void;
@@ -28,5 +32,5 @@ export interface RecordingAdminToServerEvents {
     'recording:get-segment': (payload: SegmentGetPayload) => void;
     'recording:get-chunks': (payload: ChunksGetPayload) => void;
 }
-export interface AdminClientToServerEvents extends ClientToServerEvents, NoticeToServerEvents, ReadingAdminToServerEvents, RecordingAdminToServerEvents {
+export interface AdminClientToServerEvents extends ClientToServerEvents, NoticeToServerEvents, UserAdminToServerEvents, ReadingAdminToServerEvents, RecordingAdminToServerEvents {
 }

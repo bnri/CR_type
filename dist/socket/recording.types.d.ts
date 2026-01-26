@@ -10,11 +10,14 @@ export type SegmentStatus = 'active' | 'ended';
 /**
  * 청크 파일 (S3: segments/{n}/chunks/{startTs}-{endTs}.json)
  * - 10초 단위 이벤트 묶음
+ * - snapshot: 청크 시작 시점의 뷰어 상태 (Seek 시 초기화용)
  */
 export interface ChunkFile {
     startTimestamp: number;
     endTimestamp: number;
     events: SocketViewerEvent[];
+    /** 청크 시작 시점의 뷰어 상태 (Seek 시 이 상태로 초기화 후 이벤트 재생) */
+    snapshot?: ViewerSnapshot;
 }
 /**
  * 스냅샷 파일 (S3: segments/{n}/snapshots/{ts}.json)
@@ -282,6 +285,9 @@ export interface ActiveSegment {
     startedAt: number;
     eventBuffer: SocketViewerEvent[];
     chunkStartTimestamp: number;
+    /** 현재 청크 시작 시점의 스냅샷 (청크에 포함됨) */
+    chunkStartSnapshot: ViewerSnapshot | null;
+    /** 가장 최근 스냅샷 (30초 인터벌 저장용) */
     lastSnapshot: ViewerSnapshot | null;
     chunks: ChunkRef[];
     snapshots: SnapshotRef[];
