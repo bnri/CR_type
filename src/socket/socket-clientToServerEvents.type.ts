@@ -1,6 +1,7 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
 import { SessionStartPayload, SessionEndPayload, SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
 import { MonitorStartPayload, MonitorStopPayload } from "./monitor.types";
+import { RecordingStartPayload, RecordingStopPayload } from "./recording.types";
 
 
 export interface ClientToServerEvents {
@@ -35,9 +36,16 @@ export interface MonitorAdminToServerEvents {
   'monitor:stop': (payload: MonitorStopPayload) => void;
 }
 
+/** 녹화 이벤트 (Admin/Parent → Server) - P2.2 Recording System */
+export interface RecordingAdminToServerEvents {
+  'recording:start': (payload: RecordingStartPayload) => void;
+  'recording:stop': (payload: RecordingStopPayload) => void;
+}
+
 export interface AdminClientToServerEvents
   extends ClientToServerEvents,
           NoticeToServerEvents,
           ReadingAdminToServerEvents,
-          MonitorAdminToServerEvents {}
+          MonitorAdminToServerEvents,
+          RecordingAdminToServerEvents {}
           
