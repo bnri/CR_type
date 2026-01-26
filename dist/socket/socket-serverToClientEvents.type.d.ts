@@ -1,7 +1,6 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
 import { ReadingSessionInfo, SocketViewerEvent, ViewerSnapshot } from "./reading-section.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { MonitorStartedPayload, MonitorChunkPayload, MonitorSessionChangedPayload, MonitorStoppedPayload, MonitorErrorPayload } from "./monitor.types";
 import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
 export interface ServerToClientEvents {
     connect: () => void;
@@ -62,14 +61,6 @@ export interface UserServerToClientEvents {
         readingSessionId: string | null;
     }) => void;
 }
-/** 실시간 모니터링 이벤트 (Admin에게 전송) */
-export interface MonitorServerToClientEvents {
-    'monitor:started': (payload: MonitorStartedPayload) => void;
-    'monitor:chunk': (payload: MonitorChunkPayload) => void;
-    'monitor:session-changed': (payload: MonitorSessionChangedPayload) => void;
-    'monitor:stopped': (payload: MonitorStoppedPayload) => void;
-    'monitor:error': (payload: MonitorErrorPayload) => void;
-}
 /** 녹화 이벤트 (Admin/Parent에게 전송) - P2.2 Recording System */
 export interface RecordingServerToClientEvents {
     'recording:started': (payload: RecordingStartedPayload) => void;
@@ -85,5 +76,5 @@ export interface RecordingServerToClientEvents {
     'recording:segment': (payload: SegmentMetaPayload) => void;
     'recording:chunks': (payload: ChunksResultPayload) => void;
 }
-export interface AdminServerToClientEvents extends ServerToClientEvents, NoticeToClientEvents, ReadingServerToClientEvents, UserServerToClientEvents, MonitorServerToClientEvents, RecordingServerToClientEvents {
+export interface AdminServerToClientEvents extends ServerToClientEvents, NoticeToClientEvents, ReadingServerToClientEvents, UserServerToClientEvents, RecordingServerToClientEvents {
 }

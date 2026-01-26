@@ -1,6 +1,5 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
 import { SessionStartPayload, SessionEndPayload, SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
-import { MonitorStartPayload, MonitorStopPayload } from "./monitor.types";
 import { RecordingStartPayload, RecordingStopPayload, RecordingListPayload, RecordingGetPayload, SegmentGetPayload, ChunksGetPayload } from "./recording.types";
 
 
@@ -30,12 +29,6 @@ export interface ReadingAdminToServerEvents {
   'reading-section:unsubscribe': (payload: SessionSubscribePayload) => void;
 }
 
-/** 실시간 모니터링 이벤트 (Admin용 - 모니터링 시작/중지) */
-export interface MonitorAdminToServerEvents {
-  'monitor:start': (payload: MonitorStartPayload) => void;
-  'monitor:stop': (payload: MonitorStopPayload) => void;
-}
-
 /** 녹화 이벤트 (Admin/Parent → Server) - P2.2 Recording System */
 export interface RecordingAdminToServerEvents {
   // 실시간 녹화 제어
@@ -52,6 +45,5 @@ export interface AdminClientToServerEvents
   extends ClientToServerEvents,
           NoticeToServerEvents,
           ReadingAdminToServerEvents,
-          MonitorAdminToServerEvents,
           RecordingAdminToServerEvents {}
           

@@ -3,7 +3,6 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
 import { ReadingSessionInfo, SocketViewerEvent, ViewerSnapshot } from "./reading-section.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { MonitorStartedPayload, MonitorChunkPayload, MonitorSessionChangedPayload, MonitorStoppedPayload, MonitorErrorPayload } from "./monitor.types";
 import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
 
 export interface ServerToClientEvents {
@@ -49,15 +48,6 @@ export interface UserServerToClientEvents {
   'user:reading-status': (payload: { socketId: string; userId: number; userType: 'parent' | 'child'; readingSessionId: string | null }) => void;
 }
 
-/** 실시간 모니터링 이벤트 (Admin에게 전송) */
-export interface MonitorServerToClientEvents {
-  'monitor:started': (payload: MonitorStartedPayload) => void;
-  'monitor:chunk': (payload: MonitorChunkPayload) => void;
-  'monitor:session-changed': (payload: MonitorSessionChangedPayload) => void;
-  'monitor:stopped': (payload: MonitorStoppedPayload) => void;
-  'monitor:error': (payload: MonitorErrorPayload) => void;
-}
-
 /** 녹화 이벤트 (Admin/Parent에게 전송) - P2.2 Recording System */
 export interface RecordingServerToClientEvents {
   // 실시간 녹화 알림
@@ -79,6 +69,5 @@ export interface AdminServerToClientEvents
           NoticeToClientEvents,
           ReadingServerToClientEvents,
           UserServerToClientEvents,
-          MonitorServerToClientEvents,
           RecordingServerToClientEvents {}
           
