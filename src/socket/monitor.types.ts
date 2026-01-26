@@ -80,3 +80,24 @@ export interface MonitorStoppedPayload {
 export interface MonitorErrorPayload {
   message: string;
 }
+
+// ===================== 서버 메모리 상태 =====================
+
+/** 활성 모니터링 (서버 메모리) */
+export interface ActiveMonitor {
+  targetSocketId: string;
+  adminSocketId: string;
+  userType: 'parent' | 'child';
+  userId: number;
+  userName: string;
+  parentIdx?: number;
+  startedAt: number;
+  s3Prefix: string;
+  chunkIndex: number;
+  eventBuffer: SocketViewerEvent[];
+  lastSnapshot: ViewerSnapshot | null;
+  currentReadingSessionId: string | null;
+  currentSectionId: string | null;
+  currentBookIdx: number | null;
+  intervalHandle: ReturnType<typeof setInterval> | null;
+}
