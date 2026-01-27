@@ -64,3 +64,21 @@ npm update @readerseye2/cr_type
 - [ ] 빌드 확인 (`npm run build`)
 - [ ] 배포 (`npm run deploy_npm`)
 - [ ] 의존 프로젝트 업데이트
+
+---
+
+## 타입 동기화 주의사항
+
+**뷰어 이벤트 타입은 @readerseye2/cr_viewer에서 정의**
+
+| CR_type (socket용) | CR_viewer (source of truth) |
+|-------------------|----------------------------|
+| `ViewerSnapshot` | `RecordingSnapshot` |
+| `SocketViewerEvent` | `StoredEvent` |
+
+**스냅샷 구조 변경 시:**
+1. CR_viewer의 `src/types/viewerEvent.types.ts`의 `RecordingSnapshot` 수정
+2. 여기 `src/socket/reading-section.types.ts`의 `ViewerSnapshot`도 함께 수정
+3. CR_admin의 `convertToRecordingSnapshot.ts` 변환 로직 확인
+
+**참고:** `SocketViewerEvent.type`은 `string`으로 느슨하게 정의되어 있어 CR_viewer에서 새 이벤트 추가해도 CR_type 수정 불필요

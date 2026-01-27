@@ -1,17 +1,11 @@
 // src/socket/reading-section.types.ts
 // 읽기 섹션 모니터링용 데이터 타입 정의
-// 뷰어 이벤트 타입은 viewer/viewerEvent.types.ts에서 가져옴
-
-import type {
-  CRViewerState,
-  ViewerEventType,
-  RecordingViewerState,
-} from '../viewer/viewerEvent.types';
+// 뷰어 이벤트 상세 타입은 @readerseye2/cr_viewer에서 정의
 
 // ===================== 기본 타입 =====================
 
-/** 뷰어 설정 상태 (CRViewerState에서 재사용) */
-export type ViewerStateSnapshot = RecordingViewerState;
+/** 뷰어 설정 상태 (소켓 통신용, 유연한 구조) */
+export type ViewerStateSnapshot = Record<string, unknown>;
 
 /** 뷰어 스냅샷 (소켓 통신용 - 현재 읽기 상태) */
 export interface ViewerSnapshot {
@@ -27,7 +21,7 @@ export interface ViewerSnapshot {
 
 /** 소켓 전송용 뷰어 이벤트 (간소화된 형태) */
 export interface SocketViewerEvent {
-  type: ViewerEventType | 'overlay_toggle' | 'range_select' | 'quiz_answer' | 'gi_change';
+  type: string;
   timestamp: number;
   data: Record<string, unknown>;
 }

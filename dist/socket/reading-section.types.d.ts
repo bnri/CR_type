@@ -1,6 +1,5 @@
-import type { ViewerEventType, RecordingViewerState } from '../viewer/viewerEvent.types';
-/** 뷰어 설정 상태 (CRViewerState에서 재사용) */
-export type ViewerStateSnapshot = RecordingViewerState;
+/** 뷰어 설정 상태 (소켓 통신용, 유연한 구조) */
+export type ViewerStateSnapshot = Record<string, unknown>;
 /** 뷰어 스냅샷 (소켓 통신용 - 현재 읽기 상태) */
 export interface ViewerSnapshot {
     viewMode: 'scroll' | 'page';
@@ -14,7 +13,7 @@ export interface ViewerSnapshot {
 }
 /** 소켓 전송용 뷰어 이벤트 (간소화된 형태) */
 export interface SocketViewerEvent {
-    type: ViewerEventType | 'overlay_toggle' | 'range_select' | 'quiz_answer' | 'gi_change';
+    type: string;
     timestamp: number;
     data: Record<string, unknown>;
 }
