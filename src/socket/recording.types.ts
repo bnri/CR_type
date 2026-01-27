@@ -16,7 +16,8 @@
 //       └── 1/
 //           └── ...
 
-import type { ViewerSnapshot, SocketViewerEvent } from './reading-section.types';
+import type { ViewerSnapshot } from './reading-section.types';
+import type { ViewerEvent } from './viewer-events.types';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // 기본 타입
@@ -46,7 +47,7 @@ export type SegmentStatus = 'active' | 'ended';
 export interface ChunkFile {
   startTimestamp: number;
   endTimestamp: number;
-  events: SocketViewerEvent[];
+  events: ViewerEvent[];
   /** 청크 시작 시점의 뷰어 상태 (Seek 시 이 상태로 초기화 후 이벤트 재생) */
   snapshot?: ViewerSnapshot;
 }
@@ -414,7 +415,7 @@ export interface ActiveSegment {
   startedAt: number;
 
   // 버퍼
-  eventBuffer: SocketViewerEvent[];
+  eventBuffer: ViewerEvent[];
   chunkStartTimestamp: number;
   /** 현재 청크 시작 시점의 스냅샷 (청크에 포함됨) */
   chunkStartSnapshot: ViewerSnapshot | null;

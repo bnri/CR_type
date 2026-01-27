@@ -15,6 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // src/socket/index.ts
+__exportStar(require("./viewer-events.types"), exports);
 __exportStar(require("./socket-clientToServerEvents.type"), exports);
 __exportStar(require("./socket-serverToClientEvents.type"), exports);
 __exportStar(require("./socket-message.types"), exports);

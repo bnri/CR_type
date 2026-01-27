@@ -1,5 +1,6 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
-import { ReadingSessionInfo, SocketViewerEvent, ViewerSnapshot } from "./reading-section.types";
+import { ReadingSessionInfo, ViewerSnapshot } from "./reading-section.types";
+import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
 export interface ServerToClientEvents {
@@ -35,7 +36,7 @@ export interface ReadingServerToClientEvents {
     }) => void;
     'reading-section:events': (payload: {
         sessionId: string;
-        events: SocketViewerEvent[];
+        events: ViewerEvent[];
     }) => void;
     'reading-section:error': (payload: {
         message: string;
