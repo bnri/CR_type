@@ -149,6 +149,8 @@ export interface RecordingStartedPayload {
     };
     /** 현재 활성 세그먼트 (뷰어가 열려있으면, 여기에 책/섹션 정보 포함) */
     currentSegment: SegmentMeta | null;
+    /** 현재 세그먼트의 초기 뷰어 스냅샷 (즉시 렌더링용) */
+    initialSnapshot: ViewerSnapshot | null;
 }
 /** 녹화 종료됨 */
 export interface RecordingStoppedPayload {
@@ -178,6 +180,8 @@ export interface RecordingLiveEventsPayload {
 export interface SegmentStartedPayload {
     recordingId: string;
     segment: SegmentMeta;
+    /** 세그먼트 시작 시점의 뷰어 스냅샷 (즉시 렌더링용) */
+    initialSnapshot: ViewerSnapshot | null;
 }
 /** 세그먼트 종료됨 (뷰어 닫힘) */
 export interface SegmentEndedPayload {
