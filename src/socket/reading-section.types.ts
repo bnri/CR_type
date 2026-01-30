@@ -2,7 +2,7 @@
 // 읽기 섹션 모니터링용 데이터 타입 정의
 // 뷰어 이벤트 상세 타입은 viewer-events.types.ts에서 정의
 
-import type { CRViewerState, ViewerEvent } from './viewer-events.types';
+import type { CRViewerState, ViewerEvent, AudioSnapshot } from './viewer-events.types';
 
 // ===================== 기본 타입 =====================
 
@@ -16,6 +16,9 @@ export interface ViewerSnapshot {
   viewportWidth?: number;
   viewportHeight?: number;
   viewerState?: Partial<CRViewerState>;
+  anchorGI?: number;
+  anchorOffsetRatio?: number;
+  audio?: AudioSnapshot;
 }
 
 /** 책/섹션 메타데이터 */
