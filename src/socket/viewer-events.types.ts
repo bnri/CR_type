@@ -48,7 +48,14 @@ export type ViewerEventType =
   | 'loading_start'
   | 'loading_end'
   | 'viewport_resize'
-  | 'audio_control';
+  | 'audio_control'
+  | 'range_select'
+  | 'range_change'
+  | 'range_clear'
+  | 'translate_request'
+  | 'translate_loading_start'
+  | 'translate_loading_end'
+  | 'translate_modal_close';
 
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
@@ -106,6 +113,32 @@ export type ViewportResizeEvent = ViewerEventBase<
 >;
 export type AudioControlEvent = ViewerEventBase<'audio_control', { action: AudioControlAction }>;
 
+// ── Range (텍스트 선택) 이벤트 ──
+export type RangeSelectEvent = ViewerEventBase<
+  'range_select',
+  { startGI: number; endGI: number; text: string }
+>;
+export type RangeChangeEvent = ViewerEventBase<
+  'range_change',
+  { startGI: number; endGI: number; text: string }
+>;
+export type RangeClearEvent = ViewerEventBase<'range_clear', Record<string, never>>;
+
+// ── 번역 이벤트 ──
+export type TranslateRequestEvent = ViewerEventBase<
+  'translate_request',
+  { text: string; startGI: number; endGI: number }
+>;
+export type TranslateLoadingStartEvent = ViewerEventBase<
+  'translate_loading_start',
+  { text: string }
+>;
+export type TranslateLoadingEndEvent = ViewerEventBase<
+  'translate_loading_end',
+  { originalText: string; translatedText: string }
+>;
+export type TranslateModalCloseEvent = ViewerEventBase<'translate_modal_close', Record<string, never>>;
+
 /** 모든 뷰어 이벤트 타입 (Union) */
 export type ViewerEvent =
   | GlobalIndexChangeEvent
@@ -118,7 +151,14 @@ export type ViewerEvent =
   | LoadingStartEvent
   | LoadingEndEvent
   | ViewportResizeEvent
-  | AudioControlEvent;
+  | AudioControlEvent
+  | RangeSelectEvent
+  | RangeChangeEvent
+  | RangeClearEvent
+  | TranslateRequestEvent
+  | TranslateLoadingStartEvent
+  | TranslateLoadingEndEvent
+  | TranslateModalCloseEvent;
 
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 
