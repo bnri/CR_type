@@ -257,6 +257,13 @@ export interface RecordingChunkPayload {
   snapshot?: ViewerSnapshot;
 }
 
+/** 실시간 이벤트 relay (라이브 모니터링용, 청크 대기 없이 즉시 전송) */
+export interface RecordingLiveEventsPayload {
+  recordingId: string;
+  segmentIndex: number;
+  events: ViewerEvent[];
+}
+
 /** 세그먼트 시작됨 (뷰어 열림) */
 export interface SegmentStartedPayload {
   recordingId: string;
