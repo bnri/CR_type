@@ -2,7 +2,7 @@ import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./soc
 import { ReadingSessionInfo, ViewerSnapshot } from "./reading-section.types";
 import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
+import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, RecordingLiveEventsPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
 export interface ServerToClientEvents {
     connect: () => void;
     disconnect: () => void;
@@ -67,6 +67,7 @@ export interface RecordingServerToClientEvents {
     'recording:started': (payload: RecordingStartedPayload) => void;
     'recording:stopped': (payload: RecordingStoppedPayload) => void;
     'recording:chunk': (payload: RecordingChunkPayload) => void;
+    'recording:live-events': (payload: RecordingLiveEventsPayload) => void;
     'recording:segment-started': (payload: SegmentStartedPayload) => void;
     'recording:segment-ended': (payload: SegmentEndedPayload) => void;
     'recording:error': (payload: {
