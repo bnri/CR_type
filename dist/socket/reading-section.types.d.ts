@@ -1,4 +1,4 @@
-import type { CRViewerState, ViewerEvent } from './viewer-events.types';
+import type { CRViewerState, ViewerEvent, AudioSnapshot } from './viewer-events.types';
 /** 뷰어 스냅샷 (소켓 통신용 - 현재 읽기 상태) */
 export interface ViewerSnapshot {
     viewMode: 'scroll' | 'page';
@@ -9,6 +9,9 @@ export interface ViewerSnapshot {
     viewportWidth?: number;
     viewportHeight?: number;
     viewerState?: Partial<CRViewerState>;
+    anchorGI?: number;
+    anchorOffsetRatio?: number;
+    audio?: AudioSnapshot;
 }
 /** 책/섹션 메타데이터 */
 export interface SessionMeta {
