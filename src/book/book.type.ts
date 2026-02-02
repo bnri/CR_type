@@ -1,28 +1,31 @@
 // ========== 리터럴 유니온 타입 ==========
 
+import { SectionData } from "../ast";
+import { SectionSummary } from "./book-sections.type";
+
 /** 언어 */
-export type BookLanguage = 'ko' | 'en';
+export type BookLanguage = "ko" | "en";
 
 /** 길이 */
-export type BookLength = 'short' | 'medium' | 'long';
+export type BookLength = "short" | "medium" | "long";
 
 /** 종류 */
-export type BookGenre = 'fiction' | 'non-fiction' | 'other';
+export type BookGenre = "fiction" | "non-fiction" | "other";
 
 /** 영어레벨 (영어책 전용) */
 export type BookEnLevel =
-  | 'story'
-  | 'readers'
-  | 'early-chapter'
-  | 'middle-chapter'
-  | 'chapter'
-  | 'novel';
+  | "story"
+  | "readers"
+  | "early-chapter"
+  | "middle-chapter"
+  | "chapter"
+  | "novel";
 
 /** 출판 연령등급 */
-export type PublishAgeRating = 'all' | '12' | '15' | '19';
+export type PublishAgeRating = "all" | "12" | "15" | "19";
 
 /** 책 상태 (라이프사이클) */
-export type BookStatus = 'draft' | 'pending' | 'published' | 'suspended';
+export type BookStatus = "draft" | "pending" | "published" | "suspended";
 
 // ========== MySQL book 테이블 1:1 ==========
 
@@ -55,15 +58,13 @@ export interface Book {
   original_publisher: string | null;
   isbn: string | null;
 
-  // 집계 (섹션 저장 시 갱신)
-  word_count: number | null;
-  sound_minutes: number | null;
-  section_count: number | null;
-
   // 출판/심사 조건
   price_point: number | null;
   age_rating: PublishAgeRating;
   quiz_retry_allowed: boolean;
+
+  // 태그 (book_tag 조인 결과)
+  tags: string[] | null;
 
   // 소프트 삭제
   isdeleted: boolean;
@@ -74,39 +75,51 @@ export interface Book {
   published_at: string | null;
 }
 
+// ========== API 응답 DTO ==========
+
+/** 책 상세 조회 API 응답 (meta + summary + content) */
+export interface BookDTO {
+  meta: Book;
+  summary: {
+    sectionOrder: string[];
+    sections?: SectionSummary[];
+  };
+  content: SectionData[];
+}
+
 // ========== 라벨 (UI 표시용) ==========
 
 export const BookLanguageLabel = {
-  ko: '한국어',
-  en: 'English',
+  ko: "한국어",
+  en: "English",
 } as const;
 
 export const BookLengthLabel = {
-  short: '단편',
-  medium: '중편',
-  long: '장편',
+  short: "단편",
+  medium: "중편",
+  long: "장편",
 } as const;
 
 export const BookGenreLabel = {
-  fiction: '문학',
-  'non-fiction': '비문학',
-  other: '기타',
+  fiction: "문학",
+  "non-fiction": "비문학",
+  other: "기타",
 } as const;
 
 export const BookEnLevelLabel = {
-  story: '스토리',
-  readers: '리더스',
-  'early-chapter': '얼리챕터',
-  'middle-chapter': '미들챕터',
-  chapter: '챕터',
-  novel: '노블',
+  story: "스토리",
+  readers: "리더스",
+  "early-chapter": "얼리챕터",
+  "middle-chapter": "미들챕터",
+  chapter: "챕터",
+  novel: "노블",
 } as const;
 
 export const PublishAgeRatingLabel = {
-  all: '전체이용가',
-  '12': '12세 이용가',
-  '15': '15세 이용가',
-  '19': '19세 이용가',
+  all: "전체이용가",
+  "12": "12세 이용가",
+  "15": "15세 이용가",
+  "19": "19세 이용가",
 } as const;
 
 // ========== 상수 ==========
@@ -117,11 +130,11 @@ export const BOOK_AGE_MAX = 19;
 
 /** 새 책 생성 시 기본값 */
 export const DEFAULT_BOOK_META = {
-  book_title: '나의 책',
-  book_language: 'en' as BookLanguage,
+  book_title: "나의 책",
+  book_language: "en" as BookLanguage,
   book_level: 5,
-  length: 'short' as BookLength,
-  genre: 'fiction' as BookGenre,
+  length: "short" as BookLength,
+  genre: "fiction" as BookGenre,
   quiz_retry_allowed: true,
   ar_index: 3.0,
   lexile_index: 600,
@@ -131,37 +144,47 @@ export const DEFAULT_BOOK_META = {
 
 /** AR 지수 범위별 설명 (소수점 1자리 기준) */
 export const AR_INDEX_RANGES = [
-  { min: 0.0, max: 1.9, level: '유아 ~ 초1', description: '그림책, 아주 짧은 문장' },
-  { min: 2.0, max: 2.9, level: '초2', description: '기초 리더북' },
-  { min: 3.0, max: 3.9, level: '초3', description: '챕터북 시작' },
-  { min: 4.0, max: 4.9, level: '초4', description: '본격적인 이야기 구조' },
-  { min: 5.0, max: 5.9, level: '초5', description: '어휘·문장 길이 증가' },
-  { min: 6.0, max: 6.9, level: '초6', description: '논픽션 비중 증가' },
-  { min: 7.0, max: 8.9, level: '중학생', description: '복합 문장, 추론 필요' },
-  { min: 9.0, max: 10.9, level: '고등학생', description: '문학 작품, 추상 개념' },
-  { min: 11.0, max: 12.0, level: '고급', description: '성인 소설·고전' },
+  {
+    min: 0.0,
+    max: 1.9,
+    level: "유아 ~ 초1",
+    description: "그림책, 아주 짧은 문장",
+  },
+  { min: 2.0, max: 2.9, level: "초2", description: "기초 리더북" },
+  { min: 3.0, max: 3.9, level: "초3", description: "챕터북 시작" },
+  { min: 4.0, max: 4.9, level: "초4", description: "본격적인 이야기 구조" },
+  { min: 5.0, max: 5.9, level: "초5", description: "어휘·문장 길이 증가" },
+  { min: 6.0, max: 6.9, level: "초6", description: "논픽션 비중 증가" },
+  { min: 7.0, max: 8.9, level: "중학생", description: "복합 문장, 추론 필요" },
+  {
+    min: 9.0,
+    max: 10.9,
+    level: "고등학생",
+    description: "문학 작품, 추상 개념",
+  },
+  { min: 11.0, max: 12.0, level: "고급", description: "성인 소설·고전" },
 ] as const;
 
 /** Lexile 지수 범위별 설명 */
 export const LEXILE_INDEX_RANGES = [
-  { min: 0, max: 200, level: '유아', description: '알파벳·기초 단어' },
-  { min: 200, max: 400, level: '초1', description: '아주 쉬운 문장' },
-  { min: 400, max: 600, level: '초2', description: '간단한 스토리' },
-  { min: 600, max: 800, level: '초3', description: '챕터북' },
-  { min: 800, max: 1000, level: '초4', description: '정보량 증가' },
-  { min: 1000, max: 1200, level: '초5~6', description: '교과서 수준' },
-  { min: 1200, max: 1400, level: '중학생', description: '추론·비판적 읽기' },
-  { min: 1400, max: 1600, level: '고등학생', description: '문학·비문학 혼합' },
-  { min: 1600, max: 2000, level: '성인', description: '학술·고전 문학' },
+  { min: 0, max: 200, level: "유아", description: "알파벳·기초 단어" },
+  { min: 200, max: 400, level: "초1", description: "아주 쉬운 문장" },
+  { min: 400, max: 600, level: "초2", description: "간단한 스토리" },
+  { min: 600, max: 800, level: "초3", description: "챕터북" },
+  { min: 800, max: 1000, level: "초4", description: "정보량 증가" },
+  { min: 1000, max: 1200, level: "초5~6", description: "교과서 수준" },
+  { min: 1200, max: 1400, level: "중학생", description: "추론·비판적 읽기" },
+  { min: 1400, max: 1600, level: "고등학생", description: "문학·비문학 혼합" },
+  { min: 1600, max: 2000, level: "성인", description: "학술·고전 문학" },
 ] as const;
 
 /** AR 지수로 해당 범위 설명 조회 */
 export const getARDescription = (ar: number) =>
-  AR_INDEX_RANGES.find(r => ar >= r.min && ar <= r.max);
+  AR_INDEX_RANGES.find((r) => ar >= r.min && ar <= r.max);
 
 /** Lexile 지수로 해당 범위 설명 조회 */
 export const getLexileDescription = (lexile: number) =>
-  LEXILE_INDEX_RANGES.find(r => lexile >= r.min && lexile <= r.max);
+  LEXILE_INDEX_RANGES.find((r) => lexile >= r.min && lexile <= r.max);
 
 // ========== 헬퍼 함수 ==========
 

@@ -1,15 +1,17 @@
+import { SectionData } from "../ast";
+import { SectionSummary } from "./book-sections.type";
 /** 언어 */
-export type BookLanguage = 'ko' | 'en';
+export type BookLanguage = "ko" | "en";
 /** 길이 */
-export type BookLength = 'short' | 'medium' | 'long';
+export type BookLength = "short" | "medium" | "long";
 /** 종류 */
-export type BookGenre = 'fiction' | 'non-fiction' | 'other';
+export type BookGenre = "fiction" | "non-fiction" | "other";
 /** 영어레벨 (영어책 전용) */
-export type BookEnLevel = 'story' | 'readers' | 'early-chapter' | 'middle-chapter' | 'chapter' | 'novel';
+export type BookEnLevel = "story" | "readers" | "early-chapter" | "middle-chapter" | "chapter" | "novel";
 /** 출판 연령등급 */
-export type PublishAgeRating = 'all' | '12' | '15' | '19';
+export type PublishAgeRating = "all" | "12" | "15" | "19";
 /** 책 상태 (라이프사이클) */
-export type BookStatus = 'draft' | 'pending' | 'published' | 'suspended';
+export type BookStatus = "draft" | "pending" | "published" | "suspended";
 /** MySQL book 테이블 매핑 (단일 테이블) */
 export interface Book {
     book_idx: number;
@@ -30,16 +32,23 @@ export interface Book {
     original_publish_date: string | null;
     original_publisher: string | null;
     isbn: string | null;
-    word_count: number | null;
-    sound_minutes: number | null;
-    section_count: number | null;
     price_point: number | null;
     age_rating: PublishAgeRating;
     quiz_retry_allowed: boolean;
+    tags: string[] | null;
     isdeleted: boolean;
     created_at: string;
     updated_at: string;
     published_at: string | null;
+}
+/** 책 상세 조회 API 응답 (meta + summary + content) */
+export interface BookDTO {
+    meta: Book;
+    summary: {
+        sectionOrder: string[];
+        sections?: SectionSummary[];
+    };
+    content: SectionData[];
 }
 export declare const BookLanguageLabel: {
     readonly ko: "한국어";
@@ -52,22 +61,22 @@ export declare const BookLengthLabel: {
 };
 export declare const BookGenreLabel: {
     readonly fiction: "문학";
-    readonly 'non-fiction': "비문학";
+    readonly "non-fiction": "비문학";
     readonly other: "기타";
 };
 export declare const BookEnLevelLabel: {
     readonly story: "스토리";
     readonly readers: "리더스";
-    readonly 'early-chapter': "얼리챕터";
-    readonly 'middle-chapter': "미들챕터";
+    readonly "early-chapter": "얼리챕터";
+    readonly "middle-chapter": "미들챕터";
     readonly chapter: "챕터";
     readonly novel: "노블";
 };
 export declare const PublishAgeRatingLabel: {
     readonly all: "전체이용가";
-    readonly '12': "12세 이용가";
-    readonly '15': "15세 이용가";
-    readonly '19': "19세 이용가";
+    readonly "12": "12세 이용가";
+    readonly "15": "15세 이용가";
+    readonly "19": "19세 이용가";
 };
 /** 권장 연령 범위 (5~19세) */
 export declare const BOOK_AGE_MIN = 5;
