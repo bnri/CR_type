@@ -1,4 +1,4 @@
-import type { AudioMeta } from '../book/book-sections.type';
+import type { AudioMeta } from "../book/book-sections.type";
 
 // === 콘텐츠 타입 (순수 AST + 미디어) ===
 export type SectionId = string;
@@ -20,7 +20,7 @@ export type InlineRun = {
 };
 
 export type ListMeta = {
-  kind: 'ordered' | 'bullet';
+  kind: "ordered" | "bullet";
   level: number;
   numId?: number;
   format?: string;
@@ -29,15 +29,15 @@ export type ListMeta = {
 
 export type ParagraphBlock = {
   id: string;
-  type: 'paragraph';
+  type: "paragraph";
   runs: InlineRun[];
   list?: ListMeta;
-  textAlign?: 'left' | 'right' | 'center' | 'justify';
+  textAlign?: "left" | "right" | "center" | "justify";
 };
 
 export type ImageBlock = {
   id: string;
-  type: 'image';
+  type: "image";
   src: string;
   alt?: string;
   width?: number;
@@ -70,12 +70,12 @@ type SectionAudioBase = {
 };
 
 export type SavedSectionAudio = SectionAudioBase & {
-  kind: 'saved';
+  kind: "saved";
   cdnUrl: string;
 };
 
 export type TempSectionAudio = SectionAudioBase & {
-  kind: 'temp';
+  kind: "temp";
   blobUrl: string;
 };
 
@@ -83,7 +83,7 @@ export type SectionAudio = SavedSectionAudio | TempSectionAudio;
 
 export type SectionImage =
   | {
-      kind: 'saved';
+      kind: "saved";
       index: number;
       cdnUrl: string;
       alt?: string;
@@ -92,7 +92,7 @@ export type SectionImage =
       assetKey?: string;
     }
   | {
-      kind: 'temp';
+      kind: "temp";
       index: number;
       blobUrl: string;
       alt?: string;
@@ -104,7 +104,7 @@ export type SectionImage =
 export type SectionQuiz =
   | {
       qid: string;
-      kind: 'saved';
+      kind: "saved";
       index: number;
       image_cdn_url: string;
       question: string;
@@ -115,7 +115,7 @@ export type SectionQuiz =
     }
   | {
       qid: string;
-      kind: 'temp';
+      kind: "temp";
       index: number;
       image_blob_url: string;
       question: string;
@@ -128,6 +128,8 @@ export type SectionQuiz =
 export type SectionAST = {
   title: string;
   blocks: Block[];
+  isAddedSplit?: boolean;
+  isAddedAudio?: boolean;
 };
 
 export type SectionData = {
