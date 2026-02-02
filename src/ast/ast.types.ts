@@ -199,6 +199,10 @@ export interface DraftMeta {
   draft_book_isbn: string | null;
   /** 총 어절 수 (자동 계산) */
   draft_book_word_count: number | null;
+  /** AR 지수 (0.0 ~ 12.0, 소수점 1자리) */
+  draft_book_ar_index: number | null;
+  /** Lexile 지수 (0 ~ 2000, 정수) */
+  draft_book_lexile_index: number | null;
   /** QUIZ 다시풀기 허용 여부 */
   draft_book_quiz_retry_allowed: boolean;
   /** 생성일 (ISO) */
