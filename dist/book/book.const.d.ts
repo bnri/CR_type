@@ -10,37 +10,6 @@ export type BookEnLevel = 'story' | 'readers' | 'early-chapter' | 'middle-chapte
 export type PublishAgeRating = 'all' | '12' | '15' | '19';
 /** 책 상태 (라이프사이클) */
 export type BookStatus = 'draft' | 'pending' | 'published' | 'suspended';
-/** MySQL book 테이블 매핑 (단일 테이블) */
-export interface Book {
-    book_idx: number;
-    creator_idx: number;
-    status: BookStatus;
-    book_title: string;
-    book_language: BookLanguage;
-    book_level: number;
-    book_cover_url: string | null;
-    genre: BookGenre | null;
-    length: BookLength | null;
-    en_level: BookEnLevel | null;
-    ar_index: number | null;
-    lexile_index: number | null;
-    series: string | null;
-    original_author: string | null;
-    description: string | null;
-    original_publish_date: string | null;
-    original_publisher: string | null;
-    isbn: string | null;
-    word_count: number | null;
-    sound_minutes: number | null;
-    section_count: number | null;
-    price_point: number | null;
-    age_rating: PublishAgeRating;
-    quiz_retry_allowed: boolean;
-    isdeleted: boolean;
-    created_at: string;
-    updated_at: string;
-    published_at: string | null;
-}
 export declare const BookLanguageLabel: {
     readonly ko: "한국어";
     readonly en: "English";
@@ -74,9 +43,9 @@ export declare const BOOK_AGE_MIN = 5;
 export declare const BOOK_AGE_MAX = 19;
 /** 새 책 생성 시 기본값 */
 export declare const DEFAULT_BOOK_META: {
-    readonly book_title: "나의 책";
-    readonly book_language: BookLanguage;
-    readonly book_level: 5;
+    readonly title: "나의 책";
+    readonly language: BookLanguage;
+    readonly age: 5;
     readonly length: BookLength;
     readonly genre: BookGenre;
     readonly quiz_retry_allowed: true;

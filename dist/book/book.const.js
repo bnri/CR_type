@@ -37,9 +37,9 @@ exports.BOOK_AGE_MIN = 5;
 exports.BOOK_AGE_MAX = 19;
 /** 새 책 생성 시 기본값 */
 exports.DEFAULT_BOOK_META = {
-    book_title: '나의 책',
-    book_language: 'en',
-    book_level: 5,
+    title: '나의 책',
+    language: 'en',
+    age: 5,
     length: 'short',
     genre: 'fiction',
     quiz_retry_allowed: true,
