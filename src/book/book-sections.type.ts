@@ -11,7 +11,7 @@ export type AudioMeta = {
 export interface SectionSummary {
   section_id: string;
   title: string;
-  order: number;
+  // order는 section_order 배열로 관리 (중복 제거)
   audio_count: number;
   image_count: number;
   quiz_count: number;

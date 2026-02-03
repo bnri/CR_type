@@ -10,7 +10,6 @@ export type AudioMeta = {
 export interface SectionSummary {
     section_id: string;
     title: string;
-    order: number;
     audio_count: number;
     image_count: number;
     quiz_count: number;
