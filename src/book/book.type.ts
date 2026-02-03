@@ -21,9 +21,6 @@ export type BookEnLevel =
   | "chapter"
   | "novel";
 
-/** 출판 연령등급 */
-export type PublishAgeRating = "all" | "12" | "15" | "19";
-
 /** 책 상태 (라이프사이클) */
 export type BookStatus = "draft" | "pending" | "published" | "suspended";
 
@@ -60,7 +57,6 @@ export interface Book {
 
   // 출판/심사 조건
   price_point: number | null;
-  age_rating: PublishAgeRating;
   quiz_retry_allowed: boolean;
 
   // 태그 (book_tag 조인 결과)
@@ -113,13 +109,6 @@ export const BookEnLevelLabel = {
   "middle-chapter": "미들챕터",
   chapter: "챕터",
   novel: "노블",
-} as const;
-
-export const PublishAgeRatingLabel = {
-  all: "전체이용가",
-  "12": "12세 이용가",
-  "15": "15세 이용가",
-  "19": "19세 이용가",
 } as const;
 
 // ========== 상수 ==========
@@ -220,12 +209,7 @@ export const getEnLevelOptions = () =>
     label,
   }));
 
-/** 출판 연령등급 옵션 (UI Select용) */
-export const getAgeRatingOptions = () =>
-  Object.entries(PublishAgeRatingLabel).map(([value, label]) => ({
-    value: value as PublishAgeRating,
-    label,
-  }));
+
 
 /** 권장 연령 옵션 (5~19세) */
 export const getAgeOptions = () =>

@@ -1,7 +1,7 @@
 "use strict";
 // ========== 리터럴 유니온 타입 ==========
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAgeOptions = exports.getAgeRatingOptions = exports.getEnLevelOptions = exports.getGenreOptions = exports.getLengthOptions = exports.getLanguageOptions = exports.calcSoundMinutes = exports.getLexileDescription = exports.getARDescription = exports.LEXILE_INDEX_RANGES = exports.AR_INDEX_RANGES = exports.DEFAULT_BOOK_META = exports.BOOK_AGE_MAX = exports.BOOK_AGE_MIN = exports.PublishAgeRatingLabel = exports.BookEnLevelLabel = exports.BookGenreLabel = exports.BookLengthLabel = exports.BookLanguageLabel = void 0;
+exports.getAgeOptions = exports.getEnLevelOptions = exports.getGenreOptions = exports.getLengthOptions = exports.getLanguageOptions = exports.calcSoundMinutes = exports.getLexileDescription = exports.getARDescription = exports.LEXILE_INDEX_RANGES = exports.AR_INDEX_RANGES = exports.DEFAULT_BOOK_META = exports.BOOK_AGE_MAX = exports.BOOK_AGE_MIN = exports.BookEnLevelLabel = exports.BookGenreLabel = exports.BookLengthLabel = exports.BookLanguageLabel = void 0;
 // ========== 라벨 (UI 표시용) ==========
 exports.BookLanguageLabel = {
     ko: "한국어",
@@ -24,12 +24,6 @@ exports.BookEnLevelLabel = {
     "middle-chapter": "미들챕터",
     chapter: "챕터",
     novel: "노블",
-};
-exports.PublishAgeRatingLabel = {
-    all: "전체이용가",
-    "12": "12세 이용가",
-    "15": "15세 이용가",
-    "19": "19세 이용가",
 };
 // ========== 상수 ==========
 /** 권장 연령 범위 (5~19세) */
@@ -115,12 +109,6 @@ const getEnLevelOptions = () => Object.entries(exports.BookEnLevelLabel).map(([v
     label,
 }));
 exports.getEnLevelOptions = getEnLevelOptions;
-/** 출판 연령등급 옵션 (UI Select용) */
-const getAgeRatingOptions = () => Object.entries(exports.PublishAgeRatingLabel).map(([value, label]) => ({
-    value: value,
-    label,
-}));
-exports.getAgeRatingOptions = getAgeRatingOptions;
 /** 권장 연령 옵션 (5~19세) */
 const getAgeOptions = () => Array.from({ length: exports.BOOK_AGE_MAX - exports.BOOK_AGE_MIN + 1 }, (_, i) => ({
     value: exports.BOOK_AGE_MIN + i,

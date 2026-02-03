@@ -8,8 +8,6 @@ export type BookLength = "short" | "medium" | "long";
 export type BookGenre = "fiction" | "non-fiction" | "other";
 /** 영어레벨 (영어책 전용) */
 export type BookEnLevel = "story" | "readers" | "early-chapter" | "middle-chapter" | "chapter" | "novel";
-/** 출판 연령등급 */
-export type PublishAgeRating = "all" | "12" | "15" | "19";
 /** 책 상태 (라이프사이클) */
 export type BookStatus = "draft" | "pending" | "published" | "suspended";
 /** MySQL book 테이블 매핑 (단일 테이블) */
@@ -33,7 +31,6 @@ export interface Book {
     original_publisher: string | null;
     isbn: string | null;
     price_point: number | null;
-    age_rating: PublishAgeRating;
     quiz_retry_allowed: boolean;
     tags: string[] | null;
     isdeleted: boolean;
@@ -71,12 +68,6 @@ export declare const BookEnLevelLabel: {
     readonly "middle-chapter": "미들챕터";
     readonly chapter: "챕터";
     readonly novel: "노블";
-};
-export declare const PublishAgeRatingLabel: {
-    readonly all: "전체이용가";
-    readonly "12": "12세 이용가";
-    readonly "15": "15세 이용가";
-    readonly "19": "19세 이용가";
 };
 /** 권장 연령 범위 (5~19세) */
 export declare const BOOK_AGE_MIN = 5;
@@ -301,11 +292,6 @@ export declare const getGenreOptions: () => {
 export declare const getEnLevelOptions: () => {
     value: BookEnLevel;
     label: "스토리" | "리더스" | "얼리챕터" | "미들챕터" | "챕터" | "노블";
-}[];
-/** 출판 연령등급 옵션 (UI Select용) */
-export declare const getAgeRatingOptions: () => {
-    value: PublishAgeRating;
-    label: "전체이용가" | "12세 이용가" | "15세 이용가" | "19세 이용가";
 }[];
 /** 권장 연령 옵션 (5~19세) */
 export declare const getAgeOptions: () => {

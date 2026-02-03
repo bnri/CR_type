@@ -1,9 +1,9 @@
 /** TTS 설정 (섹션 레벨) */
 export type AudioMeta = {
   provider: 'AWS' | 'GCP';
-  language: string;
-  engine: string;
-  voiceName: string;
+  language?: string;
+  engine?: string;
+  voiceName?: string;
   voiceGender?: 'Male' | 'Female';
 };
 
