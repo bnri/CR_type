@@ -104,7 +104,8 @@ export type SectionQuiz = {
     limit_sec: number;
 };
 export type SectionAST = {
-    title: string;
+    /** @deprecated title은 MongoDB SectionSummary에서 관리. 하위호환용 optional */
+    title?: string;
     blocks: Block[];
     isAddedSplit?: boolean;
     isAddedAudio?: boolean;
