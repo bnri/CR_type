@@ -79,6 +79,7 @@ export interface BookDTO {
   summary: {
     sectionOrder: string[];
     sections?: SectionSummary[];
+    free_section_ids?: string[];
   };
   content: SectionData[];
 }
