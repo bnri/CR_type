@@ -78,8 +78,8 @@ export interface BookDTO {
   meta: Book;
   summary: {
     sectionOrder: string[];
-    sections?: SectionSummary[];
-    free_section_ids?: string[];
+    sections: SectionSummary[];
+    free_section_ids: string[] | null;
   };
   content: SectionData[];
 }
