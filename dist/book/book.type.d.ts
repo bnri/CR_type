@@ -36,7 +36,6 @@ export interface Book {
     isdeleted: boolean;
     created_at: string;
     updated_at: string;
-    published_at: string | null;
 }
 /** 책 상세 조회 API 응답 (meta + summary + content) */
 export interface BookDTO {
