@@ -1,7 +1,7 @@
 import type { BookStatus } from "./book.type";
 
 /** 요청 처리 결과 */
-export type RequestResult = "pending" | "approved" | "rejected";
+export type RequestResult = "pending" | "approved" | "rejected" | "admin";
 
 /** MySQL book_status_request 테이블 1:1 */
 export interface BookStatusRequest {
