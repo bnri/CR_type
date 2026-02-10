@@ -76,6 +76,7 @@ export interface Book {
   // 타임스탬프
   created_at: string;
   updated_at: string;
+  first_published_at: string | null;
 }
 
 // ========== API 응답 DTO ==========
