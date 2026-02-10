@@ -8,8 +8,8 @@ export type BookLength = "short" | "medium" | "long";
 export type BookGenre = "fiction" | "non-fiction" | "other";
 /** 영어레벨 (영어책 전용) */
 export type BookEnLevel = "story" | "readers" | "early-chapter" | "middle-chapter" | "chapter" | "novel";
-/** 책 상태 (라이프사이클) */
-export type BookStatus = "draft" | "pending" | "published" | "suspended";
+/** 책 상태 */
+export type BookStatus = "draft" | "published" | "suspended" | "deprecated";
 /** MySQL book 테이블 매핑 (단일 테이블) */
 export interface Book {
     book_idx: number;
@@ -32,6 +32,12 @@ export interface Book {
     isbn: string | null;
     price_point: number | null;
     quiz_retry_allowed: boolean;
+    shelf_count: number;
+    total_word_count: number;
+    section_count: number;
+    total_sound_seconds: number;
+    rating_sum: number;
+    review_count: number;
     tags: string[] | null;
     isdeleted: boolean;
     created_at: string;

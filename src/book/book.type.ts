@@ -21,8 +21,8 @@ export type BookEnLevel =
   | "chapter"
   | "novel";
 
-/** 책 상태 (라이프사이클) */
-export type BookStatus = "draft" | "pending" | "published" | "suspended";
+/** 책 상태 */
+export type BookStatus = "draft" | "published" | "suspended" | "deprecated";
 
 // ========== MySQL book 테이블 1:1 ==========
 
@@ -55,9 +55,17 @@ export interface Book {
   original_publisher: string | null;
   isbn: string | null;
 
-  // 출판/심사 조건
+  // 출판 조건
   price_point: number | null;
   quiz_retry_allowed: boolean;
+
+  // 집계 (서버 관리, DEFAULT 0)
+  shelf_count: number;
+  total_word_count: number;
+  section_count: number;
+  total_sound_seconds: number;
+  rating_sum: number;
+  review_count: number;
 
   // 태그 (book_tag 조인 결과)
   tags: string[] | null;

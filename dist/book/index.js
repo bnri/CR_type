@@ -16,5 +16,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./book.type"), exports);
 __exportStar(require("./book-sections.type"), exports);
-__exportStar(require("./book-log.type"), exports);
+__exportStar(require("./book-status-request.type"), exports);
 __exportStar(require("./tag.type"), exports);
