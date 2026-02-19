@@ -96,3 +96,47 @@ export interface SessionSubscribedResponse {
     sessionId: string;
     snapshot: ViewerSnapshot;
 }
+/** S3에 저장된 읽기 세션 기록 */
+export interface ReadingSessionRecord {
+    sessionId: string;
+    userId: number;
+    userType: 'parent' | 'child';
+    userName: string;
+    familyId: number;
+    bookIdx: number;
+    bookTitle: string;
+    sectionId: string;
+    sectionTitle: string;
+    startedAt: string;
+    endedAt: string;
+    durationMs: number;
+    initialSnapshot?: ViewerSnapshot;
+    finalSnapshot?: ViewerSnapshot;
+    stats?: SessionStats;
+    /** 세션 동안의 모든 이벤트 (재생용, get 시에만 포함) */
+    events?: ViewerEvent[];
+}
+/** 읽기 세션 기록 목록 조회 요청 (Admin → Server) */
+export interface ReadingSessionsListPayload {
+    familyId?: number;
+    userId?: number;
+    date?: string;
+    limit?: number;
+    offset?: number;
+}
+/** 읽기 세션 기록 목록 조회 결과 (Server → Admin) */
+export interface ReadingSessionsListResultPayload {
+    sessions: ReadingSessionRecord[];
+    total: number;
+    hasMore: boolean;
+}
+/** 읽기 세션 기록 상세 조회 요청 (Admin → Server) */
+export interface ReadingSessionGetPayload {
+    sessionId: string;
+    /** S3 key (목록 조회 시 제공됨) */
+    s3Key?: string;
+}
+/** 읽기 세션 기록 상세 조회 결과 (Server → Admin) */
+export interface ReadingSessionGetResultPayload {
+    session: ReadingSessionRecord;
+}

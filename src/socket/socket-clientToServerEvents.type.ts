@@ -1,5 +1,5 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
-import { SessionStartPayload, SessionEndPayload, SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
+import { SessionStartPayload, SessionEndPayload, SessionProgressPayload, SessionEventPayload, SessionSubscribePayload, ReadingSessionsListPayload, ReadingSessionGetPayload } from "./reading-section.types";
 import { RecordingStartPayload, RecordingStopPayload, RecordingListPayload, RecordingGetPayload, SegmentGetPayload, ChunksGetPayload } from "./recording.types";
 
 
@@ -32,6 +32,10 @@ export interface ReadingAdminToServerEvents {
   'reading-section:list': () => void;
   'reading-section:subscribe': (payload: SessionSubscribePayload) => void;
   'reading-section:unsubscribe': (payload: SessionSubscribePayload) => void;
+  /** S3 읽기 세션 기록 목록 조회 */
+  'reading-sessions:list': (payload: ReadingSessionsListPayload) => void;
+  /** S3 읽기 세션 기록 상세 조회 (이벤트 포함) */
+  'reading-sessions:get': (payload: ReadingSessionGetPayload) => void;
 }
 
 /** 녹화 이벤트 (Admin/Parent → Server) - P2.2 Recording System */
