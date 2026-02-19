@@ -1,7 +1,7 @@
 // import type { MessageResponse } from '@/types/socket/socket-message.types';
 
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
-import { ReadingSessionInfo, ViewerSnapshot, ReadingSessionsListResultPayload, ReadingSessionGetResultPayload } from "./reading-section.types";
+import { ReadingSessionInfo, ViewerSnapshot, ReadingSessionsListResultPayload, ReadingSessionGetResultPayload, ReadingSessionDeleteResultPayload } from "./reading-section.types";
 import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, RecordingLiveEventsPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
@@ -44,6 +44,8 @@ export interface ReadingServerToClientEvents {
   'reading-sessions:list-result': (payload: ReadingSessionsListResultPayload) => void;
   /** S3 읽기 세션 기록 상세 (이벤트 포함) */
   'reading-sessions:get-result': (payload: ReadingSessionGetResultPayload) => void;
+  /** S3 읽기 세션 기록 삭제 결과 */
+  'reading-sessions:delete-result': (payload: ReadingSessionDeleteResultPayload) => void;
 }
 
 /** 연결된 사용자 모니터링 이벤트 (Admin에게 전송) */

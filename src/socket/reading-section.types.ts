@@ -172,3 +172,15 @@ export interface ReadingSessionGetPayload {
 export interface ReadingSessionGetResultPayload {
   session: ReadingSessionRecord;
 }
+
+/** 읽기 세션 기록 삭제 요청 (Admin → Server) */
+export interface ReadingSessionDeletePayload {
+  sessionId: string;
+  s3Key?: string;
+}
+
+/** 읽기 세션 기록 삭제 결과 (Server → Admin) */
+export interface ReadingSessionDeleteResultPayload {
+  sessionId: string;
+  success: boolean;
+}
