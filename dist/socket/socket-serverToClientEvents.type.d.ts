@@ -42,6 +42,11 @@ export interface ReadingServerToClientEvents {
         sessionId: string;
         events: ViewerEvent[];
     }) => void;
+    /** 섹션 변경 시 구독자에게 전송 (구독 자동 이전됨) */
+    'reading-section:section-changed': (payload: {
+        oldSessionId: string;
+        newSession: ReadingSessionInfo;
+    }) => void;
     'reading-section:error': (payload: {
         message: string;
     }) => void;
