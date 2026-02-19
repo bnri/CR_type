@@ -34,6 +34,10 @@ export interface ReadingServerToClientEvents {
         sessionId: string;
         snapshot: ViewerSnapshot | null;
     }) => void;
+    'reading-section:progress': (payload: {
+        sessionId: string;
+        snapshot: ViewerSnapshot;
+    }) => void;
     'reading-section:events': (payload: {
         sessionId: string;
         events: ViewerEvent[];

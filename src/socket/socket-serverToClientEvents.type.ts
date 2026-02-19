@@ -37,6 +37,7 @@ export interface NoticeToClientEvents {
 export interface ReadingServerToClientEvents {
   'reading-section:list': (payload: { sessions: ReadingSessionInfo[] }) => void;
   'reading-section:subscribed': (payload: { sessionId: string; snapshot: ViewerSnapshot | null }) => void;
+  'reading-section:progress': (payload: { sessionId: string; snapshot: ViewerSnapshot }) => void;
   'reading-section:events': (payload: { sessionId: string; events: ViewerEvent[] }) => void;
   'reading-section:error': (payload: { message: string }) => void;
   /** S3 읽기 세션 기록 목록 */
