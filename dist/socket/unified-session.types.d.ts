@@ -235,9 +235,13 @@ export interface SessionHistoryListResult {
     total: number;
     hasMore: boolean;
 }
-/** 세션 이력 상세 결과 */
+/** 세션 이력 상세 결과 (재생용 — 전체 청크 포함) */
 export interface SessionHistoryGetResult {
     manifest: UnifiedSessionManifest;
+    /** 세그먼트별 전체 청크 (재생용) */
+    chunks?: UnifiedChunkFile[];
+    /** 청크에서 추출한 전체 이벤트 (편의용) */
+    events?: ViewerEvent[];
 }
 /** 청크 조회 결과 */
 export interface UnifiedChunksResult {
