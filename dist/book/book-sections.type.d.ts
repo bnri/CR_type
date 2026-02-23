@@ -5,6 +5,12 @@ export type AudioMeta = {
     engine?: string;
     voiceName?: string;
     voiceGender?: 'Male' | 'Female';
+    /** 매칭 성공 수 */
+    matchApplied?: number;
+    /** 매칭 실패 수 */
+    matchMissed?: number;
+    /** 매칭 전체 수 */
+    matchTotal?: number;
 };
 /** 섹션 요약 (snake_case — MongoDB/API 공용) */
 export interface SectionSummary {
