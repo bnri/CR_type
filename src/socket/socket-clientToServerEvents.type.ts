@@ -1,6 +1,7 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
 import { SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
 import { ViewerOpenPayload, ViewerClosePayload, GazeDataPayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload } from "./unified-session.types";
+import { ReadingProgressReport } from "../book/child-reading-progress.type";
 
 
 export interface ClientToServerEvents {
@@ -23,6 +24,10 @@ export interface ClientToServerEvents {
   'session:subscribe': (payload: SessionSubscribePayload) => void;
   /** 세션 구독 해제 */
   'session:unsubscribe': (payload: SessionSubscribePayload) => void;
+
+  // === 읽기 진행 ===
+  /** 읽기 진행 보고 (5초 주기 자동저장) */
+  'progress:reading-save': (payload: ReadingProgressReport) => void;
 }
 
 
