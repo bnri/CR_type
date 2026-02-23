@@ -64,6 +64,23 @@ export type AudioSnapshot = {
   currentTimeMs: number;
 };
 
+/** 텍스트 선택 상태 스냅샷 */
+export type RangeSnapshot = {
+  startGI: number;
+  endGI: number;
+  text: string;
+};
+
+/** 번역 모달 상태 스냅샷 */
+export type TranslateSnapshot = {
+  isOpen: boolean;
+  isLoading: boolean;
+  text?: string;
+  translatedText?: string;
+  startGI?: number;
+  endGI?: number;
+};
+
 /** 오디오 제어 액션 타입 */
 export type AudioControlAction = 'play' | 'pause' | 'stop';
 
@@ -175,13 +192,17 @@ export type RecordingSnapshot = {
   viewerState: RecordingViewerState;
   globalIndex: number;
   scrollY?: number;
+  scrollRatio?: number;
   anchorGI?: number;
   anchorOffsetRatio?: number;
   currentPage?: number;
+  totalPages?: number;
   sectionId: string;
   viewportWidth: number;
   viewportHeight: number;
   audio?: AudioSnapshot;
+  range?: RangeSnapshot | null;
+  translate?: TranslateSnapshot | null;
 };
 
 /** 녹화 청크 */

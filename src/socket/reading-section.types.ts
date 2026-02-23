@@ -2,7 +2,13 @@
 // 읽기 세션 기본 타입 정의
 // 뷰어 이벤트 상세 타입은 viewer-events.types.ts에서 정의
 
-import type { CRViewerState, ViewerEvent, AudioSnapshot } from './viewer-events.types';
+import type {
+  CRViewerState,
+  ViewerEvent,
+  AudioSnapshot,
+  RangeSnapshot,
+  TranslateSnapshot,
+} from './viewer-events.types';
 
 // ===================== 기본 타입 =====================
 
@@ -11,7 +17,9 @@ export interface ViewerSnapshot {
   viewMode: 'scroll' | 'page';
   globalRunIndex: number;
   pageIndex?: number;
+  totalPages?: number;
   scrollPosition?: number;
+  scrollRatio?: number;
   totalItems: number;
   viewportWidth?: number;
   viewportHeight?: number;
@@ -19,6 +27,8 @@ export interface ViewerSnapshot {
   anchorGI?: number;
   anchorOffsetRatio?: number;
   audio?: AudioSnapshot;
+  range?: RangeSnapshot | null;
+  translate?: TranslateSnapshot | null;
 }
 
 /** 책/섹션 메타데이터 */
