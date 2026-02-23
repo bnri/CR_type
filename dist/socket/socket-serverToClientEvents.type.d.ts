@@ -1,8 +1,8 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
-import { ReadingSessionInfo, ViewerSnapshot, ReadingSessionsListResultPayload, ReadingSessionGetResultPayload, ReadingSessionDeleteResultPayload } from "./reading-section.types";
+import { ViewerSnapshot } from "./reading-section.types";
 import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { RecordingStartedPayload, RecordingStoppedPayload, RecordingChunkPayload, RecordingLiveEventsPayload, SegmentStartedPayload, SegmentEndedPayload, RecordingListResultPayload, RecordingManifestPayload, SegmentMetaPayload, ChunksResultPayload } from "./recording.types";
+import { UnifiedSessionInfo, SessionSegmentChangedPayload, UnifiedChunkFile, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
 export interface ServerToClientEvents {
     connect: () => void;
     disconnect: () => void;
@@ -15,47 +15,93 @@ export interface ServerToClientEvents {
     }) => void;
     'chat-message:read-peer': (payload: MessageReadResponse) => void;
     'chat-message:read-self': (payload: MessageReadResponse) => void;
-    'reading-section:started': (payload: {
-        session: ReadingSessionInfo;
+    /** 세션 시작됨 (서버 확인) */
+    'session:started': (payload: {
+        session: UnifiedSessionInfo;
     }) => void;
-    'reading-section:ended': (payload: {
+    /** 세션 종료됨 (서버 확인) */
+    'session:ended': (payload: {
         sessionId: string;
+        durationMs?: number;
+    }) => void;
+    /** 구독 성공 (Parent가 자녀 세션 구독 시) */
+    'session:subscribed': (payload: {
+        sessionId: string;
+        snapshot: ViewerSnapshot | null;
+    }) => void;
+    /** 구독 중인 세션의 진행 상황 */
+    'session:progress': (payload: {
+        sessionId: string;
+        snapshot: ViewerSnapshot;
+    }) => void;
+    /** 구독 중인 세션의 이벤트 */
+    'session:events': (payload: {
+        sessionId: string;
+        events: ViewerEvent[];
+    }) => void;
+    /** 구독 중인 세션의 세그먼트 변경 (섹션 변경) */
+    'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
+    /** 구독 중인 세션의 청크 (10초 간격) */
+    'session:chunk': (payload: {
+        sessionId: string;
+        segmentIndex: number;
+        chunk: UnifiedChunkFile;
+    }) => void;
+    /** 세션 에러 */
+    'session:error': (payload: {
+        message: string;
     }) => void;
 }
 export interface NoticeToClientEvents {
     'notice-message:result': (payload: NoticeMessageResult) => void;
 }
-/** 읽기 섹션 모니터링 이벤트 (Admin에게 전송) */
-export interface ReadingServerToClientEvents {
-    'reading-section:list': (payload: {
-        sessions: ReadingSessionInfo[];
+/** 통합 세션 모니터링 이벤트 (Admin/Parent에게 전송) */
+export interface SessionServerToClientEvents {
+    /** 활성 세션 목록 */
+    'session:list': (payload: {
+        sessions: UnifiedSessionInfo[];
     }) => void;
-    'reading-section:subscribed': (payload: {
+    /** 새 세션 시작됨 */
+    'session:started': (payload: {
+        session: UnifiedSessionInfo;
+    }) => void;
+    /** 세션 종료됨 */
+    'session:ended': (payload: {
+        sessionId: string;
+        durationMs?: number;
+    }) => void;
+    /** 구독 성공 */
+    'session:subscribed': (payload: {
         sessionId: string;
         snapshot: ViewerSnapshot | null;
     }) => void;
-    'reading-section:progress': (payload: {
+    /** 구독 중인 세션 진행 상황 */
+    'session:progress': (payload: {
         sessionId: string;
         snapshot: ViewerSnapshot;
     }) => void;
-    'reading-section:events': (payload: {
+    /** 구독 중인 세션 이벤트 */
+    'session:events': (payload: {
         sessionId: string;
         events: ViewerEvent[];
     }) => void;
-    /** 섹션 변경 시 구독자에게 전송 (구독 자동 이전됨) */
-    'reading-section:section-changed': (payload: {
-        oldSessionId: string;
-        newSession: ReadingSessionInfo;
+    /** 세그먼트 변경 (섹션 변경) */
+    'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
+    /** 실시간 청크 (10초 간격, 구독자에게) */
+    'session:chunk': (payload: {
+        sessionId: string;
+        segmentIndex: number;
+        chunk: UnifiedChunkFile;
     }) => void;
-    'reading-section:error': (payload: {
+    /** 에러 */
+    'session:error': (payload: {
         message: string;
     }) => void;
-    /** S3 읽기 세션 기록 목록 */
-    'reading-sessions:list-result': (payload: ReadingSessionsListResultPayload) => void;
-    /** S3 읽기 세션 기록 상세 (이벤트 포함) */
-    'reading-sessions:get-result': (payload: ReadingSessionGetResultPayload) => void;
-    /** S3 읽기 세션 기록 삭제 결과 */
-    'reading-sessions:delete-result': (payload: ReadingSessionDeleteResultPayload) => void;
+    'session:list-history-result': (payload: SessionHistoryListResult) => void;
+    'session:get-history-result': (payload: SessionHistoryGetResult) => void;
+    'session:get-chunks-result': (payload: UnifiedChunksResult) => void;
+    'session:get-segment-result': (payload: UnifiedSegmentResult) => void;
+    'session:delete-history-result': (payload: SessionHistoryDeleteResult) => void;
 }
 /** 연결된 사용자 모니터링 이벤트 (Admin에게 전송) */
 export interface UserServerToClientEvents {
@@ -77,21 +123,5 @@ export interface UserServerToClientEvents {
         readingSessionId: string | null;
     }) => void;
 }
-/** 녹화 이벤트 (Admin/Parent에게 전송) - P2.2 Recording System */
-export interface RecordingServerToClientEvents {
-    'recording:started': (payload: RecordingStartedPayload) => void;
-    'recording:stopped': (payload: RecordingStoppedPayload) => void;
-    'recording:chunk': (payload: RecordingChunkPayload) => void;
-    'recording:live-events': (payload: RecordingLiveEventsPayload) => void;
-    'recording:segment-started': (payload: SegmentStartedPayload) => void;
-    'recording:segment-ended': (payload: SegmentEndedPayload) => void;
-    'recording:error': (payload: {
-        message: string;
-    }) => void;
-    'recording:list-result': (payload: RecordingListResultPayload) => void;
-    'recording:manifest': (payload: RecordingManifestPayload) => void;
-    'recording:segment': (payload: SegmentMetaPayload) => void;
-    'recording:chunks': (payload: ChunksResultPayload) => void;
-}
-export interface AdminServerToClientEvents extends ServerToClientEvents, NoticeToClientEvents, ReadingServerToClientEvents, UserServerToClientEvents, RecordingServerToClientEvents {
+export interface AdminServerToClientEvents extends ServerToClientEvents, NoticeToClientEvents, SessionServerToClientEvents, UserServerToClientEvents {
 }

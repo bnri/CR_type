@@ -1,20 +1,28 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
-import { SessionStartPayload, SessionEndPayload, SessionProgressPayload, SessionEventPayload, SessionSubscribePayload, ReadingSessionsListPayload, ReadingSessionGetPayload, ReadingSessionDeletePayload } from "./reading-section.types";
-import { RecordingStartPayload, RecordingStopPayload, RecordingListPayload, RecordingGetPayload, SegmentGetPayload, ChunksGetPayload } from "./recording.types";
+import { SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
+import { ViewerOpenPayload, ViewerClosePayload, GazeDataPayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload } from "./unified-session.types";
 
 
 export interface ClientToServerEvents {
   'chat-message:send': (msg: MessageRequest) => void;
-  // 필요에 따라 확장
   'chat-message:refresh': (msg: ChatMessageRefreshRequest) => void;
+  'chat-message:read': (payload: ChatMessageReadRequest) => void;
 
-  'chat-message:read' : (payload:ChatMessageReadRequest) => void;
-
-  // 읽기 섹션 이벤트 (Client용 - 섹션 읽기 시작/종료/진행/이벤트 전송)
-  'reading-section:start': (payload: SessionStartPayload) => void;
-  'reading-section:end': (payload: SessionEndPayload) => void;
-  'reading-section:progress': (payload: SessionProgressPayload) => void;
-  'reading-section:event': (payload: SessionEventPayload) => void;
+  // === 통합 세션 이벤트 ===
+  /** 뷰어 열림 (세션 시작 또는 섹션 변경) */
+  'session:open': (payload: ViewerOpenPayload) => void;
+  /** 뷰어 닫힘 (세션 종료) */
+  'session:close': (payload: ViewerClosePayload) => void;
+  /** 진행 상황 (스냅샷 업데이트) */
+  'session:progress': (payload: SessionProgressPayload) => void;
+  /** 이벤트 배치 전송 */
+  'session:event': (payload: SessionEventPayload) => void;
+  /** 시선 데이터 전송 (~1초 간격) */
+  'session:gaze': (payload: GazeDataPayload) => void;
+  /** 세션 구독 (Parent가 자녀 세션 모니터링) */
+  'session:subscribe': (payload: SessionSubscribePayload) => void;
+  /** 세션 구독 해제 */
+  'session:unsubscribe': (payload: SessionSubscribePayload) => void;
 }
 
 
@@ -27,35 +35,28 @@ export interface UserAdminToServerEvents {
   'user:list': () => void;
 }
 
-/** 읽기 섹션 관리 이벤트 (Admin용 - 활성 세션 목록 조회/구독) */
-export interface ReadingAdminToServerEvents {
-  'reading-section:list': () => void;
-  'reading-section:subscribe': (payload: SessionSubscribePayload) => void;
-  'reading-section:unsubscribe': (payload: SessionSubscribePayload) => void;
-  /** S3 읽기 세션 기록 목록 조회 */
-  'reading-sessions:list': (payload: ReadingSessionsListPayload) => void;
-  /** S3 읽기 세션 기록 상세 조회 (이벤트 포함) */
-  'reading-sessions:get': (payload: ReadingSessionGetPayload) => void;
-  /** S3 읽기 세션 기록 삭제 */
-  'reading-sessions:delete': (payload: ReadingSessionDeletePayload) => void;
-}
-
-/** 녹화 이벤트 (Admin/Parent → Server) - P2.2 Recording System */
-export interface RecordingAdminToServerEvents {
-  // 실시간 녹화 제어
-  'recording:start': (payload: RecordingStartPayload) => void;
-  'recording:stop': (payload: RecordingStopPayload) => void;
-  // 녹화 조회 (재생용)
-  'recording:list': (payload: RecordingListPayload) => void;
-  'recording:get': (payload: RecordingGetPayload) => void;
-  'recording:get-segment': (payload: SegmentGetPayload) => void;
-  'recording:get-chunks': (payload: ChunksGetPayload) => void;
+/** 통합 세션 관리 이벤트 (Admin/Parent용) */
+export interface SessionAdminToServerEvents {
+  /** 활성 세션 목록 조회 */
+  'session:list': () => void;
+  /** 세션 구독 (실시간 모니터링) */
+  'session:subscribe': (payload: SessionSubscribePayload) => void;
+  /** 세션 구독 해제 */
+  'session:unsubscribe': (payload: SessionSubscribePayload) => void;
+  /** 세션 이력 목록 조회 (S3) */
+  'session:list-history': (payload: SessionHistoryListPayload) => void;
+  /** 세션 이력 상세 조회 (S3) */
+  'session:get-history': (payload: SessionHistoryGetPayload) => void;
+  /** 세션 이력 삭제 (S3) */
+  'session:delete-history': (payload: SessionHistoryDeletePayload) => void;
+  /** 청크 조회 (seek/재생용) */
+  'session:get-chunks': (payload: UnifiedChunksGetPayload) => void;
+  /** 세그먼트 상세 조회 */
+  'session:get-segment': (payload: UnifiedSegmentGetPayload) => void;
 }
 
 export interface AdminClientToServerEvents
   extends ClientToServerEvents,
           NoticeToServerEvents,
           UserAdminToServerEvents,
-          ReadingAdminToServerEvents,
-          RecordingAdminToServerEvents {}
-          
+          SessionAdminToServerEvents {}

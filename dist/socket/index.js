@@ -21,4 +21,4 @@ __exportStar(require("./socket-serverToClientEvents.type"), exports);
 __exportStar(require("./socket-message.types"), exports);
 __exportStar(require("./reading-section.types"), exports);
 __exportStar(require("./connected-user.types"), exports);
-__exportStar(require("./recording.types"), exports);
+__exportStar(require("./unified-session.types"), exports);
