@@ -7,5 +7,5 @@ export interface GazeData {
     /** 정규화된 Y 좌표 (0~1, 상→하) */
     y: number;
     /** 타임스탬프 (ms, Date.now()) */
-    timestamp: number;
+    t: number;
 }
