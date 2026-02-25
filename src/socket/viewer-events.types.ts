@@ -57,7 +57,10 @@ export type ViewerEventType =
   | 'translate_loading_end'
   | 'translate_modal_close'
   | 'calibration_start'
-  | 'calibration_end';
+  | 'calibration_end'
+  | 'show_gaze_change'
+  | 'ask_calibration'
+  | 'calibration_progress';
 
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
@@ -168,6 +171,20 @@ export type CalibrationEndEvent = ViewerEventBase<
   { type: 'quick' | 'full'; points: number; durationMs: number; quality?: number }
 >;
 
+// ── 시선추적 이벤트 ──
+export type ShowGazeChangeEvent = ViewerEventBase<
+  'show_gaze_change',
+  { showGaze: boolean }
+>;
+export type AskCalibrationEvent = ViewerEventBase<
+  'ask_calibration',
+  { requestedAt: number }
+>;
+export type CalibrationProgressEvent = ViewerEventBase<
+  'calibration_progress',
+  { current: number; total: number }
+>;
+
 /** 모든 뷰어 이벤트 타입 (Union) */
 export type ViewerEvent =
   | GlobalIndexChangeEvent
@@ -189,7 +206,10 @@ export type ViewerEvent =
   | TranslateLoadingEndEvent
   | TranslateModalCloseEvent
   | CalibrationStartEvent
-  | CalibrationEndEvent;
+  | CalibrationEndEvent
+  | ShowGazeChangeEvent
+  | AskCalibrationEvent
+  | CalibrationProgressEvent;
 
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 

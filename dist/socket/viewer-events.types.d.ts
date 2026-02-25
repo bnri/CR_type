@@ -29,7 +29,7 @@ export type CRViewerState = {
     viewportHeight: number;
 };
 /** 뷰어 이벤트 타입 */
-export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close';
+export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress';
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
     status: 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error';
@@ -124,8 +124,28 @@ export type TranslateLoadingEndEvent = ViewerEventBase<'translate_loading_end', 
     translatedText: string;
 }>;
 export type TranslateModalCloseEvent = ViewerEventBase<'translate_modal_close', Record<string, never>>;
+export type CalibrationStartEvent = ViewerEventBase<'calibration_start', {
+    type: 'quick' | 'full';
+    points: number;
+}>;
+export type CalibrationEndEvent = ViewerEventBase<'calibration_end', {
+    type: 'quick' | 'full';
+    points: number;
+    durationMs: number;
+    quality?: number;
+}>;
+export type ShowGazeChangeEvent = ViewerEventBase<'show_gaze_change', {
+    showGaze: boolean;
+}>;
+export type AskCalibrationEvent = ViewerEventBase<'ask_calibration', {
+    requestedAt: number;
+}>;
+export type CalibrationProgressEvent = ViewerEventBase<'calibration_progress', {
+    current: number;
+    total: number;
+}>;
 /** 모든 뷰어 이벤트 타입 (Union) */
-export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent;
+export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent;
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 /** 저장용 이벤트 (any type) */
 export type StoredEvent = StoredViewerEvent<ViewerEventType, unknown>;
