@@ -12,6 +12,19 @@ import type {
 
 // ===================== 기본 타입 =====================
 
+/**
+ * 뷰어 영역의 window 기준 정규화 사각형 (0~1).
+ * gaze 좌표(window 기준 0~1)를 뷰어 기준으로 변환:
+ *   vx = (gazeX - left) / width
+ *   vy = (gazeY - top) / height
+ */
+export interface ViewerRect {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
 /** 뷰어 스냅샷 (소켓 통신용 - 현재 읽기 상태) */
 export interface ViewerSnapshot {
   viewMode: 'scroll' | 'page';
@@ -23,6 +36,8 @@ export interface ViewerSnapshot {
   totalItems: number;
   viewportWidth?: number;
   viewportHeight?: number;
+  /** 뷰어 영역의 window 기준 정규화 사각형 (gaze → viewer 좌표 변환용) */
+  viewerRect?: ViewerRect;
   viewerState?: Partial<CRViewerState>;
   anchorGI?: number;
   anchorOffsetRatio?: number;
