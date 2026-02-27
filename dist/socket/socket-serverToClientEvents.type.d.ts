@@ -2,7 +2,7 @@ import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./soc
 import { ViewerSnapshot } from "./reading-section.types";
 import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { UnifiedSessionInfo, SessionSegmentChangedPayload, UnifiedChunkFile, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
+import { UnifiedSessionInfo, SessionSegmentChangedPayload, UnifiedChunkFile, GazeDataPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
 export interface ServerToClientEvents {
     connect: () => void;
     disconnect: () => void;
@@ -38,6 +38,11 @@ export interface ServerToClientEvents {
     'session:events': (payload: {
         sessionId: string;
         events: ViewerEvent[];
+    }) => void;
+    /** 구독 중인 세션의 실시간 시선 데이터 (~1초 간격) */
+    'session:gaze': (payload: {
+        sessionId: string;
+        gazeData: GazeDataPayload;
     }) => void;
     /** 구독 중인 세션의 세그먼트 변경 (섹션 변경) */
     'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
@@ -84,6 +89,11 @@ export interface SessionServerToClientEvents {
     'session:events': (payload: {
         sessionId: string;
         events: ViewerEvent[];
+    }) => void;
+    /** 구독 중인 세션 실시간 시선 데이터 (~1초 간격) */
+    'session:gaze': (payload: {
+        sessionId: string;
+        gazeData: GazeDataPayload;
     }) => void;
     /** 세그먼트 변경 (섹션 변경) */
     'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
