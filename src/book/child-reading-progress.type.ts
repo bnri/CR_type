@@ -12,7 +12,7 @@ export interface ReadRange {
 }
 
 /** 캘리브레이션 종류 */
-export type CalibrationType = 'quick' | 'full';
+export type CalibrationType = "quick" | "full";
 
 /** 섹션 읽기 중 발생한 캘리브레이션 기간 */
 export interface CalibrationPeriod {
