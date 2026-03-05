@@ -24,6 +24,7 @@ export interface Book {
     en_level: BookEnLevel | null;
     ar_index: number | null;
     lexile_index: number | null;
+    fk_index: number | null;
     series: string | null;
     original_author: string | null;
     description: string | null;
@@ -277,6 +278,90 @@ export declare const getLexileDescription: (lexile: number) => {
     readonly max: 2000;
     readonly level: "성인";
     readonly description: "학술·고전 문학";
+} | undefined;
+/** Flesch-Kincaid Grade Level 범위별 설명 (정수 1~17) */
+export declare const FK_INDEX_RANGES: readonly [{
+    readonly min: 1;
+    readonly max: 2;
+    readonly level: "유아 ~ 초1";
+    readonly description: "그림책, 기초 문장";
+}, {
+    readonly min: 3;
+    readonly max: 4;
+    readonly level: "초2~3";
+    readonly description: "짧은 이야기, 기초 리더";
+}, {
+    readonly min: 5;
+    readonly max: 6;
+    readonly level: "초4~5";
+    readonly description: "챕터북, 어휘 확장";
+}, {
+    readonly min: 7;
+    readonly max: 8;
+    readonly level: "초6~중1";
+    readonly description: "복합 문장, 논픽션";
+}, {
+    readonly min: 9;
+    readonly max: 10;
+    readonly level: "중2~3";
+    readonly description: "추론·비판적 읽기";
+}, {
+    readonly min: 11;
+    readonly max: 12;
+    readonly level: "고등학생";
+    readonly description: "문학 작품, 추상 개념";
+}, {
+    readonly min: 13;
+    readonly max: 14;
+    readonly level: "대학 초급";
+    readonly description: "학술 텍스트 입문";
+}, {
+    readonly min: 15;
+    readonly max: 17;
+    readonly level: "대학~전문";
+    readonly description: "전문 논문, 고급 텍스트";
+}];
+/** FK 지수로 해당 범위 설명 조회 */
+export declare const getFKDescription: (fk: number) => {
+    readonly min: 1;
+    readonly max: 2;
+    readonly level: "유아 ~ 초1";
+    readonly description: "그림책, 기초 문장";
+} | {
+    readonly min: 3;
+    readonly max: 4;
+    readonly level: "초2~3";
+    readonly description: "짧은 이야기, 기초 리더";
+} | {
+    readonly min: 5;
+    readonly max: 6;
+    readonly level: "초4~5";
+    readonly description: "챕터북, 어휘 확장";
+} | {
+    readonly min: 7;
+    readonly max: 8;
+    readonly level: "초6~중1";
+    readonly description: "복합 문장, 논픽션";
+} | {
+    readonly min: 9;
+    readonly max: 10;
+    readonly level: "중2~3";
+    readonly description: "추론·비판적 읽기";
+} | {
+    readonly min: 11;
+    readonly max: 12;
+    readonly level: "고등학생";
+    readonly description: "문학 작품, 추상 개념";
+} | {
+    readonly min: 13;
+    readonly max: 14;
+    readonly level: "대학 초급";
+    readonly description: "학술 텍스트 입문";
+} | {
+    readonly min: 15;
+    readonly max: 17;
+    readonly level: "대학~전문";
+    readonly description: "전문 논문, 고급 텍스트";
 } | undefined;
 /** 어절 수 → 재생 분수 계산 (200 WPM 기준) */
 export declare const calcSoundMinutes: (wordCount: number) => number;

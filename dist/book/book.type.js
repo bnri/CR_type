@@ -1,7 +1,7 @@
 "use strict";
 // ========== 리터럴 유니온 타입 ==========
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAgeOptions = exports.getEnLevelOptions = exports.getGenreOptions = exports.getLengthOptions = exports.getLanguageOptions = exports.calcSoundMinutes = exports.getLexileDescription = exports.getARDescription = exports.LEXILE_INDEX_RANGES = exports.AR_INDEX_RANGES = exports.DEFAULT_BOOK_META = exports.BOOK_AGE_MAX = exports.BOOK_AGE_MIN = exports.BookEnLevelLabel = exports.BookGenreLabel = exports.BookLengthLabel = exports.BookLanguageLabel = void 0;
+exports.getAgeOptions = exports.getEnLevelOptions = exports.getGenreOptions = exports.getLengthOptions = exports.getLanguageOptions = exports.calcSoundMinutes = exports.getFKDescription = exports.FK_INDEX_RANGES = exports.getLexileDescription = exports.getARDescription = exports.LEXILE_INDEX_RANGES = exports.AR_INDEX_RANGES = exports.DEFAULT_BOOK_META = exports.BOOK_AGE_MAX = exports.BOOK_AGE_MIN = exports.BookEnLevelLabel = exports.BookGenreLabel = exports.BookLengthLabel = exports.BookLanguageLabel = void 0;
 // ========== 라벨 (UI 표시용) ==========
 exports.BookLanguageLabel = {
     ko: "한국어",
@@ -81,6 +81,20 @@ exports.getARDescription = getARDescription;
 /** Lexile 지수로 해당 범위 설명 조회 */
 const getLexileDescription = (lexile) => exports.LEXILE_INDEX_RANGES.find((r) => lexile >= r.min && lexile <= r.max);
 exports.getLexileDescription = getLexileDescription;
+/** Flesch-Kincaid Grade Level 범위별 설명 (정수 1~17) */
+exports.FK_INDEX_RANGES = [
+    { min: 1, max: 2, level: "유아 ~ 초1", description: "그림책, 기초 문장" },
+    { min: 3, max: 4, level: "초2~3", description: "짧은 이야기, 기초 리더" },
+    { min: 5, max: 6, level: "초4~5", description: "챕터북, 어휘 확장" },
+    { min: 7, max: 8, level: "초6~중1", description: "복합 문장, 논픽션" },
+    { min: 9, max: 10, level: "중2~3", description: "추론·비판적 읽기" },
+    { min: 11, max: 12, level: "고등학생", description: "문학 작품, 추상 개념" },
+    { min: 13, max: 14, level: "대학 초급", description: "학술 텍스트 입문" },
+    { min: 15, max: 17, level: "대학~전문", description: "전문 논문, 고급 텍스트" },
+];
+/** FK 지수로 해당 범위 설명 조회 */
+const getFKDescription = (fk) => exports.FK_INDEX_RANGES.find((r) => fk >= r.min && fk <= r.max);
+exports.getFKDescription = getFKDescription;
 // ========== 헬퍼 함수 ==========
 /** 어절 수 → 재생 분수 계산 (200 WPM 기준) */
 const calcSoundMinutes = (wordCount) => Math.ceil(wordCount / 200);
