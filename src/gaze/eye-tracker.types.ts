@@ -1,5 +1,5 @@
 /** 지원하는 시선추적 프로바이더 타입 */
-export type EyeTrackerType = 'eyedid' | 'seeso' | 'custom' | 'fake' | 'webgazer' | 'android_seeso';
+export type EyeTrackerType = 'eyedid' | 'seeso' | 'custom' | 'fake' | 'webgazer' | 'android_seeso' | 'android_eyedid';
 
 /** 단일 시선 샘플 (0~1 정규화 좌표) */
 export interface GazeData {
