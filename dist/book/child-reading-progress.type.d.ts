@@ -16,7 +16,7 @@ export interface CalibrationPeriod {
     /** 캘리브레이션 결과 품질 (0~1, 기기 제공) */
     quality?: number;
 }
-/** 퀴즈 시도 결과 (개별 퀴즈) */
+/** 퀴즈 시도 결과 (개별 퀴즈, 서버 저장용) */
 export interface QuizAttemptResult {
     quizId: string;
     /** 획득 점수 */
@@ -29,6 +29,36 @@ export interface QuizAttemptResult {
     /** 타임아웃 여부 */
     timedOut: boolean;
     attemptedAt: string;
+}
+/** 문항별 퀴즈 결과 (뷰어 콜백용, 선택지 포함) */
+export interface QuizQuestionResult {
+    qid: string;
+    index: number;
+    question?: string;
+    score: number;
+    isCorrect: boolean;
+    selected: number[];
+    correctIdxes: number[];
+    /** 소요 시간 (ms) */
+    ms: number;
+    timedOut: boolean;
+}
+/** 섹션 퀴즈 전체 결과 (뷰어 onQuizComplete 콜백) */
+export interface QuizResult {
+    sectionId: string;
+    /** 총 문항 수 */
+    total: number;
+    /** 정답 수 */
+    correct: number;
+    /** 정답률 (0~1) */
+    rate: number;
+    /** 배점 합계 */
+    totalScore: number;
+    /** 획득 점수 합계 */
+    gainedScore: number;
+    /** 총 소요 시간 (ms) */
+    timeMsTotal: number;
+    perQuestion: QuizQuestionResult[];
 }
 /** 찾아본 단어 기록 */
 export interface LookedUpWord {
