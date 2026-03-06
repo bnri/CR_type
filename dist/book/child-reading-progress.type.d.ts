@@ -329,6 +329,41 @@ export interface ReadingAccumulatedState {
     quizMaxScore: number;
     estimatedReadingScore: number;
 }
+export interface ChildDailySummary {
+    childIdx: number;
+    /** KST 기준 날짜 "YYYY-MM-DD" */
+    date: string;
+    totalReadMs: number;
+    sessionCount: number;
+    /** 오늘 읽은 bookIdx 목록 (unique) */
+    booksRead: number[];
+    /** 오늘 스크롤 GI 합 (세션별 누적) */
+    totalScrolledGICount: number;
+    /** 오늘 시선 확인 GI 합 (세션별 누적) */
+    totalGazeReadGICount: number;
+    avgConcentrationPercent: number | null;
+    avgFocusRatio: number | null;
+    avgReadingSpeedWPM: number | null;
+    totalQuizScore: number;
+    totalQuizMaxScore: number;
+    totalBlinks: number;
+    totalLookedUpWords: number;
+    /** 집중도 가중합 (concentrationPercent × durationMs 누적) */
+    _weightedConcentrationMs: number;
+    /** 집중도 분모 (concentration 데이터가 있는 세션의 durationMs 누적) */
+    _concentrationDurationMs: number;
+    /** 속도 가중합 (speedWPM × durationMs 누적) */
+    _weightedSpeedMs: number;
+    /** 속도 분모 (speed 데이터가 있는 세션의 durationMs 누적) */
+    _speedDurationMs: number;
+    /** focusRatio 가중합 */
+    _weightedFocusRatioMs: number;
+    /** focusRatio 분모 */
+    _focusRatioDurationMs: number;
+    lastSessionId: string;
+    createdAt: string;
+    updatedAt: string;
+}
 /** GET /api/reading-progress/:bookIdx */
 export interface ChildBookProgressResponse {
     bookmark: ChildBookBookmark | null;

@@ -499,6 +499,64 @@ export interface ReadingAccumulatedState {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// 컬렉션 6: child_daily_summary
+// key: { childIdx, date } unique
+// 역할: 일별 읽기 요약 (세션 종료 시 upsert, 주간/월간 트렌드 차트용)
+// ═══════════════════════════════════════════════════════════════
+
+export interface ChildDailySummary {
+  childIdx: number;
+  /** KST 기준 날짜 "YYYY-MM-DD" */
+  date: string;
+
+  // ─── 읽기 시간 ───
+  totalReadMs: number;
+  sessionCount: number;
+
+  // ─── 읽은 양 ───
+  /** 오늘 읽은 bookIdx 목록 (unique) */
+  booksRead: number[];
+  /** 오늘 스크롤 GI 합 (세션별 누적) */
+  totalScrolledGICount: number;
+  /** 오늘 시선 확인 GI 합 (세션별 누적) */
+  totalGazeReadGICount: number;
+
+  // ─── 집중도 (duration 가중 평균) ───
+  avgConcentrationPercent: number | null;
+  avgFocusRatio: number | null;
+
+  // ─── 읽기 속도 ───
+  avgReadingSpeedWPM: number | null;
+
+  // ─── 퀴즈 ───
+  totalQuizScore: number;
+  totalQuizMaxScore: number;
+
+  // ─── 기타 ───
+  totalBlinks: number;
+  totalLookedUpWords: number;
+
+  // ─── 가중 평균 계산용 (내부) ───
+  /** 집중도 가중합 (concentrationPercent × durationMs 누적) */
+  _weightedConcentrationMs: number;
+  /** 집중도 분모 (concentration 데이터가 있는 세션의 durationMs 누적) */
+  _concentrationDurationMs: number;
+  /** 속도 가중합 (speedWPM × durationMs 누적) */
+  _weightedSpeedMs: number;
+  /** 속도 분모 (speed 데이터가 있는 세션의 durationMs 누적) */
+  _speedDurationMs: number;
+  /** focusRatio 가중합 */
+  _weightedFocusRatioMs: number;
+  /** focusRatio 분모 */
+  _focusRatioDurationMs: number;
+
+  // ─── 메타 ───
+  lastSessionId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ═══════════════════════════════════════════════════════════════
 // REST 응답
 // ═══════════════════════════════════════════════════════════════
 
