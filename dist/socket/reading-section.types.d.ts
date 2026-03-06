@@ -54,5 +54,5 @@ export interface SessionEventPayload {
 }
 /** 세션 구독 페이로드 */
 export interface SessionSubscribePayload {
-    sessionId: string;
+    readingSessionId: string;
 }

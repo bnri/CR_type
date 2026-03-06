@@ -8,5 +8,5 @@
 //   시선일치도(gazeAlignment, 오디오재생+시선추적시)
 //   집중도(concentration, gazeOnText/total %)
 //   찾아본단어(lookedUpWords) 퀴즈점수/정답률
-//   미검증 읽은양/속도(scrollOnly) 종합 읽기점수(readingScore, 누적)
+//   미검증 읽은양/속도(exposedOnly) 종합 읽기점수(readingScore, 누적)
 Object.defineProperty(exports, "__esModule", { value: true });

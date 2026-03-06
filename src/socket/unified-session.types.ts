@@ -10,7 +10,7 @@
 // - Parent + Admin 동일한 subscribe 체계
 //
 // S3 경로:
-// reading-sessions/{familyId}/{userId}/{YYYY-MM-DD}/{sessionId}/
+// reading-sessions/{familyId}/{childIdx}/{YYYY-MM-DD}/{readingSessionId}/
 //   ├── manifest.json                    (UnifiedSessionManifest)
 //   └── segments/
 //       ├── 0/
@@ -165,17 +165,16 @@ export interface UnifiedSegmentSummary {
  * - 기존 ReadingSessionRecord + RecordingManifest 대체
  */
 export interface UnifiedSessionManifest {
-  /** 세션 ID (UUID) */
-  sessionId: string;
+  /** 읽기 세션 ID (UUID) */
+  readingSessionId: string;
   /** 상태 */
   status: UnifiedSessionStatus;
   /** 스키마 버전 (구 포맷과 구분용, 항상 2) */
   version: 2;
 
-  // ─── 사용자 정보 ───
-  userId: number;
-  userType: 'parent' | 'child';
-  userName: string;
+  // ─── 자녀 정보 ───
+  childIdx: number;
+  childName: string;
   familyId: number;
 
   // ─── 시간 정보 ───
@@ -254,10 +253,9 @@ export interface GazeDataPayload {
  * - 현재 세그먼트 정보 포함
  */
 export interface UnifiedSessionInfo {
-  sessionId: string;
-  userId: number;
-  userType: 'parent' | 'child';
-  userName?: string;
+  readingSessionId: string;
+  childIdx: number;
+  childName?: string;
   familyId: number;
   startedAt: string;
   snapshot: ViewerSnapshot;
@@ -277,7 +275,7 @@ export interface UnifiedSessionInfo {
 
 /** 세그먼트 변경 알림 (섹션 변경 시) */
 export interface SessionSegmentChangedPayload {
-  sessionId: string;
+  readingSessionId: string;
   /** 종료된 세그먼트 인덱스 */
   oldSegmentIndex: number;
   /** 새로 시작된 세그먼트 */
@@ -298,7 +296,7 @@ export interface SessionSegmentChangedPayload {
 /** 세션 이력 목록 조회 요청 */
 export interface SessionHistoryListPayload {
   familyId?: number;
-  userId?: number;
+  childIdx?: number;
   date?: string;
   limit?: number;
   offset?: number;
@@ -306,19 +304,19 @@ export interface SessionHistoryListPayload {
 
 /** 세션 이력 상세 조회 요청 */
 export interface SessionHistoryGetPayload {
-  sessionId: string;
+  readingSessionId: string;
   s3Key?: string;
 }
 
 /** 세션 이력 삭제 요청 */
 export interface SessionHistoryDeletePayload {
-  sessionId: string;
+  readingSessionId: string;
   s3Key?: string;
 }
 
 /** 통합 청크 조회 요청 (seek/재생용) */
 export interface UnifiedChunksGetPayload {
-  sessionId: string;
+  readingSessionId: string;
   segmentIndex: number;
   /** 시작 timestamp (이 시점부터 청크 조회) */
   fromTimestamp?: number;
@@ -328,7 +326,7 @@ export interface UnifiedChunksGetPayload {
 
 /** 통합 세그먼트 상세 조회 요청 */
 export interface UnifiedSegmentGetPayload {
-  sessionId: string;
+  readingSessionId: string;
   segmentIndex: number;
 }
 
@@ -354,7 +352,7 @@ export interface SessionHistoryGetResult {
 
 /** 청크 조회 결과 */
 export interface UnifiedChunksResult {
-  sessionId: string;
+  readingSessionId: string;
   segmentIndex: number;
   chunks: UnifiedChunkFile[];
   /** Seek 시 가장 가까운 스냅샷 (초기 상태 복원용) */
@@ -363,13 +361,13 @@ export interface UnifiedChunksResult {
 
 /** 세그먼트 상세 결과 */
 export interface UnifiedSegmentResult {
-  sessionId: string;
+  readingSessionId: string;
   segment: UnifiedSegmentMeta;
 }
 
 /** 세션 삭제 결과 */
 export interface SessionHistoryDeleteResult {
-  sessionId: string;
+  readingSessionId: string;
   success: boolean;
 }
 
@@ -382,13 +380,12 @@ export interface SessionHistoryDeleteResult {
  * - 기존 ActiveRecording + SessionChunkState 대체
  */
 export interface ActiveUnifiedSession {
-  sessionId: string;
+  readingSessionId: string;
   s3Prefix: string;
 
-  // 사용자 정보
-  userId: number;
-  userType: 'parent' | 'child';
-  userName: string;
+  // 자녀 정보
+  childIdx: number;
+  childName: string;
   familyId: number;
   viewerSocketId: string;
 

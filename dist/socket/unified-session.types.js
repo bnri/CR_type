@@ -11,7 +11,7 @@
 // - Parent + Admin 동일한 subscribe 체계
 //
 // S3 경로:
-// reading-sessions/{familyId}/{userId}/{YYYY-MM-DD}/{sessionId}/
+// reading-sessions/{familyId}/{childIdx}/{YYYY-MM-DD}/{readingSessionId}/
 //   ├── manifest.json                    (UnifiedSessionManifest)
 //   └── segments/
 //       ├── 0/

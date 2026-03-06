@@ -130,9 +130,14 @@ export type CalibrationStartEvent = ViewerEventBase<'calibration_start', {
 }>;
 export type CalibrationEndEvent = ViewerEventBase<'calibration_end', {
     type: 'quick' | 'full';
+    trackerType: import('../gaze/eye-tracker.types').EyeTrackerType;
     points: number;
     durationMs: number;
     quality?: number;
+    screenWidth?: number;
+    screenHeight?: number;
+    accuracyPx?: number;
+    accuracyDeg?: number;
 }>;
 export type ShowGazeChangeEvent = ViewerEventBase<'show_gaze_change', {
     showGaze: boolean;

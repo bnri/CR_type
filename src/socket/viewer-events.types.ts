@@ -168,7 +168,17 @@ export type CalibrationStartEvent = ViewerEventBase<
 >;
 export type CalibrationEndEvent = ViewerEventBase<
   'calibration_end',
-  { type: 'quick' | 'full'; points: number; durationMs: number; quality?: number }
+  {
+    type: 'quick' | 'full';
+    trackerType: import('../gaze/eye-tracker.types').EyeTrackerType;
+    points: number;
+    durationMs: number;
+    quality?: number;
+    screenWidth?: number;
+    screenHeight?: number;
+    accuracyPx?: number;
+    accuracyDeg?: number;
+  }
 >;
 
 // ── 시선추적 이벤트 ──

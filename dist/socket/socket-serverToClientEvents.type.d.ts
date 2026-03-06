@@ -21,34 +21,34 @@ export interface ServerToClientEvents {
     }) => void;
     /** 세션 종료됨 (서버 확인) */
     'session:ended': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         durationMs?: number;
     }) => void;
     /** 구독 성공 (Parent가 자녀 세션 구독 시) */
     'session:subscribed': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         snapshot: ViewerSnapshot | null;
     }) => void;
     /** 구독 중인 세션의 진행 상황 */
     'session:progress': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         snapshot: ViewerSnapshot;
     }) => void;
     /** 구독 중인 세션의 이벤트 */
     'session:events': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         events: ViewerEvent[];
     }) => void;
     /** 구독 중인 세션의 실시간 시선 데이터 (~1초 간격) */
     'session:gaze': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         gazeData: GazeDataPayload;
     }) => void;
     /** 구독 중인 세션의 세그먼트 변경 (섹션 변경) */
     'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
     /** 구독 중인 세션의 청크 (10초 간격) */
     'session:chunk': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         segmentIndex: number;
         chunk: UnifiedChunkFile;
     }) => void;
@@ -72,34 +72,34 @@ export interface SessionServerToClientEvents {
     }) => void;
     /** 세션 종료됨 */
     'session:ended': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         durationMs?: number;
     }) => void;
     /** 구독 성공 */
     'session:subscribed': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         snapshot: ViewerSnapshot | null;
     }) => void;
     /** 구독 중인 세션 진행 상황 */
     'session:progress': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         snapshot: ViewerSnapshot;
     }) => void;
     /** 구독 중인 세션 이벤트 */
     'session:events': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         events: ViewerEvent[];
     }) => void;
     /** 구독 중인 세션 실시간 시선 데이터 (~1초 간격) */
     'session:gaze': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         gazeData: GazeDataPayload;
     }) => void;
     /** 세그먼트 변경 (섹션 변경) */
     'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
     /** 실시간 청크 (10초 간격, 구독자에게) */
     'session:chunk': (payload: {
-        sessionId: string;
+        readingSessionId: string;
         segmentIndex: number;
         chunk: UnifiedChunkFile;
     }) => void;

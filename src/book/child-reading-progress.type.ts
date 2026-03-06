@@ -7,7 +7,9 @@
 //   시선일치도(gazeAlignment, 오디오재생+시선추적시)
 //   집중도(concentration, gazeOnText/total %)
 //   찾아본단어(lookedUpWords) 퀴즈점수/정답률
-//   미검증 읽은양/속도(scrollOnly) 종합 읽기점수(readingScore, 누적)
+//   미검증 읽은양/속도(exposedOnly) 종합 읽기점수(readingScore, 누적)
+
+import type { EyeTrackerType } from '../gaze/eye-tracker.types';
 
 // ═══════════════════════════════════════════════════════════════
 // 기본 단위
@@ -25,6 +27,8 @@ export type CalibrationType = "quick" | "full";
 /** 섹션 읽기 중 발생한 캘리브레이션 기간 */
 export interface CalibrationPeriod {
   type: CalibrationType;
+  /** 사용한 시선추적 트래커 */
+  trackerType: EyeTrackerType;
   /** 사용한 포인트 수 (quick: 3, full: 5) */
   points: number;
   startedAt: string;
@@ -32,6 +36,14 @@ export interface CalibrationPeriod {
   durationMs: number;
   /** 캘리브레이션 결과 품질 (0~1, 기기 제공) */
   quality?: number;
+  /** 화면 가로 해상도 (px) */
+  screenWidth?: number;
+  /** 화면 세로 해상도 (px) */
+  screenHeight?: number;
+  /** 평균 오차 (px) */
+  accuracyPx?: number;
+  /** 평균 오차 (degree) */
+  accuracyDeg?: number;
 }
 
 /** 퀴즈 시도 결과 (개별 퀴즈, 서버 저장용) */
@@ -106,9 +118,9 @@ export interface ReadingProgressReport {
   sectionGIMax: number;
 
   /** 이 구간에서 뷰포트에 표시된 GI 범위의 최소값 */
-  scrolledFrom: number;
+  exposedFrom: number;
   /** 이 구간에서 뷰포트에 표시된 GI 범위의 최대값 */
-  scrolledTo: number;
+  exposedTo: number;
 
   /**
    * GI별 시선 dwell time (ms)
@@ -163,23 +175,23 @@ export interface ChildSectionProgress {
   /** 섹션 단어 수 (SectionSummary.word_count, WPM 계산용) */
   sectionWordCount: number;
 
-  // ─── 진도: 스크롤 구간 (관대, 중첩비허용) ───
-  scrolledRanges: ReadRange[];
+  // ─── 진도: 화면 노출 구간 (관대, 중첩비허용) ───
+  exposedRanges: ReadRange[];
   /** unique GI 수 (mergeReadRanges 후) */
-  scrolledCount: number;
-  /** scrolledCount / sectionGIMax */
-  scrolledCoverage: number; // 0~1
+  exposedCount: number;
+  /** exposedCount / sectionGIMax */
+  exposedCoverage: number; // 0~1
 
   // ─── 진도: 시선 확인 구간 (엄격, dwell ≥ threshold, 중첩비허용) ───
-  gazeReadRanges: ReadRange[];
-  gazeReadCount: number;
-  gazeReadCoverage: number; // 0~1
+  eyeReadRanges: ReadRange[];
+  eyeReadCount: number;
+  eyeReadCoverage: number; // 0~1
 
   // ─── 읽은 양 (중첩허용, re-read 포함) ───
-  /** 모든 flush의 (scrolledTo - scrolledFrom + 1) 합산 */
-  totalRawScrolledGIs: number;
+  /** 모든 flush의 (exposedTo - exposedFrom + 1) 합산 */
+  totalRawExposedGIs: number;
   /** 모든 flush의 gaze dwell ≥ threshold GI 수 합산 */
-  totalRawGazeReadGIs: number;
+  totalRawEyeReadGIs: number;
 
   // ─── 시간 + 위치 ───
   totalReadMs: number;
@@ -187,9 +199,9 @@ export interface ChildSectionProgress {
   lastReadAt: string;
 
   // ─── 읽기 속도 ───
-  /** 검증된 읽기속도: gazeReadCount / (totalReadMs / 60000) — WPM 근사 (GI ≈ word) */
+  /** 검증된 읽기속도: eyeReadCount / (totalReadMs / 60000) — WPM 근사 (GI ≈ word) */
   readingSpeedWPM: number | null;
-  /** 미검증 읽기속도: scrolledCount / (totalReadMs / 60000) */
+  /** 미검증 읽기속도: exposedCount / (totalReadMs / 60000) */
   unverifiedReadingSpeedWPM: number | null;
 
   // ─── 시선 분석 ───
@@ -248,10 +260,10 @@ export interface ChildBookBookmark {
 
   // ─── 캐시 (세션 종료 시 갱신) ───
   totalGIMax: number;
-  totalScrolledCount: number;
-  totalScrolledCoverage: number; // 0~1
-  totalGazeReadCount: number;
-  totalGazeReadCoverage: number; // 0~1
+  totalExposedCount: number;
+  totalExposedCoverage: number; // 0~1
+  totalEyeReadCount: number;
+  totalEyeReadCoverage: number; // 0~1
 
   // ─── 책 전체 읽기 점수 (전 섹션 합산) ───
   totalReadingScore: number;
@@ -277,8 +289,8 @@ export interface ChildReadingLog {
   childIdx: number;
   bookIdx: number;
   sectionId: string;
-  scrolledFrom: number;
-  scrolledTo: number;
+  exposedFrom: number;
+  exposedTo: number;
   /** 전체 dwell map 그대로 보존 */
   gazeDwellMap: Record<string, number>;
   blinkCount: number;
@@ -304,17 +316,27 @@ export interface ChildReadingLog {
 
 export interface ChildCalibrationLog {
   childIdx: number;
-  /** 읽기 세션 중 발생 시 세션 ID */
-  sessionId?: string;
+  /** 읽기 세션 중 발생 시 읽기 세션 ID */
+  readingSessionId?: string;
   /** 읽기 중이었던 섹션 */
   sectionId?: string;
   type: CalibrationType;
+  /** 사용한 시선추적 트래커 */
+  trackerType: EyeTrackerType;
   /** 사용한 포인트 수 */
   points: number;
   startedAt: string;
   endedAt: string;
   durationMs: number;
   quality?: number;
+  /** 화면 가로 해상도 (px) */
+  screenWidth?: number;
+  /** 화면 세로 해상도 (px) */
+  screenHeight?: number;
+  /** 평균 오차 (px) */
+  accuracyPx?: number;
+  /** 평균 오차 (degree) */
+  accuracyDeg?: number;
   createdAt: string;
 }
 
@@ -333,23 +355,23 @@ export interface SegmentReadingSummary {
   durationMs: number;
 
   // 커버리지 (중첩비허용)
-  scrolledFrom: number;
-  scrolledTo: number;
-  scrolledGICount: number;
-  gazeReadGICount: number;
+  exposedFrom: number;
+  exposedTo: number;
+  exposedGICount: number;
+  eyeReadGICount: number;
 
   // 읽은 양 (중첩허용)
-  rawScrolledGICount: number;
-  rawGazeReadGICount: number;
+  rawExposedGICount: number;
+  rawEyeReadGICount: number;
 
   // 읽기 속도
-  /** gazeReadGICount / (durationMs / 60000) — WPM 근사 */
+  /** eyeReadGICount / (durationMs / 60000) — WPM 근사 */
   readingSpeedWPM: number | null;
-  /** scrolledGICount / (durationMs / 60000) */
+  /** exposedGICount / (durationMs / 60000) */
   unverifiedReadingSpeedWPM: number;
 
   // 집중도/시선
-  /** gazeReadGICount / scrolledGICount (시선 없으면 null) */
+  /** eyeReadGICount / exposedGICount (시선 없으면 null) */
   focusRatio: number | null;
   /** 평균 dwell time (ms per GI) */
   avgDwellMs: number | null;
@@ -375,13 +397,13 @@ export interface SegmentReadingSummary {
 
 // ═══════════════════════════════════════════════════════════════
 // 컬렉션 5: child_reading_sessions
-// key: { childIdx, sessionId } unique
+// key: { childIdx, readingSessionId } unique
 // 역할: 세션 전체 요약 (세션 종료 시 생성)
 // ═══════════════════════════════════════════════════════════════
 
 export interface ChildReadingSessionSummary {
   childIdx: number;
-  sessionId: string;
+  readingSessionId: string;
   startedAt: string;
   endedAt: string;
   totalDurationMs: number;
@@ -389,8 +411,8 @@ export interface ChildReadingSessionSummary {
   segments: SegmentReadingSummary[];
 
   // ─── 세션 전체 통계 ───
-  totalScrolledGICount: number;
-  totalGazeReadGICount: number;
+  totalExposedGICount: number;
+  totalEyeReadGICount: number;
   overallFocusRatio: number | null;
 
   // 읽기 속도 (WPM)
@@ -426,9 +448,9 @@ export interface ChildReadingSessionSummary {
  */
 export interface ReadingScoreInput {
   /** 진도 (중첩비허용 coverage, 0~1) */
-  scrolledCoverage: number;
-  /** 검증된 진도 (gazeRead coverage, 0~1) */
-  gazeReadCoverage: number;
+  exposedCoverage: number;
+  /** 검증된 진도 (eyeRead coverage, 0~1) */
+  eyeReadCoverage: number;
   /** 집중도 (%, 0~100) */
   concentrationPercent: number | null;
   /** 시선일치도 (0~1) */
@@ -443,7 +465,7 @@ export interface ReadingScoreInput {
 
 // 점수 알고리즘 가중치 (TBD — 실제 데이터 수집 후 튜닝)
 // 예시:
-//   score += gazeReadCoverage * 50  (최대 50점)
+//   score += eyeReadCoverage * 50  (최대 50점)
 //   score += concentration * 0.2    (최대 20점)
 //   score += quizAccuracy * 20      (최대 20점)
 //   score += vocabulary_bonus        (단어당 1점)
@@ -466,11 +488,11 @@ export interface ReadingAccumulatedState {
   sectionWordCount: number;
 
   // 진도 (중첩비허용, 로컬 머지)
-  scrolledRanges: ReadRange[];
-  scrolledCoverage: number;
+  exposedRanges: ReadRange[];
+  exposedCoverage: number;
 
   // 읽은 양 (중첩허용)
-  totalRawScrolledGIs: number;
+  totalRawExposedGIs: number;
 
   // 시간
   totalReadMs: number;
@@ -516,10 +538,10 @@ export interface ChildDailySummary {
   // ─── 읽은 양 ───
   /** 오늘 읽은 bookIdx 목록 (unique) */
   booksRead: number[];
-  /** 오늘 스크롤 GI 합 (세션별 누적) */
-  totalScrolledGICount: number;
+  /** 오늘 노출 GI 합 (세션별 누적) */
+  totalExposedGICount: number;
   /** 오늘 시선 확인 GI 합 (세션별 누적) */
-  totalGazeReadGICount: number;
+  totalEyeReadGICount: number;
 
   // ─── 집중도 (duration 가중 평균) ───
   avgConcentrationPercent: number | null;
@@ -551,7 +573,7 @@ export interface ChildDailySummary {
   _focusRatioDurationMs: number;
 
   // ─── 메타 ───
-  lastSessionId: string;
+  lastReadingSessionId: string;
   createdAt: string;
   updatedAt: string;
 }
