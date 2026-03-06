@@ -213,6 +213,8 @@ export interface ChildSectionProgress {
   lookedUpWords: LookedUpWord[];
 
   // ─── 퀴즈 ───
+  /** 개별 퀴즈 결과 (quizId 기준 최신 1건만 유지, 재시도 시 덮어쓰기) */
+  quizResults: QuizAttemptResult[];
   quizScore: number;
   quizMaxScore: number;
   quizCorrectCount: number;
