@@ -1,7 +1,7 @@
 /** 지원하는 시선추적 프로바이더 타입 */
 export type EyeTrackerType = 'eyedid' | 'seeso' | 'custom' | 'fake' | 'webgazer' | 'android_seeso' | 'android_eyedid';
 /** 트래킹 상태 (CRGaze 전용) */
-export declare const enum GazeTrackingState {
+export declare enum GazeTrackingState {
     TRACKING = 0,
     BLINK = 1,
     LOST = 2

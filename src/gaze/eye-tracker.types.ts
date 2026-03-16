@@ -2,7 +2,7 @@
 export type EyeTrackerType = 'eyedid' | 'seeso' | 'custom' | 'fake' | 'webgazer' | 'android_seeso' | 'android_eyedid';
 
 /** 트래킹 상태 (CRGaze 전용) */
-export const enum GazeTrackingState {
+export enum GazeTrackingState {
   TRACKING = 0,
   BLINK = 1,
   LOST = 2,
