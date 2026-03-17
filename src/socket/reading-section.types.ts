@@ -25,6 +25,14 @@ export interface ViewerRect {
   height: number;
 }
 
+/** 뷰어 영역의 pixel 기준 사각형 — 재생 뷰어 배치용 */
+export interface ViewerRectPx {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
 /** 뷰어 스냅샷 (소켓 통신용 - 현재 읽기 상태) */
 export interface ViewerSnapshot {
   viewMode: 'scroll' | 'page';
@@ -50,6 +58,8 @@ export interface ViewerSnapshot {
   screenWidth?: number;
   /** 녹화 당시 전체 화면 크기 (window.innerHeight) */
   screenHeight?: number;
+  /** 뷰어 영역의 pixel 기준 사각형 — 재생 뷰어 배치용 */
+  viewerRectPx?: ViewerRectPx;
 }
 
 /** 책/섹션 메타데이터 */
