@@ -46,6 +46,10 @@ export interface ViewerSnapshot {
   translate?: TranslateSnapshot | null;
   /** 렌더링된 텍스트의 워드 간 평균 거리 (px) — reading saccade 판정용 */
   wordAvgDistancePx?: number;
+  /** 녹화 당시 전체 화면 크기 (window.innerWidth) */
+  screenWidth?: number;
+  /** 녹화 당시 전체 화면 크기 (window.innerHeight) */
+  screenHeight?: number;
 }
 
 /** 책/섹션 메타데이터 */
