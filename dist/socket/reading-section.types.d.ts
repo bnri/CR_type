@@ -30,6 +30,8 @@ export interface ViewerSnapshot {
     audio?: AudioSnapshot;
     range?: RangeSnapshot | null;
     translate?: TranslateSnapshot | null;
+    /** 렌더링된 텍스트의 워드 간 평균 거리 (px) — reading saccade 판정용 */
+    wordAvgDistancePx?: number;
 }
 /** 책/섹션 메타데이터 */
 export interface SessionMeta {
