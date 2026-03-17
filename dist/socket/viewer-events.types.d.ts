@@ -172,6 +172,8 @@ export type RecordingSnapshot = {
     audio?: AudioSnapshot;
     range?: RangeSnapshot | null;
     translate?: TranslateSnapshot | null;
+    /** 렌더링된 run 간 수평 평균 거리 (px) — reading saccade 판정용 */
+    wordAvgDistancePx?: number;
 };
 /** 녹화 청크 */
 export type RecordingChunk = {
