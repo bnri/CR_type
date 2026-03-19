@@ -29,7 +29,7 @@ export type CRViewerState = {
     viewportHeight: number;
 };
 /** 뷰어 이벤트 타입 */
-export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'calibration_gate_open' | 'calibration_gate_close' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress';
+export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'reading_gate_open' | 'reading_gate_close' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress';
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
     status: 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error';
@@ -140,11 +140,11 @@ export type CalibrationEndEvent = ViewerEventBase<'calibration_end', {
     accuracyDeg?: number;
 }>;
 /** Swal 다이얼로그 표시 시작 — 이 구간은 etc 시간으로 분류됨 */
-export type CalibrationGateOpenEvent = ViewerEventBase<'calibration_gate_open', {
+export type CalibrationGateOpenEvent = ViewerEventBase<'reading_gate_open', {
     reason?: string;
 }>;
 /** Swal 다이얼로그 완료 (선택 완료 or 닫힘) */
-export type CalibrationGateCloseEvent = ViewerEventBase<'calibration_gate_close', {
+export type CalibrationGateCloseEvent = ViewerEventBase<'reading_gate_close', {
     action: 'calibrate' | 'skip';
 }>;
 export type ShowGazeChangeEvent = ViewerEventBase<'show_gaze_change', {
