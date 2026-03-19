@@ -29,7 +29,7 @@ export type CRViewerState = {
     viewportHeight: number;
 };
 /** 뷰어 이벤트 타입 */
-export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress';
+export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'calibration_gate_open' | 'calibration_gate_close' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress';
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
     status: 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error';
@@ -139,6 +139,14 @@ export type CalibrationEndEvent = ViewerEventBase<'calibration_end', {
     accuracyPx?: number;
     accuracyDeg?: number;
 }>;
+/** Swal 다이얼로그 표시 시작 — 이 구간은 etc 시간으로 분류됨 */
+export type CalibrationGateOpenEvent = ViewerEventBase<'calibration_gate_open', {
+    reason?: string;
+}>;
+/** Swal 다이얼로그 완료 (선택 완료 or 닫힘) */
+export type CalibrationGateCloseEvent = ViewerEventBase<'calibration_gate_close', {
+    action: 'calibrate' | 'skip';
+}>;
 export type ShowGazeChangeEvent = ViewerEventBase<'show_gaze_change', {
     showGaze: boolean;
 }>;
@@ -150,7 +158,7 @@ export type CalibrationProgressEvent = ViewerEventBase<'calibration_progress', {
     total: number;
 }>;
 /** 모든 뷰어 이벤트 타입 (Union) */
-export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent;
+export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | CalibrationGateOpenEvent | CalibrationGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent;
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 /** 저장용 이벤트 (any type) */
 export type StoredEvent = StoredViewerEvent<ViewerEventType, unknown>;

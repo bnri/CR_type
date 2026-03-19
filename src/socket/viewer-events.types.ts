@@ -58,6 +58,8 @@ export type ViewerEventType =
   | 'translate_modal_close'
   | 'calibration_start'
   | 'calibration_end'
+  | 'calibration_gate_open'
+  | 'calibration_gate_close'
   | 'show_gaze_change'
   | 'ask_calibration'
   | 'calibration_progress';
@@ -181,6 +183,18 @@ export type CalibrationEndEvent = ViewerEventBase<
   }
 >;
 
+// ── 캘리브레이션 게이트 이벤트 (섹션 이동 시 Swal 표시 구간) ──
+/** Swal 다이얼로그 표시 시작 — 이 구간은 etc 시간으로 분류됨 */
+export type CalibrationGateOpenEvent = ViewerEventBase<
+  'calibration_gate_open',
+  { reason?: string }
+>;
+/** Swal 다이얼로그 완료 (선택 완료 or 닫힘) */
+export type CalibrationGateCloseEvent = ViewerEventBase<
+  'calibration_gate_close',
+  { action: 'calibrate' | 'skip' }
+>;
+
 // ── 시선추적 이벤트 ──
 export type ShowGazeChangeEvent = ViewerEventBase<
   'show_gaze_change',
@@ -217,6 +231,8 @@ export type ViewerEvent =
   | TranslateModalCloseEvent
   | CalibrationStartEvent
   | CalibrationEndEvent
+  | CalibrationGateOpenEvent
+  | CalibrationGateCloseEvent
   | ShowGazeChangeEvent
   | AskCalibrationEvent
   | CalibrationProgressEvent;
