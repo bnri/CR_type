@@ -139,13 +139,13 @@ export type CalibrationEndEvent = ViewerEventBase<'calibration_end', {
     accuracyPx?: number;
     accuracyDeg?: number;
 }>;
-/** Swal 다이얼로그 표시 시작 — 이 구간은 etc 시간으로 분류됨 */
-export type CalibrationGateOpenEvent = ViewerEventBase<'reading_gate_open', {
+/** Swal/dialog 표시 시작 — 이 구간은 etc 시간으로 분류됨 */
+export type ReadingGateOpenEvent = ViewerEventBase<'reading_gate_open', {
     reason?: string;
 }>;
-/** Swal 다이얼로그 완료 (선택 완료 or 닫힘) */
-export type CalibrationGateCloseEvent = ViewerEventBase<'reading_gate_close', {
-    action: 'calibrate' | 'skip';
+/** Swal/dialog 완료 (선택 완료 or 닫힘) */
+export type ReadingGateCloseEvent = ViewerEventBase<'reading_gate_close', {
+    action: 'calibrate' | 'skip' | 'cancel' | string;
 }>;
 export type ShowGazeChangeEvent = ViewerEventBase<'show_gaze_change', {
     showGaze: boolean;
@@ -158,7 +158,7 @@ export type CalibrationProgressEvent = ViewerEventBase<'calibration_progress', {
     total: number;
 }>;
 /** 모든 뷰어 이벤트 타입 (Union) */
-export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | CalibrationGateOpenEvent | CalibrationGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent;
+export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ReadingGateOpenEvent | ReadingGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent;
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 /** 저장용 이벤트 (any type) */
 export type StoredEvent = StoredViewerEvent<ViewerEventType, unknown>;
