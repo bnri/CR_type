@@ -516,8 +516,53 @@ export interface ReadingAccumulatedState {
   quizScore: number;
   quizMaxScore: number;
 
+  // ── 읽기 속도 (GI velocity 기반) ──
+  /** 속도 필터 통과한 GI 수 (WPM 계산용) */
+  validReadGIs: number;
+  /** 유효 읽기 시간 ms (유효 GI가 있는 window만 포함) */
+  validReadMs: number;
+  /** 추정 WPM (800 초과 시 null) */
+  estimatedWpm: number | null;
+
   // 종합 (실시간 추정)
   estimatedReadingScore: number;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 클라이언트 측 세션 전체 요약 (읽기 세션당 1개)
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 읽기 세션 전체를 아우르는 요약 — 세션 종료 시 localStorage 저장 + 추후 서버 전송
+ * - 섹션 전환마다 accumulated 병합하여 누적
+ * - accumulated는 섹션 단위 리셋, sessionSummary는 세션 동안 유지
+ */
+export interface ReadingSessionSummary {
+  // ── GI 기반 (시선 무관) ──
+  /** 세션 전체 GI progress (0~1, 전 섹션 합산) */
+  totalExposedCoverage: number;
+  /** 속도 필터 통과한 총 GI 수 */
+  totalValidReadGIs: number;
+  /** 유효 읽기 시간 (ms) */
+  totalValidReadMs: number;
+  /** 추정 WPM (800 초과 시 null) */
+  estimatedWpm: number | null;
+
+  // ── 눈깜빡임 ──
+  totalBlinks: number;
+  /** 분당 깜빡임 (totalValidReadMs 기준) */
+  blkPerMinute: number | null;
+
+  // ── 어휘/퀴즈 ──
+  totalWordLookups: number;
+  lookedUpWords: LookedUpWord[];
+  totalQuizScore: number;
+  totalQuizMaxScore: number;
+  quizResults: QuizAttemptResult[];
+
+  // ── 시선 기반 (gaze) — 추후 구현 ──
+  /** 집중듣기 점수: 오디오+시선 GI LINEBREAK 패턴 기반 (placeholder) */
+  readingPlayFocusGrade: number | null;
 }
 
 // ═══════════════════════════════════════════════════════════════
