@@ -116,5 +116,7 @@ export type SectionData = {
     images?: SectionImage[];
     audios?: SectionAudio[];
     quizzes?: SectionQuiz[];
+    /** 섹션 단어 수 (SectionSummary.word_count에서 복사) */
+    word_count?: number;
 };
 export {};
