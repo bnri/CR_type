@@ -8,10 +8,10 @@ export declare enum GazeTrackingState {
 }
 /** 단일 시선 샘플 (0~1 정규화 좌표) */
 export interface GazeData {
-    /** 정규화된 X 좌표 (0~1, 좌→우) */
-    x: number;
-    /** 정규화된 Y 좌표 (0~1, 상→하) */
-    y: number;
+    /** 정규화된 X 좌표 (0~1, 좌→우). BLINK/LOST 시 null */
+    x: number | null;
+    /** 정규화된 Y 좌표 (0~1, 상→하). BLINK/LOST 시 null */
+    y: number | null;
     /** 타임스탬프 (ms, Date.now()) */
     t: number;
     /** 모델 신뢰도 (0~1) */
