@@ -126,6 +126,9 @@ export interface ReadingProgressReport {
 
   /** 소요 시간 ms */
   durationMs: number;
+
+  /** 실시간 세션 상태 — 서버 Redis 저장용 (5초마다 갱신) */
+  liveState?: LiveReadingState;
 }
 
 // ═══════════════════════════════════════════════════════════════

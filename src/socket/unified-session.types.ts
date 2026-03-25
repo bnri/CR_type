@@ -21,6 +21,7 @@
 
 import type { ViewerSnapshot, SessionMeta, SessionStats } from './reading-section.types';
 import type { ViewerEvent } from './viewer-events.types';
+import type { ReadingSessionRecord } from '../book/child-reading-progress.type';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // 기본 참조 타입
@@ -228,6 +229,8 @@ export interface ViewerClosePayload {
   durationMs?: number;
   finalSnapshot?: ViewerSnapshot;
   stats?: SessionStats;
+  /** 클라이언트가 구축한 세션 전체 기록 — 서버 MongoDB 저장용 */
+  sessionRecord?: ReadingSessionRecord;
 }
 
 /**
