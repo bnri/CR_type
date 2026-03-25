@@ -97,6 +97,8 @@ export interface ReadingProgressReport {
     quizResults: QuizAttemptResult[];
     /** 소요 시간 ms */
     durationMs: number;
+    /** 실시간 세션 상태 — 서버 Redis 저장용 (5초마다 갱신) */
+    liveState?: LiveReadingState;
 }
 /** 읽기세션 내 1개 섹션 읽기 구간 스냅샷 */
 export interface SegmentSnapshot {
