@@ -217,6 +217,8 @@ export interface SectionMergedProgress {
   mergedRanges: ReadRange[];
   /** mergedRanges unique GI 수 / sectionGIMax */
   coverage: number; // 0~1
+  /** 이 섹션에서 마지막으로 읽은 GI 위치 */
+  lastGlobalIndex: number;
 }
 
 /** 책별 누적 진도 */
