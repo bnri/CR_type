@@ -126,6 +126,9 @@ export interface ReadingProgressReport {
 
   /** 소요 시간 ms */
   durationMs: number;
+
+  /** 실시간 세션 상태 — 서버 Redis 저장용 (5초마다 갱신) */
+  liveState?: LiveReadingState;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -214,6 +217,8 @@ export interface SectionMergedProgress {
   mergedRanges: ReadRange[];
   /** mergedRanges unique GI 수 / sectionGIMax */
   coverage: number; // 0~1
+  /** 이 섹션에서 마지막으로 읽은 GI 위치 */
+  lastGlobalIndex: number;
 }
 
 /** 책별 누적 진도 */
