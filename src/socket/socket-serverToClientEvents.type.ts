@@ -3,6 +3,7 @@ import { ViewerSnapshot } from "./reading-section.types";
 import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { UnifiedSessionInfo, SessionSegmentChangedPayload, UnifiedChunkFile, GazeDataPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
+import { LiveReadingState } from "../book/child-reading-progress.type";
 
 export interface ServerToClientEvents {
   connect: () => void;
@@ -35,6 +36,12 @@ export interface ServerToClientEvents {
   'session:chunk': (payload: { readingSessionId: string; segmentIndex: number; chunk: UnifiedChunkFile }) => void;
   /** 세션 에러 */
   'session:error': (payload: { message: string }) => void;
+
+  // === 실시간 읽기 모니터링 (부모 앱) ===
+  /** 자녀 읽기 실시간 상태 (5초 주기) */
+  'reading:child-live': (payload: LiveReadingState) => void;
+  /** 자녀 읽기 종료 (세션 종료 또는 TTL 만료) */
+  'reading:child-offline': (payload: { testeeIdx: number }) => void;
 }
 
 export interface NoticeToClientEvents {

@@ -28,6 +28,12 @@ export interface ClientToServerEvents {
   // === 읽기 진행 ===
   /** 읽기 진행 보고 (5초 주기 자동저장) */
   'progress:reading-save': (payload: ReadingProgressReport) => void;
+
+  // === 실시간 읽기 모니터링 구독 (부모 앱) ===
+  /** 자녀 읽기 상태 구독 시작 */
+  'reading:watch-children': (childIdxList: number[]) => void;
+  /** 자녀 읽기 상태 구독 해제 */
+  'reading:unwatch-children': () => void;
 }
 
 
@@ -38,6 +44,14 @@ export interface NoticeToServerEvents {
 /** 사용자 관리 이벤트 (Admin용 - 연결된 사용자 목록 조회) */
 export interface UserAdminToServerEvents {
   'user:list': () => void;
+}
+
+/** 실시간 읽기 모니터링 구독 (Admin용) */
+export interface ReadingWatchAdminToServerEvents {
+  /** 자녀 읽기 상태 구독 시작 */
+  'reading:watch-children': (childIdxList: number[]) => void;
+  /** 자녀 읽기 상태 구독 해제 */
+  'reading:unwatch-children': () => void;
 }
 
 /** 통합 세션 관리 이벤트 (Admin/Parent용) */
@@ -64,4 +78,5 @@ export interface AdminClientToServerEvents
   extends ClientToServerEvents,
           NoticeToServerEvents,
           UserAdminToServerEvents,
-          SessionAdminToServerEvents {}
+          SessionAdminToServerEvents,
+          ReadingWatchAdminToServerEvents {}
