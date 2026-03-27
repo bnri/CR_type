@@ -95,10 +95,13 @@ export interface ReadingProgressReport {
   /** 섹션 전체 GI 수 (ViewerSnapshot.totalItems) */
   sectionGIMax: number;
 
-  /** 이 구간에서 뷰포트에 표시된 GI 범위의 최소값 */
+  /** @deprecated — exposedRanges 사용 */
   exposedFrom: number;
-  /** 이 구간에서 뷰포트에 표시된 GI 범위의 최대값 */
+  /** @deprecated — exposedRanges 사용 */
   exposedTo: number;
+
+  /** 이 구간에서 속도필터 통과한 읽기 GI 범위들 (빈 구간 보존) */
+  exposedRanges?: ReadRange[];
 
   /**
    * GI별 시선 dwell time (ms)
