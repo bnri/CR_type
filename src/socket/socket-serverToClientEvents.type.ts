@@ -2,7 +2,7 @@ import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./soc
 import { ViewerSnapshot } from "./reading-section.types";
 import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { UnifiedSessionInfo, SessionSegmentChangedPayload, UnifiedChunkFile, GazeDataPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
+import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionSubscribedPayload, UnifiedChunkFile, GazeDataPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
 import { LiveReadingState } from "../book/child-reading-progress.type";
 
 export interface ServerToClientEvents {
@@ -23,7 +23,7 @@ export interface ServerToClientEvents {
   /** 세션 종료됨 (서버 확인) */
   'session:ended': (payload: { readingSessionId: string; durationMs?: number }) => void;
   /** 구독 성공 (Parent가 자녀 세션 구독 시) */
-  'session:subscribed': (payload: { readingSessionId: string; snapshot: ViewerSnapshot | null }) => void;
+  'session:subscribed': (payload: SessionSubscribedPayload) => void;
   /** 구독 중인 세션의 진행 상황 */
   'session:progress': (payload: { readingSessionId: string; snapshot: ViewerSnapshot }) => void;
   /** 구독 중인 세션의 이벤트 */
@@ -57,7 +57,7 @@ export interface SessionServerToClientEvents {
   /** 세션 종료됨 */
   'session:ended': (payload: { readingSessionId: string; durationMs?: number }) => void;
   /** 구독 성공 */
-  'session:subscribed': (payload: { readingSessionId: string; snapshot: ViewerSnapshot | null }) => void;
+  'session:subscribed': (payload: SessionSubscribedPayload) => void;
   /** 구독 중인 세션 진행 상황 */
   'session:progress': (payload: { readingSessionId: string; snapshot: ViewerSnapshot }) => void;
   /** 구독 중인 세션 이벤트 */

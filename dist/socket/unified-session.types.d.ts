@@ -8,6 +8,13 @@ export interface ChunkRef {
     key: string;
     eventCount: number;
 }
+/** session:subscribed 응답 페이로드 */
+export interface SessionSubscribedPayload {
+    readingSessionId: string;
+    snapshot: ViewerSnapshot | null;
+    /** 과거 chunk 참조 목록 (seek용 — 시간범위 + S3 키) */
+    chunkRefs?: ChunkRef[];
+}
 /** 통합 세션 상태 */
 export type UnifiedSessionStatus = 'active' | 'ended';
 /** 통합 세그먼트 상태 */
