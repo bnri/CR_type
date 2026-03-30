@@ -164,8 +164,17 @@ export type CalibrationProgressEvent = ViewerEventBase<'calibration_progress', {
     current: number;
     total: number;
 }>;
+export type QuizStartEvent = ViewerEventBase<'quiz_start', {
+    quizId?: string;
+}>;
+export type QuizEndEvent = ViewerEventBase<'quiz_end', {
+    quizId?: string;
+    score?: number;
+    total?: number;
+    durationMs?: number;
+}>;
 /** 모든 뷰어 이벤트 타입 (Union) */
-export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ReadingGateOpenEvent | ReadingGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent | ScreenResizeEvent;
+export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ReadingGateOpenEvent | ReadingGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent | QuizStartEvent | QuizEndEvent | ScreenResizeEvent;
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 /** 저장용 이벤트 (any type) */
 export type StoredEvent = StoredViewerEvent<ViewerEventType, unknown>;
