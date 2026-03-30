@@ -44,7 +44,7 @@ export interface ViewerSnapshot {
   totalItems: number;
   viewportWidth?: number;
   viewportHeight?: number;
-  /** 뷰어 영역의 window 기준 정규화 사각형 (gaze → viewer 좌표 변환용) */
+  /** @deprecated viewerRectPx 사용 */
   viewerRect?: ViewerRect;
   viewerState?: Partial<CRViewerState>;
   anchorGI?: number;
