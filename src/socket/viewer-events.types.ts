@@ -2,6 +2,8 @@
 // 뷰어 이벤트 타입 정의 (source of truth)
 // CR_viewer의 viewerEvent.types.ts에서 이관
 
+import type { ViewerRectPx } from './reading-section.types';
+
 // ===================== 뷰어 상태 타입 =====================
 
 export type ViewerMode = 'scroll' | 'page';
@@ -48,6 +50,7 @@ export type ViewerEventType =
   | 'loading_start'
   | 'loading_end'
   | 'viewport_resize'
+  | 'screen_resize'
   | 'audio_control'
   | 'range_select'
   | 'range_change'
@@ -133,7 +136,11 @@ export type LoadingStartEvent = ViewerEventBase<'loading_start', Record<string, 
 export type LoadingEndEvent = ViewerEventBase<'loading_end', { duration: number }>;
 export type ViewportResizeEvent = ViewerEventBase<
   'viewport_resize',
-  { width: number; height: number }
+  { width: number; height: number; viewerRectPx?: ViewerRectPx }
+>;
+export type ScreenResizeEvent = ViewerEventBase<
+  'screen_resize',
+  { screenWidth: number; screenHeight: number; viewerRectPx?: ViewerRectPx }
 >;
 export type AudioControlEvent = ViewerEventBase<'audio_control', { action: AudioControlAction }>;
 
