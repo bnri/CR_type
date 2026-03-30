@@ -30,7 +30,7 @@ export type CRViewerState = {
     viewportHeight: number;
 };
 /** 뷰어 이벤트 타입 */
-export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'screen_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'reading_gate_open' | 'reading_gate_close' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress';
+export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'screen_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'reading_gate_open' | 'reading_gate_close' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress' | 'quiz_start' | 'quiz_end';
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
     status: 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error';

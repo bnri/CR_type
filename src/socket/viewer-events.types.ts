@@ -65,7 +65,9 @@ export type ViewerEventType =
   | 'reading_gate_close'
   | 'show_gaze_change'
   | 'ask_calibration'
-  | 'calibration_progress';
+  | 'calibration_progress'
+  | 'quiz_start'
+  | 'quiz_end';
 
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
@@ -215,6 +217,13 @@ export type AskCalibrationEvent = ViewerEventBase<
 export type CalibrationProgressEvent = ViewerEventBase<
   'calibration_progress',
   { current: number; total: number }
+>;
+
+// ── 퀴즈 이벤트 ──
+export type QuizStartEvent = ViewerEventBase<'quiz_start', { quizId?: string }>;
+export type QuizEndEvent = ViewerEventBase<
+  'quiz_end',
+  { quizId?: string; score?: number; total?: number; durationMs?: number }
 >;
 
 /** 모든 뷰어 이벤트 타입 (Union) */
