@@ -64,7 +64,6 @@ export interface ReadingStateRatios {
     reading: number;
     scanning: number;
     blink: number;
-    away: number;
     lost: number;
     etc: number;
 }
