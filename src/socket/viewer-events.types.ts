@@ -253,6 +253,8 @@ export type ViewerEvent =
   | ShowGazeChangeEvent
   | AskCalibrationEvent
   | CalibrationProgressEvent
+  | QuizStartEvent
+  | QuizEndEvent
   | ScreenResizeEvent;
 
 export type ViewerEventCallback = (event: ViewerEvent) => void;
