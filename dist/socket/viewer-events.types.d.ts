@@ -165,7 +165,7 @@ export type CalibrationProgressEvent = ViewerEventBase<'calibration_progress', {
     total: number;
 }>;
 /** 모든 뷰어 이벤트 타입 (Union) */
-export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ReadingGateOpenEvent | ReadingGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent;
+export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ReadingGateOpenEvent | ReadingGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent | ScreenResizeEvent;
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 /** 저장용 이벤트 (any type) */
 export type StoredEvent = StoredViewerEvent<ViewerEventType, unknown>;
