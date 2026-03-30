@@ -58,6 +58,8 @@ export interface ViewerSnapshot {
   screenHeight?: number;
   /** 뷰어 영역의 pixel 기준 사각형 — 재생 뷰어 배치용 */
   viewerRectPx?: ViewerRectPx;
+  /** 스냅샷 시점 상태 오버레이 (캘리브레이션, 퀴즈 등 진행 중 메시지) */
+  statusOverlay?: string | null;
 }
 
 /** 책/섹션 메타데이터 */
