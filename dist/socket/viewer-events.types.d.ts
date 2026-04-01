@@ -1,3 +1,4 @@
+import type { ViewerRectPx } from './reading-section.types';
 export type ViewerMode = 'scroll' | 'page';
 export type ViewerTheme = 'light' | 'dark' | 'sepia' | 'green';
 export type PointerStyle = 'highlight' | 'underline';
@@ -29,7 +30,7 @@ export type CRViewerState = {
     viewportHeight: number;
 };
 /** 뷰어 이벤트 타입 */
-export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'reading_gate_open' | 'reading_gate_close' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress';
+export type ViewerEventType = 'global_index_change' | 'scroll' | 'page_change' | 'section_change' | 'mode_change' | 'settings_change' | 'render_start' | 'loading_start' | 'loading_end' | 'viewport_resize' | 'screen_resize' | 'audio_control' | 'range_select' | 'range_change' | 'range_clear' | 'translate_request' | 'translate_loading_start' | 'translate_loading_end' | 'translate_modal_close' | 'calibration_start' | 'calibration_end' | 'reading_gate_open' | 'reading_gate_close' | 'show_gaze_change' | 'ask_calibration' | 'calibration_progress' | 'quiz_start' | 'quiz_end';
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
     status: 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error';
@@ -96,6 +97,12 @@ export type LoadingEndEvent = ViewerEventBase<'loading_end', {
 export type ViewportResizeEvent = ViewerEventBase<'viewport_resize', {
     width: number;
     height: number;
+    viewerRectPx?: ViewerRectPx;
+}>;
+export type ScreenResizeEvent = ViewerEventBase<'screen_resize', {
+    screenWidth: number;
+    screenHeight: number;
+    viewerRectPx?: ViewerRectPx;
 }>;
 export type AudioControlEvent = ViewerEventBase<'audio_control', {
     action: AudioControlAction;
@@ -157,8 +164,17 @@ export type CalibrationProgressEvent = ViewerEventBase<'calibration_progress', {
     current: number;
     total: number;
 }>;
+export type QuizStartEvent = ViewerEventBase<'quiz_start', {
+    quizId?: string;
+}>;
+export type QuizEndEvent = ViewerEventBase<'quiz_end', {
+    quizId?: string;
+    score?: number;
+    total?: number;
+    durationMs?: number;
+}>;
 /** 모든 뷰어 이벤트 타입 (Union) */
-export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ReadingGateOpenEvent | ReadingGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent;
+export type ViewerEvent = GlobalIndexChangeEvent | ScrollEvent | PageChangeEvent | SectionChangeEvent | ModeChangeEvent | SettingsChangeEvent | RenderStartEvent | LoadingStartEvent | LoadingEndEvent | ViewportResizeEvent | AudioControlEvent | RangeSelectEvent | RangeChangeEvent | RangeClearEvent | TranslateRequestEvent | TranslateLoadingStartEvent | TranslateLoadingEndEvent | TranslateModalCloseEvent | CalibrationStartEvent | CalibrationEndEvent | ReadingGateOpenEvent | ReadingGateCloseEvent | ShowGazeChangeEvent | AskCalibrationEvent | CalibrationProgressEvent | QuizStartEvent | QuizEndEvent | ScreenResizeEvent;
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 /** 저장용 이벤트 (any type) */
 export type StoredEvent = StoredViewerEvent<ViewerEventType, unknown>;

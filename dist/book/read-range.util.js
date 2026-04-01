@@ -7,8 +7,11 @@ exports.mergeReadRanges = mergeReadRanges;
 exports.sumReadRanges = sumReadRanges;
 exports.gisToRanges = gisToRanges;
 exports.filterDwellToRanges = filterDwellToRanges;
-/** 정렬된 ranges 배열에 newRange를 머지 (겹침/인접 합산) */
-function mergeReadRange(ranges, newRange) {
+/**
+ * 정렬된 ranges 배열에 newRange를 머지 (겹침/인접 합산)
+ * @param gap — 허용 gap (기본 3: GI 3개 이내 빈 구간은 합침)
+ */
+function mergeReadRange(ranges, newRange, gap = 3) {
     if (ranges.length === 0)
         return [newRange];
     const result = [];
@@ -19,10 +22,10 @@ function mergeReadRange(ranges, newRange) {
             result.push(r);
             continue;
         }
-        if (r.to + 1 < merged.from) {
+        if (r.to + gap < merged.from) {
             result.push(r);
         }
-        else if (r.from > merged.to + 1) {
+        else if (r.from > merged.to + gap) {
             result.push(merged);
             result.push(r);
             inserted = true;

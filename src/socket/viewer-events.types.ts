@@ -2,6 +2,8 @@
 // 뷰어 이벤트 타입 정의 (source of truth)
 // CR_viewer의 viewerEvent.types.ts에서 이관
 
+import type { ViewerRectPx } from './reading-section.types';
+
 // ===================== 뷰어 상태 타입 =====================
 
 export type ViewerMode = 'scroll' | 'page';
@@ -48,6 +50,7 @@ export type ViewerEventType =
   | 'loading_start'
   | 'loading_end'
   | 'viewport_resize'
+  | 'screen_resize'
   | 'audio_control'
   | 'range_select'
   | 'range_change'
@@ -62,7 +65,9 @@ export type ViewerEventType =
   | 'reading_gate_close'
   | 'show_gaze_change'
   | 'ask_calibration'
-  | 'calibration_progress';
+  | 'calibration_progress'
+  | 'quiz_start'
+  | 'quiz_end';
 
 /** 오디오 상태 스냅샷 */
 export type AudioSnapshot = {
@@ -133,7 +138,11 @@ export type LoadingStartEvent = ViewerEventBase<'loading_start', Record<string, 
 export type LoadingEndEvent = ViewerEventBase<'loading_end', { duration: number }>;
 export type ViewportResizeEvent = ViewerEventBase<
   'viewport_resize',
-  { width: number; height: number }
+  { width: number; height: number; viewerRectPx?: ViewerRectPx }
+>;
+export type ScreenResizeEvent = ViewerEventBase<
+  'screen_resize',
+  { screenWidth: number; screenHeight: number; viewerRectPx?: ViewerRectPx }
 >;
 export type AudioControlEvent = ViewerEventBase<'audio_control', { action: AudioControlAction }>;
 
@@ -210,6 +219,13 @@ export type CalibrationProgressEvent = ViewerEventBase<
   { current: number; total: number }
 >;
 
+// ── 퀴즈 이벤트 ──
+export type QuizStartEvent = ViewerEventBase<'quiz_start', { quizId?: string }>;
+export type QuizEndEvent = ViewerEventBase<
+  'quiz_end',
+  { quizId?: string; score?: number; total?: number; durationMs?: number }
+>;
+
 /** 모든 뷰어 이벤트 타입 (Union) */
 export type ViewerEvent =
   | GlobalIndexChangeEvent
@@ -236,7 +252,10 @@ export type ViewerEvent =
   | ReadingGateCloseEvent
   | ShowGazeChangeEvent
   | AskCalibrationEvent
-  | CalibrationProgressEvent;
+  | CalibrationProgressEvent
+  | QuizStartEvent
+  | QuizEndEvent
+  | ScreenResizeEvent;
 
 export type ViewerEventCallback = (event: ViewerEvent) => void;
 

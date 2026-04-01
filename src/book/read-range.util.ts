@@ -3,16 +3,19 @@
 
 import type { ReadRange } from './child-reading-progress.type';
 
-/** 정렬된 ranges 배열에 newRange를 머지 (겹침/인접 합산) */
-export function mergeReadRange(ranges: ReadRange[], newRange: ReadRange): ReadRange[] {
+/**
+ * 정렬된 ranges 배열에 newRange를 머지 (겹침/인접 합산)
+ * @param gap — 허용 gap (기본 3: GI 3개 이내 빈 구간은 합침)
+ */
+export function mergeReadRange(ranges: ReadRange[], newRange: ReadRange, gap = 3): ReadRange[] {
   if (ranges.length === 0) return [newRange];
   const result: ReadRange[] = [];
   let merged = { ...newRange };
   let inserted = false;
   for (const r of ranges) {
     if (inserted) { result.push(r); continue; }
-    if (r.to + 1 < merged.from) { result.push(r); }
-    else if (r.from > merged.to + 1) { result.push(merged); result.push(r); inserted = true; }
+    if (r.to + gap < merged.from) { result.push(r); }
+    else if (r.from > merged.to + gap) { result.push(merged); result.push(r); inserted = true; }
     else { merged = { from: Math.min(merged.from, r.from), to: Math.max(merged.to, r.to) }; }
   }
   if (!inserted) result.push(merged);

@@ -1,6 +1,9 @@
 import type { ReadRange } from './child-reading-progress.type';
-/** 정렬된 ranges 배열에 newRange를 머지 (겹침/인접 합산) */
-export declare function mergeReadRange(ranges: ReadRange[], newRange: ReadRange): ReadRange[];
+/**
+ * 정렬된 ranges 배열에 newRange를 머지 (겹침/인접 합산)
+ * @param gap — 허용 gap (기본 3: GI 3개 이내 빈 구간은 합침)
+ */
+export declare function mergeReadRange(ranges: ReadRange[], newRange: ReadRange, gap?: number): ReadRange[];
 /** 여러 newRanges를 기존 ranges에 순차 머지 */
 export declare function mergeReadRanges(existing: ReadRange[], newRanges: ReadRange[]): ReadRange[];
 /** ranges 내 고유 GI 총 개수 (각 구간 길이 합) */
