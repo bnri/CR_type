@@ -1,5 +1,5 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
-import { SessionProgressPayload, SessionEventPayload, SessionSubscribePayload } from "./reading-section.types";
+import { SessionProgressPayload, SessionEventPayload } from "./reading-section.types";
 import { ViewerOpenPayload, ViewerClosePayload, GazeDataPayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload } from "./unified-session.types";
 import { ReadingProgressReport } from "../book/child-reading-progress.type";
 export interface ClientToServerEvents {
@@ -16,10 +16,6 @@ export interface ClientToServerEvents {
     'session:event': (payload: SessionEventPayload) => void;
     /** 시선 데이터 전송 (~1초 간격) */
     'session:gaze': (payload: GazeDataPayload) => void;
-    /** 세션 구독 (Parent가 자녀 세션 모니터링) */
-    'session:subscribe': (payload: SessionSubscribePayload) => void;
-    /** 세션 구독 해제 */
-    'session:unsubscribe': (payload: SessionSubscribePayload) => void;
     /** 읽기 진행 보고 (5초 주기 자동저장) */
     'progress:reading-save': (payload: ReadingProgressReport) => void;
     /** 자녀 읽기 상태 구독 시작 */
@@ -45,10 +41,6 @@ export interface ReadingWatchAdminToServerEvents {
 export interface SessionAdminToServerEvents {
     /** 활성 세션 목록 조회 */
     'session:list': () => void;
-    /** 세션 구독 (실시간 모니터링) */
-    'session:subscribe': (payload: SessionSubscribePayload) => void;
-    /** 세션 구독 해제 */
-    'session:unsubscribe': (payload: SessionSubscribePayload) => void;
     /** 세션 이력 목록 조회 (S3) */
     'session:list-history': (payload: SessionHistoryListPayload) => void;
     /** 세션 이력 상세 조회 (S3) */

@@ -1,8 +1,6 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
-import { ViewerSnapshot } from "./reading-section.types";
-import { ViewerEvent } from "./viewer-events.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionSubscribedPayload, UnifiedChunkFile, GazeDataPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
+import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
 import { LiveReadingState } from "../book/child-reading-progress.type";
 export interface ServerToClientEvents {
     connect: () => void;
@@ -24,31 +22,6 @@ export interface ServerToClientEvents {
     'session:ended': (payload: {
         readingSessionId: string;
         durationMs?: number;
-    }) => void;
-    /** 구독 성공 (Parent가 자녀 세션 구독 시) */
-    'session:subscribed': (payload: SessionSubscribedPayload) => void;
-    /** 구독 중인 세션의 진행 상황 */
-    'session:progress': (payload: {
-        readingSessionId: string;
-        snapshot: ViewerSnapshot;
-    }) => void;
-    /** 구독 중인 세션의 이벤트 */
-    'session:events': (payload: {
-        readingSessionId: string;
-        events: ViewerEvent[];
-    }) => void;
-    /** 구독 중인 세션의 실시간 시선 데이터 (~1초 간격) */
-    'session:gaze': (payload: {
-        readingSessionId: string;
-        gazeData: GazeDataPayload;
-    }) => void;
-    /** 구독 중인 세션의 세그먼트 변경 (섹션 변경) */
-    'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
-    /** 구독 중인 세션의 청크 (10초 간격) */
-    'session:chunk': (payload: {
-        readingSessionId: string;
-        segmentIndex: number;
-        chunk: UnifiedChunkFile;
     }) => void;
     /** 세션 에러 */
     'session:error': (payload: {
@@ -79,31 +52,8 @@ export interface SessionServerToClientEvents {
         readingSessionId: string;
         durationMs?: number;
     }) => void;
-    /** 구독 성공 */
-    'session:subscribed': (payload: SessionSubscribedPayload) => void;
-    /** 구독 중인 세션 진행 상황 */
-    'session:progress': (payload: {
-        readingSessionId: string;
-        snapshot: ViewerSnapshot;
-    }) => void;
-    /** 구독 중인 세션 이벤트 */
-    'session:events': (payload: {
-        readingSessionId: string;
-        events: ViewerEvent[];
-    }) => void;
-    /** 구독 중인 세션 실시간 시선 데이터 (~1초 간격) */
-    'session:gaze': (payload: {
-        readingSessionId: string;
-        gazeData: GazeDataPayload;
-    }) => void;
     /** 세그먼트 변경 (섹션 변경) */
     'session:segment-changed': (payload: SessionSegmentChangedPayload) => void;
-    /** 실시간 청크 (10초 간격, 구독자에게) */
-    'session:chunk': (payload: {
-        readingSessionId: string;
-        segmentIndex: number;
-        chunk: UnifiedChunkFile;
-    }) => void;
     /** 에러 */
     'session:error': (payload: {
         message: string;

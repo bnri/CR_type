@@ -67,7 +67,3 @@ export interface SessionProgressPayload {
 export interface SessionEventPayload {
     events: ViewerEvent[];
 }
-/** 세션 구독 페이로드 */
-export interface SessionSubscribePayload {
-    readingSessionId: string;
-}

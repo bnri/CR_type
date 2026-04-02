@@ -8,13 +8,6 @@ export interface ChunkRef {
     key: string;
     eventCount: number;
 }
-/** session:subscribed 응답 페이로드 */
-export interface SessionSubscribedPayload {
-    readingSessionId: string;
-    snapshot: ViewerSnapshot | null;
-    /** 과거 chunk 참조 목록 (seek용 — 시간범위 + S3 키) */
-    chunkRefs?: ChunkRef[];
-}
 /** 통합 세션 상태 */
 export type UnifiedSessionStatus = 'active' | 'ended';
 /** 통합 세그먼트 상태 */
@@ -38,6 +31,15 @@ export interface GazeBatch {
  * - snapshot: 청크 시작 시점의 뷰어 상태 (Seek 시 초기화용)
  * - gazeData: 시선 추적 배치 데이터 (활성 시에만)
  */
+/** 5초 chunk 종료 시점의 읽기 분석 요약 */
+export interface ChunkReadingScanSummary {
+    readRatio: number;
+    validReadGIs: number;
+    totalReadMs: number;
+    totalAwayMs: number;
+    avgFixationMs: number;
+    metrics?: Record<string, number>;
+}
 export interface UnifiedChunkFile {
     startTimestamp: number;
     endTimestamp: number;
@@ -46,6 +48,8 @@ export interface UnifiedChunkFile {
     snapshot?: ViewerSnapshot;
     /** 시선 추적 데이터 배치 (~30FPS, 활성 시에만 포함) */
     gazeData?: GazeBatch[];
+    /** chunk 시점 읽기 분석 요약 (Phase 4) */
+    readingScanSummary?: ChunkReadingScanSummary;
 }
 /**
  * 통합 세그먼트 메타데이터
@@ -284,7 +288,6 @@ export interface ActiveUnifiedSession {
     currentSegment: ActiveUnifiedSegment | null;
     completedSegments: UnifiedSegmentSummary[];
     totalEvents: number;
-    subscribers: Set<string>;
     chunkIntervalHandle: ReturnType<typeof setInterval> | null;
 }
 /**

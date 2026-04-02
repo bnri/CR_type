@@ -22,3 +22,4 @@ __exportStar(require("./socket-message.types"), exports);
 __exportStar(require("./reading-section.types"), exports);
 __exportStar(require("./connected-user.types"), exports);
 __exportStar(require("./unified-session.types"), exports);
+__exportStar(require("./result-socket.types"), exports);
