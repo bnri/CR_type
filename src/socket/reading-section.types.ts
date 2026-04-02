@@ -88,3 +88,14 @@ export interface SessionProgressPayload {
 export interface SessionEventPayload {
   events: ViewerEvent[];
 }
+
+/** 5초 통합 데이터 페이로드 (session:data) — events + gaze + snapshot 한번에 전송 */
+export interface SessionDataPayload {
+  events: ViewerEvent[];
+  gaze?: {
+    samples: number[];
+    startTs: number;
+    endTs: number;
+  };
+  snapshot: ViewerSnapshot;
+}

@@ -1,6 +1,6 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
-import { SessionProgressPayload, SessionEventPayload } from "./reading-section.types";
-import { ViewerOpenPayload, ViewerClosePayload, GazeDataPayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload } from "./unified-session.types";
+import { SessionDataPayload } from "./reading-section.types";
+import { ViewerOpenPayload, ViewerClosePayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload } from "./unified-session.types";
 import { ReadingProgressReport } from "../book/child-reading-progress.type";
 
 
@@ -14,12 +14,8 @@ export interface ClientToServerEvents {
   'session:open': (payload: ViewerOpenPayload) => void;
   /** 뷰어 닫힘 (세션 종료) */
   'session:close': (payload: ViewerClosePayload) => void;
-  /** 진행 상황 (스냅샷 업데이트) */
-  'session:progress': (payload: SessionProgressPayload) => void;
-  /** 이벤트 배치 전송 */
-  'session:event': (payload: SessionEventPayload) => void;
-  /** 시선 데이터 전송 (~1초 간격) */
-  'session:gaze': (payload: GazeDataPayload) => void;
+  /** 5초 통합 데이터 (events + gaze + snapshot) */
+  'session:data': (payload: SessionDataPayload) => void;
   // === Live 시청 (chunk 기반) ===
   /** 자녀 세션 live 구독 (부모) */
   'live:subscribe': (payload: { readingSessionId: string }) => void;
