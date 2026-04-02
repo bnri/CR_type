@@ -27,6 +27,19 @@ export interface ServerToClientEvents {
     'session:error': (payload: {
         message: string;
     }) => void;
+    /** 새 chunk 저장 알림 (5초마다) — 데이터는 기존 API로 fetch */
+    'live:chunk-notify': (payload: {
+        readingSessionId: string;
+        segmentIndex: number;
+        chunkKey: string;
+        startTs: number;
+        endTs: number;
+    }) => void;
+    /** live 구독 중인 세션 종료 */
+    'live:session-ended': (payload: {
+        readingSessionId: string;
+        durationMs: number;
+    }) => void;
     /** 자녀 읽기 실시간 상태 (5초 주기) */
     'reading:child-live': (payload: LiveReadingState) => void;
     /** 자녀 읽기 종료 (세션 종료 또는 TTL 만료) */

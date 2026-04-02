@@ -16,6 +16,14 @@ export interface ClientToServerEvents {
     'session:event': (payload: SessionEventPayload) => void;
     /** 시선 데이터 전송 (~1초 간격) */
     'session:gaze': (payload: GazeDataPayload) => void;
+    /** 자녀 세션 live 구독 (부모) */
+    'live:subscribe': (payload: {
+        readingSessionId: string;
+    }) => void;
+    /** 자녀 세션 live 구독 해제 */
+    'live:unsubscribe': (payload: {
+        readingSessionId: string;
+    }) => void;
     /** 읽기 진행 보고 (5초 주기 자동저장) */
     'progress:reading-save': (payload: ReadingProgressReport) => void;
     /** 자녀 읽기 상태 구독 시작 */
