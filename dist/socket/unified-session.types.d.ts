@@ -129,10 +129,6 @@ export interface UnifiedSessionManifest {
     totalEvents: number;
     /** 실제 활동 시간 합계 (ms, 세그먼트 간 갭 제외) */
     totalDurationMs: number;
-    /** 세션 최초 스냅샷 */
-    initialSnapshot?: ViewerSnapshot;
-    /** 세션 최종 스냅샷 */
-    finalSnapshot?: ViewerSnapshot;
     /** 구 포맷에서 변환된 경우 true */
     migrated?: boolean;
 }
