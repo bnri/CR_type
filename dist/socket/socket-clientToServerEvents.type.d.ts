@@ -26,6 +26,25 @@ export interface ClientToServerEvents {
     'reading:watch-children': (childIdxList: number[]) => void;
     /** 자녀 읽기 상태 구독 해제 */
     'reading:unwatch-children': () => void;
+    /** 부모→자녀 offer */
+    'webrtc:offer': (payload: {
+        targetChildIdx: number;
+        sdp: string;
+    }) => void;
+    /** 자녀→부모 answer */
+    'webrtc:answer': (payload: {
+        targetParentIdx: number;
+        sdp: string;
+    }) => void;
+    /** ICE candidate 교환 (양방향) */
+    'webrtc:ice-candidate': (payload: {
+        targetIdx: number;
+        candidate: string;
+    }) => void;
+    /** 연결 종료 (양방향) */
+    'webrtc:hangup': (payload: {
+        targetIdx: number;
+    }) => void;
 }
 export interface NoticeToServerEvents {
     'notice-message:send': (msg: MessageRequest) => void;

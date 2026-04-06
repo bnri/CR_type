@@ -46,6 +46,16 @@ export interface ServerToClientEvents {
   'reading:child-live': (payload: LiveReadingState) => void;
   /** 자녀 읽기 종료 (세션 종료 또는 TTL 만료) */
   'reading:child-offline': (payload: { testeeIdx: number }) => void;
+
+  // === WebRTC 시그널링 ===
+  /** 부모의 offer 수신 (자녀 측) */
+  'webrtc:offer': (payload: { fromParentIdx: number; sdp: string }) => void;
+  /** 자녀의 answer 수신 (부모 측) */
+  'webrtc:answer': (payload: { fromChildIdx: number; sdp: string }) => void;
+  /** ICE candidate 수신 (양방향) */
+  'webrtc:ice-candidate': (payload: { fromIdx: number; candidate: string }) => void;
+  /** 연결 종료 수신 (양방향) */
+  'webrtc:hangup': (payload: { fromIdx: number }) => void;
 }
 
 export interface NoticeToClientEvents {
