@@ -40,6 +40,16 @@ export interface ServerToClientEvents {
         readingSessionId: string;
         durationMs: number;
     }) => void;
+    /** 자녀(같은 family room)가 소켓에 연결됨 */
+    'user:connected': (payload: {
+        user: ConnectedUser;
+    }) => void;
+    /** 자녀(같은 family room)가 소켓에서 연결 해제됨 */
+    'user:disconnected': (payload: {
+        socketId: string;
+        userId: number;
+        userType: 'parent' | 'child';
+    }) => void;
     /** 자녀 읽기 실시간 상태 (5초 주기) */
     'reading:child-live': (payload: LiveReadingState) => void;
     /** 자녀 읽기 종료 (세션 종료 또는 TTL 만료) */

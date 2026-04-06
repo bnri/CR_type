@@ -35,6 +35,12 @@ export interface ServerToClientEvents {
   /** live 구독 중인 세션 종료 */
   'live:session-ended': (payload: { readingSessionId: string; durationMs: number }) => void;
 
+  // === 자녀 소켓 접속 상태 (부모 앱) ===
+  /** 자녀(같은 family room)가 소켓에 연결됨 */
+  'user:connected': (payload: { user: ConnectedUser }) => void;
+  /** 자녀(같은 family room)가 소켓에서 연결 해제됨 */
+  'user:disconnected': (payload: { socketId: string; userId: number; userType: 'parent' | 'child' }) => void;
+
   // === 실시간 읽기 모니터링 (부모 앱) ===
   /** 자녀 읽기 실시간 상태 (5초 주기) */
   'reading:child-live': (payload: LiveReadingState) => void;
