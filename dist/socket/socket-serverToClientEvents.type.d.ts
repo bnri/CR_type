@@ -2,6 +2,12 @@ import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./soc
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
 import { LiveReadingState } from "../book/child-reading-progress.type";
+/** WebRTC ICE 서버 설정 (STUN/TURN) */
+export interface IceServerConfig {
+    urls: string | string[];
+    username?: string;
+    credential?: string;
+}
 export interface ServerToClientEvents {
     connect: () => void;
     disconnect: () => void;
@@ -56,15 +62,20 @@ export interface ServerToClientEvents {
     'reading:child-offline': (payload: {
         testeeIdx: number;
     }) => void;
-    /** 부모의 offer 수신 (자녀 측) */
+    /** 부모의 offer 수신 (자녀 측) — iceServers 포함 */
     'webrtc:offer': (payload: {
         fromParentIdx: number;
         sdp: string;
+        iceServers?: IceServerConfig[];
     }) => void;
     /** 자녀의 answer 수신 (부모 측) */
     'webrtc:answer': (payload: {
         fromChildIdx: number;
         sdp: string;
+    }) => void;
+    /** TURN credential 포함 ICE 서버 설정 (부모 측, offer 직후 수신) */
+    'webrtc:ice-servers': (payload: {
+        iceServers: IceServerConfig[];
     }) => void;
     /** ICE candidate 수신 (양방향) */
     'webrtc:ice-candidate': (payload: {
