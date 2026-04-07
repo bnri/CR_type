@@ -1,6 +1,18 @@
 // src/socket/connected-user.types.ts
 
 /**
+ * Socket 디바이스 플랫폼 (얼굴보기 디바이스 선택용).
+ * 자녀 socket에만 채워짐. userAgent에서 파싱.
+ */
+export type DevicePlatform =
+  | 'windows'
+  | 'macos'
+  | 'android'
+  | 'ios'
+  | 'linux'
+  | 'unknown';
+
+/**
  * 연결된 사용자 정보 (Socket 기반)
  */
 export interface ConnectedUser {
@@ -14,10 +26,12 @@ export interface ConnectedUser {
   userName: string;
   /** 부모 idx (child인 경우) */
   parentIdx?: number;
-  /** 연결 시간 */
+  /** 연결 시간 (ISO) */
   connectedAt: string;
   /** 현재 읽기 세션 ID (읽기 중인 경우) */
   readingSessionId?: string;
+  /** 디바이스 플랫폼 — 자녀 socket에만 채워짐 (얼굴보기 디바이스 선택용) */
+  platform?: DevicePlatform;
 }
 
 /**

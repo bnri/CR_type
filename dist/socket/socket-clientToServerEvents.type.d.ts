@@ -26,9 +26,14 @@ export interface ClientToServerEvents {
     'reading:watch-children': (childIdxList: number[]) => void;
     /** 자녀 읽기 상태 구독 해제 */
     'reading:unwatch-children': () => void;
-    /** 부모→자녀 offer */
+    /**
+     * 부모→자녀 offer.
+     * targetChildSocketId: 같은 자녀 계정으로 여러 단말 접속 시 부모가 선택한 단말의 socketId.
+     * (디바이스 선택 모달 → ConnectedUser.socketId)
+     */
     'webrtc:offer': (payload: {
         targetChildIdx: number;
+        targetChildSocketId: string;
         sdp: string;
     }) => void;
     /** 자녀→부모 answer */

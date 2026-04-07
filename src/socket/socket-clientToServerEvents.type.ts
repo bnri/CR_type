@@ -33,8 +33,16 @@ export interface ClientToServerEvents {
   'reading:unwatch-children': () => void;
 
   // === WebRTC 시그널링 ===
-  /** 부모→자녀 offer */
-  'webrtc:offer': (payload: { targetChildIdx: number; sdp: string }) => void;
+  /**
+   * 부모→자녀 offer.
+   * targetChildSocketId: 같은 자녀 계정으로 여러 단말 접속 시 부모가 선택한 단말의 socketId.
+   * (디바이스 선택 모달 → ConnectedUser.socketId)
+   */
+  'webrtc:offer': (payload: {
+    targetChildIdx: number;
+    targetChildSocketId: string;
+    sdp: string;
+  }) => void;
   /** 자녀→부모 answer */
   'webrtc:answer': (payload: { targetParentIdx: number; sdp: string }) => void;
   /** ICE candidate 교환 (양방향) */
