@@ -4,6 +4,7 @@
     "module": "CommonJS", // ✅ 이걸 꼭 명시!
     "declaration": true,
     "emitDeclarationOnly": false,
+    "rootDir": "src",
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
