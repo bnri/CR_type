@@ -6,3 +6,4 @@ export * from './reading-section.types';
 export * from './connected-user.types';
 export * from './unified-session.types';
 export * from './result-socket.types';
+export * from './webrtc.types';

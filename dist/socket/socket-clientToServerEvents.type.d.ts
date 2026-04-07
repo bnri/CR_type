@@ -2,6 +2,7 @@ import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } fro
 import { SessionDataPayload } from "./reading-section.types";
 import { ViewerOpenPayload, ViewerClosePayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload } from "./unified-session.types";
 import { ReadingProgressReport } from "../book/child-reading-progress.type";
+import { ChildDeviceInfo } from "./webrtc.types";
 export interface ClientToServerEvents {
     'chat-message:send': (msg: MessageRequest) => void;
     'chat-message:refresh': (msg: ChatMessageRefreshRequest) => void;
@@ -26,11 +27,23 @@ export interface ClientToServerEvents {
     'reading:watch-children': (childIdxList: number[]) => void;
     /** 자녀 읽기 상태 구독 해제 */
     'reading:unwatch-children': () => void;
-    /** 부모→자녀 offer */
+    /**
+     * 부모→자녀 offer.
+     * targetChildSocketId: 같은 자녀 계정으로 여러 단말 접속 시 부모가 선택한 단말의 socketId.
+     * (디바이스 선택 모달 → ChildDeviceInfo.socketId)
+     */
     'webrtc:offer': (payload: {
         targetChildIdx: number;
+        targetChildSocketId: string;
         sdp: string;
     }) => void;
+    /**
+     * 자녀 활성 디바이스 목록 조회 (부모→서버, ack 패턴).
+     * 얼굴보기 클릭 시 호출. 결과가 2개 이상이면 부모가 디바이스 선택 모달에서 1개 선택.
+     */
+    'webrtc:list-child-devices': (payload: {
+        childIdx: number;
+    }, cb: (devices: ChildDeviceInfo[]) => void) => void;
     /** 자녀→부모 answer */
     'webrtc:answer': (payload: {
         targetParentIdx: number;
