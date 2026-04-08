@@ -55,16 +55,42 @@ export interface ServerToClientEvents {
   'reading:child-offline': (payload: { testeeIdx: number }) => void;
 
   // === WebRTC 시그널링 ===
-  /** 부모의 offer 수신 (자녀 측) — iceServers 포함 */
-  'webrtc:offer': (payload: { fromParentIdx: number; sdp: string; iceServers?: IceServerConfig[] }) => void;
-  /** 자녀의 answer 수신 (부모 측) */
-  'webrtc:answer': (payload: { fromChildIdx: number; sdp: string }) => void;
+  /**
+   * 부모의 offer 수신 (자녀 측) — iceServers 포함.
+   * fromParentSocketId: 자녀가 어느 부모 단말이 보낸 offer인지 식별.
+   *   같은 parent_idx의 단말 2대가 동시에 같은 자녀에 offer를 보내면 두 PC가 공존해야 한다.
+   */
+  'webrtc:offer': (payload: {
+    fromParentIdx: number;
+    fromParentSocketId: string;
+    sdp: string;
+    iceServers?: IceServerConfig[];
+  }) => void;
+  /**
+   * 자녀의 answer 수신 (부모 측).
+   * fromSocketId: 어느 자녀 단말이 보낸 answer인지 식별.
+   */
+  'webrtc:answer': (payload: {
+    fromChildIdx: number;
+    fromSocketId: string;
+    sdp: string;
+  }) => void;
   /** TURN credential 포함 ICE 서버 설정 (부모 측, offer 직후 수신) */
   'webrtc:ice-servers': (payload: { iceServers: IceServerConfig[] }) => void;
-  /** ICE candidate 수신 (양방향) */
-  'webrtc:ice-candidate': (payload: { fromIdx: number; candidate: string }) => void;
-  /** 연결 종료 수신 (양방향) */
-  'webrtc:hangup': (payload: { fromIdx: number }) => void;
+  /**
+   * ICE candidate 수신 (양방향).
+   * fromSocketId: 발신자 socketId — 수신측이 어느 PC에 매핑할지 결정하는 키.
+   */
+  'webrtc:ice-candidate': (payload: {
+    fromIdx: number;
+    fromSocketId: string;
+    candidate: string;
+  }) => void;
+  /**
+   * 연결 종료 수신 (양방향).
+   * fromSocketId: 발신자 socketId.
+   */
+  'webrtc:hangup': (payload: { fromIdx: number; fromSocketId: string }) => void;
 }
 
 export interface NoticeToClientEvents {

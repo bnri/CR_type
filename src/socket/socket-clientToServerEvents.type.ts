@@ -43,12 +43,28 @@ export interface ClientToServerEvents {
     targetChildSocketId: string;
     sdp: string;
   }) => void;
-  /** 자녀→부모 answer */
-  'webrtc:answer': (payload: { targetParentIdx: number; sdp: string }) => void;
-  /** ICE candidate 교환 (양방향) */
-  'webrtc:ice-candidate': (payload: { targetIdx: number; candidate: string }) => void;
-  /** 연결 종료 (양방향) */
-  'webrtc:hangup': (payload: { targetIdx: number }) => void;
+  /**
+   * 자녀→부모 answer.
+   * targetParentSocketId: 부모 계정 단말 단위로 1:1 라우팅하기 위해 사용.
+   * 같은 parent_idx의 다른 단말로는 전송되지 않는다.
+   */
+  'webrtc:answer': (payload: {
+    targetParentSocketId: string;
+    sdp: string;
+  }) => void;
+  /**
+   * ICE candidate 교환 (양방향).
+   * targetSocketId: 발신자가 부모면 자녀 socket, 자녀면 부모 socket을 지정.
+   */
+  'webrtc:ice-candidate': (payload: {
+    targetSocketId: string;
+    candidate: string;
+  }) => void;
+  /**
+   * 연결 종료 (양방향).
+   * targetSocketId: 1:1 hangup 대상 socket.
+   */
+  'webrtc:hangup': (payload: { targetSocketId: string }) => void;
   /**
    * WebRTC 진단 정보 (부모→서버, 단방향)
    * - iceCandidateType: 부모 측 selected candidate pair의 local candidate type
