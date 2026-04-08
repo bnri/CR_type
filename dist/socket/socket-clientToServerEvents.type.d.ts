@@ -1,6 +1,6 @@
 import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } from "./socket-message.types";
 import { SessionDataPayload } from "./reading-section.types";
-import { ViewerOpenPayload, ViewerClosePayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload } from "./unified-session.types";
+import { ViewerOpenPayload, ViewerClosePayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload, LiveBatchPayload } from "./unified-session.types";
 import { ReadingProgressReport } from "../book/child-reading-progress.type";
 export interface ClientToServerEvents {
     'chat-message:send': (msg: MessageRequest) => void;
@@ -10,7 +10,7 @@ export interface ClientToServerEvents {
     'session:open': (payload: ViewerOpenPayload) => void;
     /** 뷰어 닫힘 (세션 종료) */
     'session:close': (payload: ViewerClosePayload) => void;
-    /** 5초 통합 데이터 (events + gaze + snapshot) */
+    /** 10초 통합 데이터 (events + gaze + snapshot) */
     'session:data': (payload: SessionDataPayload) => void;
     /** 자녀 세션 live 구독 (부모) */
     'live:subscribe': (payload: {
@@ -18,6 +18,12 @@ export interface ClientToServerEvents {
     }) => void;
     /** 자녀 세션 live 구독 해제 */
     'live:unsubscribe': (payload: {
+        readingSessionId: string;
+    }) => void;
+    /** 라이브 batch 전송 (CR_app → server, 100ms 주기) */
+    'live:batch': (payload: LiveBatchPayload) => void;
+    /** 라이브 mid-join 초기 상태 요청 (watcher → server) */
+    'live:request-initial': (payload: {
         readingSessionId: string;
     }) => void;
     /** 읽기 진행 보고 (5초 주기 자동저장) */

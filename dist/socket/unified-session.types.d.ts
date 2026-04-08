@@ -308,3 +308,49 @@ export interface ActiveUnifiedSegment {
     totalEvents: number;
     totalGazeSamples: number;
 }
+/**
+ * 라이브 batch 페이로드 (CR_app → server → watchers).
+ * - events 있으면 reliable emit, gaze만이면 volatile emit
+ * - gazeSamples: flat [x, y, t, x, y, t, ...] (저장과 동일 포맷)
+ */
+export interface LiveBatchPayload {
+    readingSessionId: string;
+    /** flat [x, y, t, ...]. 100ms 동안 누적된 gaze samples */
+    gazeSamples?: number[];
+    /** 100ms 동안 발생한 viewer events */
+    events?: ViewerEvent[];
+    /** publisher 측 batch 종료 timestamp */
+    clientTs: number;
+}
+/**
+ * Watcher mid-join 응답 (server → 단일 watcher).
+ * chunkStartSnapshot은 anchor, bufferedEvents/bufferedGaze는 chunk 시작~now 누적.
+ */
+export interface LiveInitialPayload {
+    readingSessionId: string;
+    segmentIndex: number;
+    chunkStartTs: number;
+    chunkStartSnapshot: ViewerSnapshot;
+    /** chunk 시작 ~ 현재 누적 events */
+    bufferedEvents: ViewerEvent[];
+    /** chunk 시작 ~ 현재 누적 gaze */
+    bufferedGaze: GazeBatch[];
+    /** 서버 응답 시각 (clock sync용) */
+    serverTs: number;
+}
+/**
+ * Chunk 경계에서 새 anchor 통지 (server → watchers).
+ * watcher는 이 신호로 currentChunkStartTs 갱신 + snapshot 재적용.
+ */
+export interface LiveChunkRolledPayload {
+    readingSessionId: string;
+    segmentIndex: number;
+    newChunkStartTs: number;
+    newChunkStartSnapshot: ViewerSnapshot;
+}
+/**
+ * Publisher → emit on/off 신호 (시청자 0명 최적화, Phase 7).
+ */
+export interface LiveEmitToggle {
+    readingSessionId: string;
+}

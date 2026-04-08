@@ -1,6 +1,6 @@
 import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult } from "./unified-session.types";
+import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult, LiveBatchPayload, LiveInitialPayload, LiveChunkRolledPayload, LiveEmitToggle } from "./unified-session.types";
 import { LiveReadingState } from "../book/child-reading-progress.type";
 /** WebRTC ICE 서버 설정 (STUN/TURN) */
 export interface IceServerConfig {
@@ -33,7 +33,7 @@ export interface ServerToClientEvents {
     'session:error': (payload: {
         message: string;
     }) => void;
-    /** 새 chunk 저장 알림 (5초마다) — 데이터는 기존 API로 fetch */
+    /** 새 chunk 저장 알림 (10초마다) — 데이터는 기존 API로 fetch */
     'live:chunk-notify': (payload: {
         readingSessionId: string;
         segmentIndex: number;
@@ -46,6 +46,16 @@ export interface ServerToClientEvents {
         readingSessionId: string;
         durationMs: number;
     }) => void;
+    /** 라이브 batch fanout (server → watchers in live:${id} room) */
+    'live:batch': (payload: LiveBatchPayload) => void;
+    /** 라이브 mid-join 초기 상태 응답 (server → 단일 watcher) */
+    'live:initial': (payload: LiveInitialPayload) => void;
+    /** chunk 경계 anchor 갱신 (server → watchers) */
+    'live:chunk-rolled': (payload: LiveChunkRolledPayload) => void;
+    /** 시청자 1명 이상 → publisher emit 시작 (Phase 7) */
+    'live:start-emit': (payload: LiveEmitToggle) => void;
+    /** 시청자 0명 → publisher emit 정지 (Phase 7) */
+    'live:stop-emit': (payload: LiveEmitToggle) => void;
     /** 자녀(같은 family room)가 소켓에 연결됨 */
     'user:connected': (payload: {
         user: ConnectedUser;
