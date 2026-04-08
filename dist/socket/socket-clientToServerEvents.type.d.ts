@@ -67,6 +67,16 @@ export interface ClientToServerEvents {
         targetSocketId: string;
     }) => void;
     /**
+     * 자녀→부모 peer 오류 통지.
+     * 자녀 단말에 카메라가 없거나, answer 생성 실패 등으로 offer를 처리할 수 없을 때 발신.
+     * 부모는 watchdog timeout 대신 즉시 명확한 에러 메시지를 받는다.
+     */
+    'webrtc:peer-error': (payload: {
+        targetParentSocketId: string;
+        reason: 'camera-unavailable' | 'no-video-track' | 'offer-failed';
+        message?: string;
+    }) => void;
+    /**
      * WebRTC 진단 정보 (부모→서버, 단방향)
      * - iceCandidateType: 부모 측 selected candidate pair의 local candidate type
      * - endReason: 비정상 종료 시에만 동봉 (정상 종료는 'webrtc:hangup' 사용)

@@ -113,6 +113,16 @@ export interface ServerToClientEvents {
         fromIdx: number;
         fromSocketId: string;
     }) => void;
+    /**
+     * 자녀 측 peer 오류 수신 (부모 측).
+     * 자녀 단말에 카메라가 없거나 offer 처리 실패 시 즉시 통지된다.
+     */
+    'webrtc:peer-error': (payload: {
+        fromChildIdx: number;
+        fromSocketId: string;
+        reason: 'camera-unavailable' | 'no-video-track' | 'offer-failed';
+        message?: string;
+    }) => void;
 }
 export interface NoticeToClientEvents {
     'notice-message:result': (payload: NoticeMessageResult) => void;
