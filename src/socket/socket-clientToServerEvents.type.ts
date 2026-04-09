@@ -83,12 +83,12 @@ export interface ClientToServerEvents {
   }) => void;
   /**
    * WebRTC 진단 정보 (부모→서버, 단방향)
-   * - iceCandidateType: 부모 측 selected candidate pair의 local candidate type
+   * - connectTimeMs: offer 전송 → connectionState=connected 까지 걸린 시간 (ms). 실패 시 null.
    * - endReason: 비정상 종료 시에만 동봉 (정상 종료는 'webrtc:hangup' 사용)
    */
   'webrtc:diag': (payload: {
     targetChildIdx: number;
-    iceCandidateType: 'host' | 'srflx' | 'relay' | null;
+    connectTimeMs: number | null;
     endReason?: 'ice-failed' | 'connection-failed';
   }) => void;
   /**
