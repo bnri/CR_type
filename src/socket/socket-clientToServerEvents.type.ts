@@ -2,6 +2,8 @@ import { ChatMessageReadRequest, ChatMessageRefreshRequest, MessageRequest } fro
 import { SessionDataPayload } from "./reading-section.types";
 import { ViewerOpenPayload, ViewerClosePayload, SessionHistoryListPayload, SessionHistoryGetPayload, SessionHistoryDeletePayload, UnifiedChunksGetPayload, UnifiedSegmentGetPayload, LiveBatchPayload } from "./unified-session.types";
 import { ReadingProgressReport } from "../book/child-reading-progress.type";
+import { IceServerConfig } from "./socket-serverToClientEvents.type";
+import { ConnectedUser } from "./connected-user.types";
 
 
 export interface ClientToServerEvents {
@@ -89,6 +91,22 @@ export interface ClientToServerEvents {
     iceCandidateType: 'host' | 'srflx' | 'relay' | null;
     endReason?: 'ice-failed' | 'connection-failed';
   }) => void;
+  /**
+   * 부모→서버: PC 생성 전에 TURN credential을 ack로 받아온다.
+   * 자녀는 offer payload에 iceServers가 동봉되지만, 부모는 PC를 직접 만들기 때문에
+   * 이 ack로 동일한 시점 보장(= PC 생성 전에 TURN URL 확보).
+   */
+  'webrtc:request-ice-servers': (
+    ack: (response: { iceServers: IceServerConfig[] }) => void,
+  ) => void;
+  /**
+   * 부모→서버: 현재 family room 의 자녀 ConnectedUser 목록을 ack 로 받아온다.
+   * connect 시점 catch-up + incremental events 만으론 좀비 socket / 이벤트 누락 케이스에서
+   * frontend cache 가 stale 될 수 있어서, 디바이스 picker 같은 critical UI 에서 fresh fetch 용도.
+   */
+  'presence:list-family': (
+    ack: (response: { children: ConnectedUser[] }) => void,
+  ) => void;
 }
 
 
