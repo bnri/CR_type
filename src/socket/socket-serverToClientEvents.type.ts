@@ -1,4 +1,4 @@
-import { MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
+import { ChatMessageRefreshedResponse, MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
 import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult, LiveBatchPayload, LiveInitialPayload, LiveChunkRolledPayload, LiveEmitToggle } from "./unified-session.types";
 import { LiveReadingState } from "../book/child-reading-progress.type";
@@ -18,7 +18,7 @@ export interface ServerToClientEvents {
   // 채팅
   'chat-message:append-self': (msg: MessageResponse) => void;
   'chat-message:append-peer': (msg: MessageResponse) => void;
-  'chat-message:refreshed': (payload: { roomKey: string; msgArr: MessageResponse[] }) => void;
+  'chat-message:refreshed': (payload: ChatMessageRefreshedResponse) => void;
   'chat-message:read-peer': (payload: MessageReadResponse) => void;
   'chat-message:read-self': (payload: MessageReadResponse) => void;
 
