@@ -1,6 +1,6 @@
 import { ChatMessageRefreshedResponse, MessageReadResponse, MessageResponse, NoticeMessageResult } from "./socket-message.types";
 import { ConnectedUser, ConnectedUsersGrouped } from "./connected-user.types";
-import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult, LiveBatchPayload, LiveInitialPayload, LiveChunkRolledPayload, LiveEmitToggle } from "./unified-session.types";
+import { UnifiedSessionInfo, SessionSegmentChangedPayload, SessionHistoryListResult, SessionHistoryGetResult, UnifiedChunksResult, UnifiedSegmentResult, SessionHistoryDeleteResult, LiveBatchPayload, LiveInitialPayload, LiveChunkRolledPayload, LiveEmitToggle, LiveReadingRatiosPayload } from "./unified-session.types";
 import { LiveReadingState } from "../book/child-reading-progress.type";
 /** WebRTC ICE 서버 설정 (STUN/TURN) */
 export interface IceServerConfig {
@@ -53,6 +53,8 @@ export interface ServerToClientEvents {
     'live:start-emit': (payload: LiveEmitToggle) => void;
     /** 시청자 0명 → publisher emit 정지 (Phase 7) */
     'live:stop-emit': (payload: LiveEmitToggle) => void;
+    /** 1초 실시간 읽기 상태 비율 (volatile) */
+    'live:reading-ratios': (payload: LiveReadingRatiosPayload) => void;
     /** 자녀(같은 family room)가 소켓에 연결됨 */
     'user:connected': (payload: {
         user: ConnectedUser;
