@@ -1,6 +1,6 @@
 import type { ViewerSnapshot, SessionMeta, SessionStats } from './reading-section.types';
 import type { ViewerEvent } from './viewer-events.types';
-import type { ReadingSessionRecord } from '../book/child-reading-progress.type';
+import type { ReadingSessionRecord, ReadingStateRatios } from '../book/child-reading-progress.type';
 /** 청크 참조 정보 (meta.json 내) */
 export interface ChunkRef {
     start: number;
@@ -39,6 +39,10 @@ export interface ChunkReadingScanSummary {
     totalAwayMs: number;
     avgFixationMs: number;
     metrics?: Record<string, number>;
+    /** 이 chunk 구간만의 읽기 상태 비율 (전체 누적 아님) */
+    chunkStateRatios?: ReadingStateRatios;
+    /** 이 chunk 구간의 경과 시간 (ms) */
+    chunkDurationMs?: number;
 }
 export interface UnifiedChunkFile {
     startTimestamp: number;
@@ -353,4 +357,14 @@ export interface LiveChunkRolledPayload {
  */
 export interface LiveEmitToggle {
     readingSessionId: string;
+}
+/** 1초마다 live 시청자에게 emit — 실시간 읽기 상태 비율 */
+export interface LiveReadingRatiosPayload {
+    readingSessionId: string;
+    /** 최근 구간의 읽기 상태 비율 */
+    ratios: ReadingStateRatios;
+    /** 세션 시작 이후 경과 시간 (ms) */
+    elapsedMs: number;
+    /** 타임스탬프 */
+    timestamp: number;
 }
