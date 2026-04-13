@@ -447,6 +447,9 @@ export interface ActiveUnifiedSegment {
   // 통계
   totalEvents: number;
   totalGazeSamples: number;
+
+  /** 현재 chunk 구간의 윈도우 비율 버퍼 (flush마다 push, chunk flush 시 가중 평균 후 리셋) */
+  chunkWindowRatios: { ratios: ReadingStateRatios; durationMs: number }[];
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
