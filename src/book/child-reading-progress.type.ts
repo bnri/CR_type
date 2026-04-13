@@ -271,11 +271,6 @@ export interface LiveReadingState {
   // 읽기패턴 비율
   readingStateRatios: ReadingStateRatios | null;
 
-  /** 이번 5초 윈도우만의 읽기 상태 비율 (chunk 합산용) */
-  windowStateRatios?: ReadingStateRatios | null;
-  /** 이번 윈도우 경과 시간 (ms) */
-  windowDurationMs?: number;
-
   // 집중듣기 (재생 중일 때만)
   isAudioPlaying: boolean;
   focusListeningScore: number | null;
