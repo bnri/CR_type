@@ -1,9 +1,9 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// /result 네임스페이스 이벤트 타입 (추후 확장용)
+// /result 네임스페이스 이벤트 타입
 //
-// Phase 5~6에서 CR_result 독립 프로젝트 + CR_ws /result 게이트웨이 구현 시 활성화
-// 관련 plan: CR_docs/plan/cr-result/05-cr-ws-socket-result.md
-//            CR_docs/plan/cr-result/06-cr-result-project.md
+// 상태: 타입 SSOT 만 작성됨. CR_ws /result 게이트웨이 + CR_result 프로젝트는 미구현.
+// 카탈로그: CR_docs/docs/feature/SOCKET_IO_EVENTS.md (/result 섹션)
+// 재개 plan: CR_docs/plan/LATOR-cr-result-realtime-architecture.md
 // ═══════════════════════════════════════════════════════════════════════════
 
 import type { ViewerSnapshot } from './reading-section.types';
