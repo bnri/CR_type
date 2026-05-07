@@ -167,6 +167,14 @@ export interface BookProgress {
     createdAt: string;
     updatedAt: string;
 }
+/** ReadingState별 frame 수 — window/chunk 단위 SSOT (count → ratio derive) */
+export interface ReadingStateFrameCounts {
+    reading: number;
+    scanning: number;
+    blink: number;
+    lost: number;
+    etc: number;
+}
 /** Redis 실시간 읽기 상태 */
 export interface LiveReadingState {
     testeeIdx: number;
@@ -184,6 +192,11 @@ export interface LiveReadingState {
     rawReadGIs: number;
     totalWordLookups: number;
     readingStateRatios: ReadingStateRatios | null;
+    /**
+     * 직전 5초 윈도우 동안의 state별 frame 수 (Phase 2 — chunk 단위 합산용).
+     * CR_ws가 chunk flush 시 chunkWindowFrameCounts 버퍼에 push 후 합산.
+     */
+    windowStateFrameCounts?: ReadingStateFrameCounts;
     isAudioPlaying: boolean;
     focusListeningScore: number | null;
     focusListeningDurationMs: number;

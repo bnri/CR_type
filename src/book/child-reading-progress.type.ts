@@ -249,6 +249,15 @@ export interface BookProgress {
 // 역할: 부모 모니터링용 실시간 읽기 상태
 // ═══════════════════════════════════════════════════════════════
 
+/** ReadingState별 frame 수 — window/chunk 단위 SSOT (count → ratio derive) */
+export interface ReadingStateFrameCounts {
+  reading: number;
+  scanning: number;
+  blink: number;
+  lost: number;
+  etc: number;
+}
+
 /** Redis 실시간 읽기 상태 */
 export interface LiveReadingState {
   testeeIdx: number;
@@ -268,8 +277,13 @@ export interface LiveReadingState {
   rawReadGIs: number;
   totalWordLookups: number;
 
-  // 읽기패턴 비율
+  // 읽기패턴 비율 (세션 전체 누적)
   readingStateRatios: ReadingStateRatios | null;
+  /**
+   * 직전 5초 윈도우 동안의 state별 frame 수 (Phase 2 — chunk 단위 합산용).
+   * CR_ws가 chunk flush 시 chunkWindowFrameCounts 버퍼에 push 후 합산.
+   */
+  windowStateFrameCounts?: ReadingStateFrameCounts;
 
   // 집중듣기 (재생 중일 때만)
   isAudioPlaying: boolean;

@@ -1,6 +1,7 @@
 import type { ViewerSnapshot, SessionMeta, SessionStats } from './reading-section.types';
 import type { ViewerEvent } from './viewer-events.types';
-import type { ReadingSessionRecord, ReadingStateRatios } from '../book/child-reading-progress.type';
+import type { ReadingSessionRecord, ReadingStateRatios, ReadingStateFrameCounts } from '../book/child-reading-progress.type';
+export type { ReadingStateFrameCounts };
 /** 청크 참조 정보 (meta.json 내) */
 export interface ChunkRef {
     start: number;
@@ -16,6 +17,10 @@ export type UnifiedSegmentStatus = 'active' | 'ended';
  * 시선 데이터 배치 (청크 내 포함)
  * - ~30FPS의 x,y,t 데이터를 flat number[]로 압축
  * - 30FPS × 10초 = 900샘플 = 2700숫자 (객체 대비 ~60% JSON 크기 절감)
+ *
+ * 설계 메모: state(LOST/BLINK)는 sample 단위로 저장하지 않음.
+ * chunk 단위로 ChunkReadingScanSummary.stateFrameCounts에 집계되며,
+ * 재생 측은 그 값을 직접 사용(재분석 X)하고, 더 큰 구간 비율은 frame count 가중 합산으로 derive.
  */
 export interface GazeBatch {
     /** 배치 시작 timestamp (ms) */
@@ -43,6 +48,11 @@ export interface ChunkReadingScanSummary {
     chunkStateRatios?: ReadingStateRatios;
     /** 이 chunk 구간의 경과 시간 (ms) */
     chunkDurationMs?: number;
+    /**
+     * 이 chunk 구간의 state별 frame 수 (frame count 가중 합산용 SSOT).
+     * 더 큰 구간 비율은 chunk들의 stateFrameCounts를 합산 후 derive.
+     */
+    chunkStateFrameCounts?: ReadingStateFrameCounts;
 }
 export interface UnifiedChunkFile {
     startTimestamp: number;
@@ -311,6 +321,12 @@ export interface ActiveUnifiedSegment {
     chunks: ChunkRef[];
     totalEvents: number;
     totalGazeSamples: number;
+    /**
+     * 현재 chunk 구간의 윈도우 frame counts 버퍼 (Phase 3).
+     * progress:reading-save로 도착한 windowStateFrameCounts들을 chunk flush 시점까지 누적,
+     * flush 시 합산하여 ChunkReadingScanSummary.chunkStateFrameCounts 생성 + 리셋.
+     */
+    chunkWindowFrameCounts: ReadingStateFrameCounts[];
 }
 /**
  * 라이브 batch 페이로드 (CR_app → server → watchers).
