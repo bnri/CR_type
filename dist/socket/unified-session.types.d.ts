@@ -44,15 +44,18 @@ export interface ChunkReadingScanSummary {
     totalAwayMs: number;
     avgFixationMs: number;
     metrics?: Record<string, number>;
-    /** 이 chunk 구간만의 읽기 상태 비율 (전체 누적 아님) */
+    /** 이 chunk 종료 시점의 누적 읽기 상태 비율 (세션 시작 ~ chunk 종료) */
     chunkStateRatios?: ReadingStateRatios;
     /** 이 chunk 구간의 경과 시간 (ms) */
     chunkDurationMs?: number;
     /**
-     * 이 chunk 구간의 state별 frame 수 (frame count 가중 합산용 SSOT).
-     * 더 큰 구간 비율은 chunk들의 stateFrameCounts를 합산 후 derive.
+     * 세션 시작 ~ 이 chunk 종료 시점까지의 state별 누적 frame 수 (SSOT).
+     * - 자녀 분석기의 누적 stats 를 그대로 박음
+     * - 임의 구간 비율은 chunk_b.cumulativeStateFrameCounts - chunk_a.cumulativeStateFrameCounts 로 derive
      */
-    chunkStateFrameCounts?: ReadingStateFrameCounts;
+    cumulativeStateFrameCounts?: ReadingStateFrameCounts;
+    /** cumulativeStateFrameCounts 의 분모로 쓸 누적 총 frame 수 */
+    cumulativeTotalFrames?: number;
 }
 export interface UnifiedChunkFile {
     startTimestamp: number;
@@ -322,11 +325,12 @@ export interface ActiveUnifiedSegment {
     totalEvents: number;
     totalGazeSamples: number;
     /**
-     * 현재 chunk 구간의 윈도우 frame counts 버퍼 (Phase 3).
-     * progress:reading-save로 도착한 windowStateFrameCounts들을 chunk flush 시점까지 누적,
-     * flush 시 합산하여 ChunkReadingScanSummary.chunkStateFrameCounts 생성 + 리셋.
+     * 자녀가 마지막으로 보낸 누적 frame counts (LiveReadingState.cumulativeStateFrameCounts).
+     * chunk flush 시 그대로 ChunkReadingScanSummary.cumulativeStateFrameCounts 에 박는다.
      */
-    chunkWindowFrameCounts: ReadingStateFrameCounts[];
+    lastCumulativeFrameCounts: ReadingStateFrameCounts | null;
+    /** lastCumulativeFrameCounts 의 분모 (LiveReadingState.cumulativeTotalFrames) */
+    lastCumulativeTotalFrames: number | null;
 }
 /**
  * 라이브 batch 페이로드 (CR_app → server → watchers).

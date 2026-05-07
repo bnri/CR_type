@@ -288,10 +288,14 @@ export interface LiveReadingState {
   // 읽기패턴 비율 (세션 전체 누적)
   readingStateRatios: ReadingStateRatios | null;
   /**
-   * 직전 5초 윈도우 동안의 state별 frame 수 (Phase 2 — chunk 단위 합산용).
-   * CR_ws가 chunk flush 시 chunkWindowFrameCounts 버퍼에 push 후 합산.
+   * 세션 시작 이후 누적된 state별 frame 수.
+   * - 자녀 분석기(ReadingStatsAccumulator)의 누적값 그대로 동봉
+   * - chunk flush 시 그대로 ChunkReadingScanSummary.cumulativeStateFrameCounts 에 박아 저장
+   * - 더 작은 구간 ratio 는 chunk[i].counts - chunk[i-1].counts 로 derive
    */
-  windowStateFrameCounts?: ReadingStateFrameCounts;
+  cumulativeStateFrameCounts?: ReadingStateFrameCounts;
+  /** cumulativeStateFrameCounts 의 분모로 쓸 누적 총 frame 수 */
+  cumulativeTotalFrames?: number;
 
   // 집중듣기 (재생 중일 때만)
   isAudioPlaying: boolean;
