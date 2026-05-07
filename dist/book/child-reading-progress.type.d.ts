@@ -79,6 +79,13 @@ export interface ReadingProgressReport {
     /** 이 구간에서 속도필터 통과한 읽기 GI 범위들 (빈 구간 보존) */
     exposedRanges?: ReadRange[];
     /**
+     * 윈도우 종료 시점의 현재 GI 위치 (rpState.lastGI).
+     * exposedTo와 달리 속도필터/방향과 무관하게 마지막으로 본 GI 위치를 반영.
+     * book_progress.lastGlobalIndex (이어보기 위치) 갱신용.
+     * -1 = 아직 GI 미확정 (초기 상태)
+     */
+    currentGI: number;
+    /**
      * GI별 시선 dwell time (ms)
      * - 키: globalIndex (string), 값: 해당 5초 윈도우 내 누적 dwell ms
      * - 시선 추적 기기 없으면 빈 객체 {}
