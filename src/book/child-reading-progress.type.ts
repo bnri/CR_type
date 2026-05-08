@@ -374,3 +374,32 @@ export interface ReadingAccumulatedState {
 export interface BookProgressResponse {
   progress: BookProgress | null;
 }
+
+// ═══════════════════════════════════════════════════════════════
+// REST: GET /v1/reading-progress/child/:childIdx/books
+// 자녀 책장 (reading / read 분류)
+// ═══════════════════════════════════════════════════════════════
+
+/** 책장 status 필터 — 가중평균 coverage 0.9 임계 */
+export type ChildBooksStatus = "reading" | "read" | "all";
+
+/** 자녀 책장용 책 메타 (Book − 내부 필드 + creator/sound JOIN 결과) */
+export type BookProgressBookItem = Omit<
+  Book,
+  | "status"
+  | "creator_idx"
+  | "isdeleted"
+  | "created_at"
+  | "updated_at"
+  | "total_sound_seconds"
+> & {
+  /** creator JOIN 결과 */
+  creator_name: string | null;
+  /** FLOOR(total_sound_seconds / 60) */
+  sound_minutes: number | null;
+};
+
+/** 자녀 책장 응답 아이템 = 책 메타 + 책별 진행률 */
+export type ChildBookProgressItem = BookProgressBookItem & {
+  progress: BookProgress;
+};
