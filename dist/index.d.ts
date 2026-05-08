@@ -3,3 +3,4 @@ export * from './socket';
 export * from './book';
 export * from './ast';
 export * from './gaze';
+export * from './child';
