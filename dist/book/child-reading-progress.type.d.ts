@@ -265,4 +265,11 @@ export type BookProgressBookItem = Omit<Book, "status" | "creator_idx" | "isdele
 /** 자녀 책장 응답 아이템 = 책 메타 + 책별 진행률 */
 export type ChildBookProgressItem = BookProgressBookItem & {
     progress: BookProgress;
+    /**
+     * 책 전체 진도 (0~1) — 가중평균 coverage.
+     * 분모 = Σ book_sections.sections[i].gi_count (책 전체)
+     * 분자 = Σ book_progress.sectionProgress[i].coverage × sectionGIMax (자녀가 읽은 부분)
+     * → 자녀가 한 번도 안 들어간 섹션도 분모에 포함되므로, 일부 섹션만 100% 읽어도 책 전체 % 는 낮게 나옴.
+     */
+    overallCoverage: number;
 };

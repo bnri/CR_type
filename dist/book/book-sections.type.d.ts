@@ -21,7 +21,7 @@ export interface SectionSummary {
     quiz_count: number;
     word_count: number;
     /** 섹션 전체 GI 수 (AST runs 합산, image 블록 제외) */
-    gi_count?: number;
+    gi_count: number;
     sound_minutes?: number;
     is_added_split?: boolean;
     is_added_audio?: boolean;
