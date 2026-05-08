@@ -4,6 +4,8 @@
 // MongoDB: reading_sessions (세션당 1개) + book_progress (책별 1개)
 // Redis: reading:live:{testeeIdx} (실시간 부모 모니터링)
 
+import type { Book } from "./book.type";
+
 // ═══════════════════════════════════════════════════════════════
 // 기본 단위
 // ═══════════════════════════════════════════════════════════════
