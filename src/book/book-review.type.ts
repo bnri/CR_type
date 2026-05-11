@@ -19,10 +19,10 @@ export interface BookReview {
 }
 
 /**
- * 목록 조회 응답 — child + child_extended JOIN 으로 작성자(child) 정보 포함.
+ * 목록 조회 응답 — book_review JOIN child 로 작성자(child) 표시 컬럼 포함.
  * isdeleted 는 응답에서 제외 (필터링된 결과만 노출).
  */
-export interface BookReviewWithAuthor extends BookReview {
+export interface BookReviewWithChild extends BookReview {
   /** child.child_name */
   child_name: string;
   /** child.child_image_url */
@@ -30,9 +30,8 @@ export interface BookReviewWithAuthor extends BookReview {
   /** child.child_birthday — 나이 계산용. 미등록 자녀는 null */
   child_birthday: string | null;
   /**
-   * child_extended.bg_color — avatar fallback 색 토큰 키
+   * child.bg_color — avatar fallback 색 토큰 키
    * (navy|forest|brick|mustard|violet|wine|slate|walnut).
-   * child_extended row 가 없는 legacy child 는 null.
    */
   child_bg_color: string | null;
 }
