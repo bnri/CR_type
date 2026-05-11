@@ -1,7 +1,7 @@
 "use strict";
 // ========== 리터럴 유니온 타입 ==========
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAgeOptions = exports.getEnLevelOptions = exports.getGenreOptions = exports.getLengthOptions = exports.getLanguageOptions = exports.calcSoundMinutes = exports.getFKDescription = exports.FK_INDEX_RANGES = exports.getLexileDescription = exports.getARDescription = exports.LEXILE_INDEX_RANGES = exports.AR_INDEX_RANGES = exports.DEFAULT_BOOK_META = exports.BOOK_AGE_MAX = exports.BOOK_AGE_MIN = exports.BookEnLevelLabel = exports.BookGenreLabel = exports.BookLengthLabel = exports.BookLanguageLabel = void 0;
+exports.getLevelOptions = exports.getEnLevelOptions = exports.getGenreOptions = exports.getLengthOptions = exports.getLanguageOptions = exports.calcSoundMinutes = exports.getFKDescription = exports.FK_INDEX_RANGES = exports.getLexileDescription = exports.getARDescription = exports.LEXILE_INDEX_RANGES = exports.AR_INDEX_RANGES = exports.DEFAULT_BOOK_META = exports.BOOK_LEVEL_MAX = exports.BOOK_LEVEL_MIN = exports.BookEnLevelLabel = exports.BookGenreLabel = exports.BookLengthLabel = exports.BookLanguageLabel = void 0;
 // ========== 라벨 (UI 표시용) ==========
 exports.BookLanguageLabel = {
     ko: "한국어",
@@ -26,9 +26,9 @@ exports.BookEnLevelLabel = {
     novel: "노블",
 };
 // ========== 상수 ==========
-/** 권장 연령 범위 (5~19세) */
-exports.BOOK_AGE_MIN = 5;
-exports.BOOK_AGE_MAX = 19;
+/** 권장 레벨 범위 (1~30) */
+exports.BOOK_LEVEL_MIN = 1;
+exports.BOOK_LEVEL_MAX = 30;
 /** 새 책 생성 시 기본값 */
 exports.DEFAULT_BOOK_META = {
     book_title: "나의 책",
@@ -123,9 +123,9 @@ const getEnLevelOptions = () => Object.entries(exports.BookEnLevelLabel).map(([v
     label,
 }));
 exports.getEnLevelOptions = getEnLevelOptions;
-/** 권장 연령 옵션 (5~19세) */
-const getAgeOptions = () => Array.from({ length: exports.BOOK_AGE_MAX - exports.BOOK_AGE_MIN + 1 }, (_, i) => ({
-    value: exports.BOOK_AGE_MIN + i,
-    label: `만 ${exports.BOOK_AGE_MIN + i}세`,
+/** 권장 레벨 옵션 (1~30) */
+const getLevelOptions = () => Array.from({ length: exports.BOOK_LEVEL_MAX - exports.BOOK_LEVEL_MIN + 1 }, (_, i) => ({
+    value: exports.BOOK_LEVEL_MIN + i,
+    label: `Lv.${exports.BOOK_LEVEL_MIN + i}`,
 }));
-exports.getAgeOptions = getAgeOptions;
+exports.getLevelOptions = getLevelOptions;

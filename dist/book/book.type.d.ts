@@ -77,9 +77,9 @@ export declare const BookEnLevelLabel: {
     readonly chapter: "챕터";
     readonly novel: "노블";
 };
-/** 권장 연령 범위 (5~19세) */
-export declare const BOOK_AGE_MIN = 5;
-export declare const BOOK_AGE_MAX = 19;
+/** 권장 레벨 범위 (1~30) */
+export declare const BOOK_LEVEL_MIN = 1;
+export declare const BOOK_LEVEL_MAX = 30;
 /** 새 책 생성 시 기본값 */
 export declare const DEFAULT_BOOK_META: {
     readonly book_title: "나의 책";
@@ -385,8 +385,8 @@ export declare const getEnLevelOptions: () => {
     value: BookEnLevel;
     label: "스토리" | "리더스" | "얼리챕터" | "미들챕터" | "챕터" | "노블";
 }[];
-/** 권장 연령 옵션 (5~19세) */
-export declare const getAgeOptions: () => {
+/** 권장 레벨 옵션 (1~30) */
+export declare const getLevelOptions: () => {
     value: number;
     label: string;
 }[];

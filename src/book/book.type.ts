@@ -123,9 +123,9 @@ export const BookEnLevelLabel = {
 
 // ========== 상수 ==========
 
-/** 권장 연령 범위 (5~19세) */
-export const BOOK_AGE_MIN = 5;
-export const BOOK_AGE_MAX = 19;
+/** 권장 레벨 범위 (1~30) */
+export const BOOK_LEVEL_MIN = 1;
+export const BOOK_LEVEL_MAX = 30;
 
 /** 새 책 생성 시 기본값 */
 export const DEFAULT_BOOK_META = {
@@ -237,9 +237,9 @@ export const getEnLevelOptions = () =>
 
 
 
-/** 권장 연령 옵션 (5~19세) */
-export const getAgeOptions = () =>
-  Array.from({ length: BOOK_AGE_MAX - BOOK_AGE_MIN + 1 }, (_, i) => ({
-    value: BOOK_AGE_MIN + i,
-    label: `만 ${BOOK_AGE_MIN + i}세`,
+/** 권장 레벨 옵션 (1~30) */
+export const getLevelOptions = () =>
+  Array.from({ length: BOOK_LEVEL_MAX - BOOK_LEVEL_MIN + 1 }, (_, i) => ({
+    value: BOOK_LEVEL_MIN + i,
+    label: `Lv.${BOOK_LEVEL_MIN + i}`,
   }));
