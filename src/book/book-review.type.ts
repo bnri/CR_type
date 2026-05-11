@@ -27,6 +27,8 @@ export interface BookReviewWithAuthor extends BookReview {
   author_name: string;
   /** child.child_image_url */
   author_image_url: string | null;
+  /** child.child_birthday — 나이 계산용. 미등록 자녀는 null */
+  author_birthday: string | null;
 }
 
 /** POST/PATCH body */
