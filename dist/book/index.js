@@ -17,6 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./book.type"), exports);
 __exportStar(require("./book-sections.type"), exports);
 __exportStar(require("./book-status-request.type"), exports);
+__exportStar(require("./book-review.type"), exports);
 __exportStar(require("./tag.type"), exports);
 __exportStar(require("./child-reading-progress.type"), exports);
 __exportStar(require("./read-range.util"), exports);

@@ -130,6 +130,10 @@ export interface ReadingSessionRecord {
     readingSessionId: string;
     bookIdx: number;
     bookTitle?: string;
+    /** 책 표지 URL (API JOIN 시점에 채워짐, 저장 시 미존재) */
+    bookCoverUrl?: string;
+    /** 책 원작자 (API JOIN 시점에 채워짐, 저장 시 미존재) */
+    bookAuthor?: string;
     startedAt: string;
     endedAt: string;
     totalDurationMs: number;
