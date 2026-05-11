@@ -203,6 +203,10 @@ export interface LiveReadingState {
     /** 중복허용 읽은량 */
     rawReadGIs: number;
     totalWordLookups: number;
+    /** 현재 세션 누적 readingScore (CR_app calcReadingScore 산식). 부모 대시보드에서 today.sumReadingScore 와 합산 표시용 */
+    readingScore: number;
+    /** 현재 세션 누적 단어 수 = totalValidReadGIs × wordsPerGI (round). 부모 대시보드에서 today.totalReadWords 와 합산 표시용 */
+    readWords: number;
     readingStateRatios: ReadingStateRatios | null;
     /**
      * 세션 시작 이후 누적된 state별 frame 수.
