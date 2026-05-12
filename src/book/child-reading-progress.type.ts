@@ -96,11 +96,6 @@ export interface ReadingProgressReport {
   /** 섹션 전체 GI 수 (ViewerSnapshot.totalItems) */
   sectionGIMax: number;
 
-  /** @deprecated — exposedRanges 사용 */
-  exposedFrom: number;
-  /** @deprecated — exposedRanges 사용 */
-  exposedTo: number;
-
   /** 이 구간에서 속도필터 통과한 읽기 GI 범위들 (빈 구간 보존) */
   exposedRanges?: ReadRange[];
 
