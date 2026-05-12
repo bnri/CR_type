@@ -64,6 +64,8 @@ export interface Book {
   shelf_count: number;
   total_word_count: number;
   section_count: number;
+  /** 전체 섹션 GI 합 (책장 진도 분모) — denormalized from MongoDB book_sections.sections[].gi_count */
+  total_gi_count: number;
   total_sound_seconds: number;
   rating_sum: number;
   review_count: number;
