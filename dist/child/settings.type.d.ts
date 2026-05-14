@@ -27,18 +27,22 @@ export interface ChildRecommendationSettings {
     rec_explore_new_genre: boolean;
 }
 export declare const DEFAULT_CHILD_RECOMMENDATION_SETTINGS: ChildRecommendationSettings;
+/** 야간 읽기 제한 시각 (HH 정수, 0=자정) */
+export type NightLimitHour = 20 | 21 | 22 | 23 | 0;
 export interface ChildViewerSettings {
-    /** 페이지 이탈 감지 */
+    /** 읽기 중단 감지 (읽기 행위 없으면 뷰어 자동 종료 + 부모 알림) */
     viewer_page_leave_detect: boolean;
     /** 자동 시선 맞춤 (재캘리브레이션 유도) */
     viewer_auto_gaze_calibrate: boolean;
-    /** 야간 읽기 제한 */
+    /** 야간 읽기 제한 on/off */
     viewer_night_limit: boolean;
-    /** 집중듣기 도움 */
+    /** 야간 읽기 제한 시각 (20|21|22|23|0=자정) — viewer_night_limit=true 일 때만 적용 */
+    viewer_night_limit_hour: NightLimitHour;
+    /** 집중듣기 도움 (TTS 위치 추적 못하면 단어 점멸로 현재 위치 안내) */
     viewer_focus_listen_help: boolean;
     /** 읽기 속도 자동 조정 */
     viewer_auto_speed_adjust: boolean;
-    /** 권장도서 우선 노출 */
+    /** 권장도서 먼저 읽기 강제 (다 읽기 전까지 다른 책 잠금) */
     viewer_recommended_first: boolean;
 }
 export declare const DEFAULT_CHILD_VIEWER_SETTINGS: ChildViewerSettings;

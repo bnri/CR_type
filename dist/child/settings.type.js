@@ -27,6 +27,7 @@ exports.DEFAULT_CHILD_VIEWER_SETTINGS = {
     viewer_page_leave_detect: true,
     viewer_auto_gaze_calibrate: true,
     viewer_night_limit: false,
+    viewer_night_limit_hour: 22,
     viewer_focus_listen_help: true,
     viewer_auto_speed_adjust: false,
     viewer_recommended_first: true,
