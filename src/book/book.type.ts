@@ -49,7 +49,10 @@ export interface Book {
   fk_index: number | null;
 
   // 저작 정보
+  /** @deprecated book_series FK 전환 중 — series_idx 사용. Phase8 별도 GO 후 제거 예정. */
   series: string | null;
+  /** book_series 마스터 FK (NULL = 시리즈 미소속) */
+  series_idx: number | null;
   original_author: string | null;
   description: string | null;
   original_publish_date: string | null;
@@ -82,11 +85,26 @@ export interface Book {
   first_published_at: string | null;
 }
 
+// ========== book_series 마스터 ==========
+
+/** MySQL book_series 테이블 매핑 (시리즈 마스터) */
+export interface BookSeries {
+  series_idx: number;
+  series_name: string;
+  description: string | null;
+  cover_url: string | null;
+  isdeleted: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 // ========== API 응답 DTO ==========
 
 /** 책 상세 조회 API 응답 (meta + summary + content) */
 export interface BookDTO {
   meta: Book;
+  /** book_series.series_name join 결과 (series_idx 동봉용, NULL = 미소속) */
+  series_name?: string | null;
   summary: {
     sectionOrder: string[];
     sections: SectionSummary[];
