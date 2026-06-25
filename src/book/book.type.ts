@@ -53,6 +53,8 @@ export interface Book {
   series: string | null;
   /** book_series 마스터 FK (NULL = 시리즈 미소속) */
   series_idx: number | null;
+  /** book_series JOIN 결과 — DB 컨럼 아님, 조회 시 LEFT JOIN 동봉 (NULL = 미소속 또는 미조인) */
+  series_name?: string | null;
   original_author: string | null;
   description: string | null;
   original_publish_date: string | null;
